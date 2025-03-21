@@ -14,12 +14,12 @@ export const SignUpSchema = yup.object().shape({
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
       "Please enter a valid email"
     ),
+});
+
+export const SignUpSchemaPass = yup.object().shape({
   password: yup
     .string()
     .required("Can't be empty")
-    .min(
-      8,
-      "Your password needs to be at least 8 characters. Please enter a longer one."
-    )
+    .min(8)
     .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/, "Invalid"),
 });

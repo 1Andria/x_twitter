@@ -13,6 +13,8 @@ import NextBtnSign from "../../__atoms/NextBtnSign/NextBtnSign";
 import { useDate } from "@/app/common/hooks/zustand/MonthZustand";
 import { useRegistrationSteps } from "@/app/common/hooks/zustand/RegistSteps";
 import { SignUpForm } from "@/app/common/types/NameInpTypes";
+import Link from "next/link";
+import PasswordSign from "../PasswordSign/PasswordSign";
 
 function CreateAcc() {
   const open = useCreateAcc((state) => state.open);
@@ -49,6 +51,8 @@ function CreateAcc() {
   const ToPasswordLevel = useRegistrationSteps(
     (state) => state.setToPasswordLevel
   );
+
+
 
   return (
     <Modal
@@ -118,28 +122,7 @@ function CreateAcc() {
             <NextBtnSign name={name} email={email} />
           </form>
         )}
-        {passwordLevel && (
-          <form className="w-[570px] ml-[20px] mr-[20px] h-[640px] rounded-[20px] pr-[60px] pl-[60px] bg-black flex  flex-col pt-[15px] pb-[40px]">
-            <div className="w-full flex justify-center ">
-              <div className="w-[30px] h-[30px]">
-                <XIcon />
-              </div>
-            </div>
-            <h1 className="text-white text-[30px] font-semibold">
-              You'll need a password
-            </h1>
-            <p className="text-[#6C7075]">
-              Make sure it’s 8 characters or more.
-            </p>
-            <SignInp
-              register={register}
-              errors={errors}
-              regName="password"
-              label="Password"
-              type="password"
-            />
-          </form>
-        )}
+        {passwordLevel && <PasswordSign />}
       </Box>
     </Modal>
   );
