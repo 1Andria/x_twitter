@@ -7,4 +7,5 @@ export type RegisterBtnType = {
   btnTxtColor?: string;
   FixImageGap?: string;
   hover?: string;
+  onClick?: () => void;
 };

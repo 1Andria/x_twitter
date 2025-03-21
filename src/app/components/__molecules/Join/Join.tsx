@@ -1,10 +1,17 @@
+"use client";
 import React from "react";
 import RegisterBtn from "../../__atoms/RegisterBtn/RegisterBtn";
 import Google from "@/app/common/icons/Google";
 import Apple from "@/app/common/icons/Apple";
 import Link from "next/link";
+import { OpenGoogle } from "@/app/common/functions/OpnGglAcc";
+import { OpenApple } from "@/app/common/functions/OpnAplAcc";
+import CreateAcc from "../CreateAccount/CreateAcc";
+import { useCreateAcc } from "@/app/common/hooks/zustand/CreateAccState";
 
 function Join() {
+  const setOpen = useCreateAcc((state) => state.setOpen);
+
   return (
     <>
       <div className="flex flex-col">
@@ -18,12 +25,14 @@ function Join() {
             btnTxt="sign up with google"
             btnIcon={<Google />}
             btnFont="font-normal"
+            onClick={OpenGoogle}
           />
           <RegisterBtn
             btnColor="bg-white"
             btnTxt="Sign up with Apple"
             btnIcon={<Apple />}
             btnFont="font-semibold"
+            onClick={OpenApple}
           />
           <div className="flex items-center gap-[10px]">
             <div className="w-full h-[1px] bg-[#2F3336]"></div>
@@ -37,7 +46,9 @@ function Join() {
               btnTxt="Create account"
               btnFont="font-semibold"
               FixImageGap="pr-[20px]"
+              onClick={() => setOpen(true)}
             />
+            <CreateAcc />
             <p className="text-[#71767B] text-[10px]">
               By signing up, you agree to the{" "}
               <Link
@@ -77,7 +88,7 @@ function Join() {
               btnTxtColor="text-[#1D9BF0]"
               FixImageGap="pr-[20px]"
               btnFont="font-semibold"
-              btnBorder="border-[1px] border-dotted border-[red]"
+              btnBorder="border-[1px]  border-[#536471]"
             />
           </div>
         </div>
