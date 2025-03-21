@@ -4,6 +4,7 @@ type RegisterStepTypes = {
   firstLevel: boolean;
   passwordLevel: boolean;
   setToPasswordLevel: () => void;
+  setToPasswordLevelReverse: () => void;
 };
 
 export const useRegistrationSteps = create<RegisterStepTypes>((set) => ({
@@ -13,5 +14,10 @@ export const useRegistrationSteps = create<RegisterStepTypes>((set) => ({
     set(() => ({
       firstLevel: false,
       passwordLevel: true,
+    })),
+  setToPasswordLevelReverse: () =>
+    set(() => ({
+      firstLevel: true,
+      passwordLevel: false,
     })),
 }));

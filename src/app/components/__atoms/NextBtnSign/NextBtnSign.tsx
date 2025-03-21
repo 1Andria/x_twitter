@@ -1,9 +1,6 @@
 import { useDate } from "@/app/common/hooks/zustand/MonthZustand";
+import { NextBtnProps } from "@/app/common/types/PasswordBtnProps";
 import React from "react";
-type NextBtnProps = {
-  name?: string;
-  email?: string;
-};
 
 function NextBtnSign({ name, email }: NextBtnProps) {
   const selectedMonth = useDate((state) => state.selectedMonth);

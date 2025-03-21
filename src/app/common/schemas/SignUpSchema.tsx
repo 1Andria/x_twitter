@@ -21,5 +21,8 @@ export const SignUpSchemaPass = yup.object().shape({
     .string()
     .required("Can't be empty")
     .min(8)
-    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/, "Invalid"),
+    .matches(
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
+      "Invalid password"
+    ),
 });

@@ -52,8 +52,6 @@ function CreateAcc() {
     (state) => state.setToPasswordLevel
   );
 
-
-
   return (
     <Modal
       open={open}
@@ -81,8 +79,14 @@ function CreateAcc() {
         {firstLevel && (
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="max-w-[570px] w-full ml-[10px] mr-[10px] h-[640px] rounded-[20px] pr-[60px] pl-[60px] bg-black flex justify-between flex-col pt-[15px] pb-[40px]"
+            className="max-w-[570px] w-full ml-[10px] mr-[10px] h-[640px] rounded-[20px] pr-[60px] pl-[60px] bg-black flex justify-between flex-col pt-[15px] pb-[40px] relative"
           >
+            <div
+              onClick={onClose}
+              className=" rounded-[50%] cursor-pointer hover:bg-[#4E5050] w-[25px] h-[25px] flex justify-center items-center absolute top-[20px] left-[20px]"
+            >
+              <h1 className=" text-white">X</h1>
+            </div>
             <div className="w-full flex justify-center ">
               <div className="w-[30px] h-[30px]">
                 <XIcon />
