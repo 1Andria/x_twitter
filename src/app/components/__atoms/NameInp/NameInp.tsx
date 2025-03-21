@@ -7,7 +7,7 @@ function SignInp({ register, errors, regName, label, type }: NameInpProps) {
     <>
       <div className="flex flex-col gap-[3px]">
         <TextField
-          id="outlined-basic"
+          id={regName}
           label={label}
           variant="outlined"
           type={type}
@@ -29,7 +29,7 @@ function SignInp({ register, errors, regName, label, type }: NameInpProps) {
             },
           }}
         />
-        {errors.name && (
+        {errors[regName] && (
           <span className="text-[#FC4747] text-[12px]">
             {errors[regName]?.message}
           </span>

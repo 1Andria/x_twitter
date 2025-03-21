@@ -28,16 +28,12 @@ function CreateAcc() {
     resolver: yupResolver(SignUpSchema),
   });
 
-  //   const onSubmit = (data: SignUpForm) => {
-  //     console.log(data);
-  //     ToPasswordLevel();
-  //     console.log(firstLevel);
-  //     console.log(passwordLevel);
-  //   };
-
-  function onSubmit() {
-    alert("asdsdaads");
-  }
+  const onSubmit = (data: SignUpForm) => {
+    console.log(data);
+    ToPasswordLevel();
+    console.log(firstLevel);
+    console.log(passwordLevel);
+  };
 
   const name = watch("name");
   const email = watch("email");
@@ -68,6 +64,7 @@ function CreateAcc() {
           },
         },
       }}
+      className="w-full"
     >
       <Box
         sx={{
@@ -121,8 +118,19 @@ function CreateAcc() {
             <NextBtnSign name={name} email={email} />
           </form>
         )}
-        {/* {passwordLevel && (
-          <form className="max-w-[570px] w-full ml-[10px] mr-[10px] h-[640px] rounded-[20px] pr-[60px] pl-[60px] bg-black flex justify-between flex-col pt-[15px] pb-[40px]">
+        {passwordLevel && (
+          <form className="w-[570px] ml-[20px] mr-[20px] h-[640px] rounded-[20px] pr-[60px] pl-[60px] bg-black flex  flex-col pt-[15px] pb-[40px]">
+            <div className="w-full flex justify-center ">
+              <div className="w-[30px] h-[30px]">
+                <XIcon />
+              </div>
+            </div>
+            <h1 className="text-white text-[30px] font-semibold">
+              You'll need a password
+            </h1>
+            <p className="text-[#6C7075]">
+              Make sure it’s 8 characters or more.
+            </p>
             <SignInp
               register={register}
               errors={errors}
@@ -131,7 +139,7 @@ function CreateAcc() {
               type="password"
             />
           </form>
-        )} */}
+        )}
       </Box>
     </Modal>
   );

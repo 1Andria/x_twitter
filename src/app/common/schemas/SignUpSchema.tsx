@@ -17,6 +17,9 @@ export const SignUpSchema = yup.object().shape({
   password: yup
     .string()
     .required("Can't be empty")
-    .min(8, "Use at least 8 characters")
+    .min(
+      8,
+      "Your password needs to be at least 8 characters. Please enter a longer one."
+    )
     .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/, "Invalid"),
 });
