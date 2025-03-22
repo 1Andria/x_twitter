@@ -1,9 +1,5 @@
 import { create } from "zustand";
-
-type SeenTypes = {
-  seen: boolean;
-  setSeen: () => void;
-};
+import { SeenTypes } from "../../Types/Common";
 
 export const useSeenPassword = create<SeenTypes>((set) => ({
   seen: false,

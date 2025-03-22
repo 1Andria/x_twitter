@@ -1,7 +1,6 @@
 import XIcon from "@/app/common/icons/xIcon";
 import React from "react";
 import SignInp from "../../__atoms/NameInp/NameInp";
-import { SignPassForm } from "@/app/common/types/NameInpTypes";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SignUpSchemaPass } from "@/app/common/schemas/SignUpSchema";
 import { useForm } from "react-hook-form";
@@ -10,8 +9,15 @@ import { useRegistrationSteps } from "@/app/common/hooks/zustand/RegistSteps";
 import Eye from "@/app/common/icons/Eye";
 import { useSeenPassword } from "@/app/common/hooks/zustand/Seen";
 import PasswordBtn from "../../__atoms/PasswordBtn/PasswordBtn";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../firebase/config";
+import { useLogIn } from "@/app/common/hooks/zustand/CreateAccState";
+import { FirebaseError } from "firebase/app";
+import { PassSignType, SignPassForm } from "@/app/common/Types/Common";
 
-function PasswordSign() {
+function PasswordSign({ onClose, email, name }: PassSignType) {
+  const setOpenLogIn = useLogIn((state) => state.setOpenLogIn);
+
   const {
     register,
     handleSubmit,
@@ -27,9 +33,24 @@ function PasswordSign() {
 
   const password = watch("password");
 
-  const onSubmitPassword = (data: SignPassForm) => {
-    console.log("Password Step Data:", data);
+  const onSubmitPassword = async (data: SignPassForm) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        data.password
+      );
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        console.error("Registration Error:", error.message);
+      } else {
+        console.error("Unknown Error:", error);
+      }
+    }
     reset();
+    onClose();
+    setToPasswordLevelReverse();
+    setOpenLogIn(true);
   };
 
   const seen = useSeenPassword((state) => state.seen);
@@ -57,7 +78,15 @@ function PasswordSign() {
             You'll need a password
           </h1>
           <p className="text-[#6C7075] mt-[5px]">
-            Make sure it’s 8 characters or more.
+            Make sure it’s 8 characters or more. <br />
+            <strong className="hover:underline cursor-pointer">
+              <Link
+                target="_blank"
+                href={"https://password-generator-eta-eosin.vercel.app/"}
+              >
+                Generate Password.
+              </Link>
+            </strong>
           </p>
           <div className="relative mt-[30px]">
             <SignInp

@@ -1,11 +1,5 @@
 import { create } from "zustand";
-
-type RegisterStepTypes = {
-  firstLevel: boolean;
-  passwordLevel: boolean;
-  setToPasswordLevel: () => void;
-  setToPasswordLevelReverse: () => void;
-};
+import { RegisterStepTypes } from "../../Types/Common";
 
 export const useRegistrationSteps = create<RegisterStepTypes>((set) => ({
   firstLevel: true,

@@ -1,3 +1,0 @@
-type CrAccType = {
-  open: boolean;
-};

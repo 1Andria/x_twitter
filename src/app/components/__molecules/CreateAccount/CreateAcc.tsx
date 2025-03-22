@@ -12,9 +12,8 @@ import YearSelector from "../../__atoms/YearSelector/YearSelector";
 import NextBtnSign from "../../__atoms/NextBtnSign/NextBtnSign";
 import { useDate } from "@/app/common/hooks/zustand/MonthZustand";
 import { useRegistrationSteps } from "@/app/common/hooks/zustand/RegistSteps";
-import { SignUpForm } from "@/app/common/types/NameInpTypes";
-import Link from "next/link";
 import PasswordSign from "../PasswordSign/PasswordSign";
+import { SignUpForm } from "@/app/common/Types/Common";
 
 function CreateAcc() {
   const open = useCreateAcc((state) => state.open);
@@ -26,15 +25,13 @@ function CreateAcc() {
     formState: { errors },
     reset,
     watch,
+    getValues,
   } = useForm<SignUpForm>({
     resolver: yupResolver(SignUpSchema),
   });
 
   const onSubmit = (data: SignUpForm) => {
-    console.log(data);
     ToPasswordLevel();
-    console.log(firstLevel);
-    console.log(passwordLevel);
   };
 
   const name = watch("name");
@@ -126,7 +123,13 @@ function CreateAcc() {
             <NextBtnSign name={name} email={email} />
           </form>
         )}
-        {passwordLevel && <PasswordSign />}
+        {passwordLevel && (
+          <PasswordSign
+            onClose={onClose}
+            email={getValues("email")}
+            name={getValues("name")}
+          />
+        )}
       </Box>
     </Modal>
   );

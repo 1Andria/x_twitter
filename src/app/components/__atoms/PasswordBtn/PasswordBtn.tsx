@@ -1,4 +1,4 @@
-import { PasswordBtnProps } from "@/app/common/types/PasswordBtnProps";
+import { PasswordBtnProps } from "@/app/common/Types/Common";
 import React from "react";
 
 function PasswordBtn({ password }: PasswordBtnProps) {

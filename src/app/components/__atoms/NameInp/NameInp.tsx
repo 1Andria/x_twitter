@@ -1,4 +1,4 @@
-import { NameInpProps } from "@/app/common/types/NameInpTypes";
+import { NameInpProps } from "@/app/common/Types/Common";
 import { TextField } from "@mui/material";
 import React from "react";
 import { FieldValues } from "react-hook-form";

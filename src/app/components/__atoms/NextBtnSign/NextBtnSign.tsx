@@ -1,5 +1,5 @@
 import { useDate } from "@/app/common/hooks/zustand/MonthZustand";
-import { NextBtnProps } from "@/app/common/types/PasswordBtnProps";
+import { NextBtnProps } from "@/app/common/Types/Common";
 import React from "react";
 
 function NextBtnSign({ name, email }: NextBtnProps) {

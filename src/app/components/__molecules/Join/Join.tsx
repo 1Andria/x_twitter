@@ -7,10 +7,15 @@ import Link from "next/link";
 import { OpenGoogle } from "@/app/common/functions/OpnGglAcc";
 import { OpenApple } from "@/app/common/functions/OpnAplAcc";
 import CreateAcc from "../CreateAccount/CreateAcc";
-import { useCreateAcc } from "@/app/common/hooks/zustand/CreateAccState";
+import {
+  useCreateAcc,
+  useLogIn,
+} from "@/app/common/hooks/zustand/CreateAccState";
+import LogIn from "../LogIn/LogIn";
 
 function Join() {
   const setOpen = useCreateAcc((state) => state.setOpen);
+  const setOpenLogIn = useLogIn((state) => state.setOpenLogIn);
 
   return (
     <>
@@ -89,10 +94,12 @@ function Join() {
               FixImageGap="pr-[20px]"
               btnFont="font-semibold"
               btnBorder="border-[1px]  border-[#536471]"
+              onClick={() => setOpenLogIn(true)}
             />
           </div>
         </div>
       </div>
+      <LogIn />
     </>
   );
 }

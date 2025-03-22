@@ -1,5 +1,5 @@
 "use client";
-import { RegisterBtnType } from "@/app/common/types/RegisterBtnType";
+import { RegisterBtnType } from "@/app/common/Types/Common";
 import React from "react";
 
 function RegisterBtn({

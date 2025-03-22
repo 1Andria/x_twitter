@@ -1,13 +1,6 @@
 import { create } from "zustand";
-type DateState = {
-  selectedMonth: number | "";
-  setSelectedMonth: (month: number | "") => void;
-  selectedDay: number | "";
-  setSelectedDay: (day: number | "") => void;
-  selectedYear: number | "";
-  setSelectedYear: (day: number | "") => void;
-  resetDate: () => void;
-};
+import { DateState } from "../../Types/Common";
+
 
 export const useDate = create<DateState>((set) => ({
   selectedMonth: "",
