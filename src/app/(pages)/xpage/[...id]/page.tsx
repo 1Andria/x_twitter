@@ -1,7 +1,13 @@
 import React from "react";
+type ParamsType = {
+  params: {
+    id: string;
+  };
+};
 
-function xpage() {
-  return <div>page</div>;
+function xpage({ params }: ParamsType) {
+  const some = params.id;
+  return <div>page {some}</div>;
 }
 
 export default xpage;

@@ -43,7 +43,7 @@ function LogIn() {
       setEmail("");
       setPassword("");
       setOpenLogIn(false);
-      router.push("xpage/1");
+      router.push("xpage/username");
       useNotFound.getState().setUserNotFound(false);
     } else {
       useNotFound.getState().setUserNotFound(true);
