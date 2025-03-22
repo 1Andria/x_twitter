@@ -1,4 +1,3 @@
-import { useCreateAcc } from "@/app/common/hooks/zustand/CreateAccState";
 import XIcon from "@/app/common/icons/xIcon";
 import { SignUpSchema } from "@/app/common/schemas/SignUpSchema";
 import { Box, Modal } from "@mui/material";
@@ -10,10 +9,9 @@ import MonthSelector from "../../__atoms/MonthSelector/MonthSelector";
 import DaySeletor from "../../__atoms/DaySelector/DaySeletor";
 import YearSelector from "../../__atoms/YearSelector/YearSelector";
 import NextBtnSign from "../../__atoms/NextBtnSign/NextBtnSign";
-import { useDate } from "@/app/common/hooks/zustand/MonthZustand";
-import { useRegistrationSteps } from "@/app/common/hooks/zustand/RegistSteps";
 import PasswordSign from "../PasswordSign/PasswordSign";
 import { SignUpForm } from "@/app/common/Types/Common";
+import { useCreateAcc, useDate, useRegistrationSteps } from "@/app/common/hooks/Store";
 
 function CreateAcc() {
   const open = useCreateAcc((state) => state.open);

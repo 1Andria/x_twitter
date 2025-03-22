@@ -4,14 +4,12 @@ import RegisterBtn from "../../__atoms/RegisterBtn/RegisterBtn";
 import Google from "@/app/common/icons/Google";
 import Apple from "@/app/common/icons/Apple";
 import Link from "next/link";
+import CreateAcc from "../CreateAccount/CreateAcc";
+
+import LogIn from "../LogIn/LogIn";
+import { useCreateAcc, useLogIn } from "@/app/common/hooks/Store";
 import { OpenGoogle } from "@/app/common/functions/OpnGglAcc";
 import { OpenApple } from "@/app/common/functions/OpnAplAcc";
-import CreateAcc from "../CreateAccount/CreateAcc";
-import {
-  useCreateAcc,
-  useLogIn,
-} from "@/app/common/hooks/zustand/CreateAccState";
-import LogIn from "../LogIn/LogIn";
 
 function Join() {
   const setOpen = useCreateAcc((state) => state.setOpen);

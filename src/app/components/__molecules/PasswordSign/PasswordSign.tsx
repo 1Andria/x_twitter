@@ -5,15 +5,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SignUpSchemaPass } from "@/app/common/schemas/SignUpSchema";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { useRegistrationSteps } from "@/app/common/hooks/zustand/RegistSteps";
 import Eye from "@/app/common/icons/Eye";
-import { useSeenPassword } from "@/app/common/hooks/zustand/Seen";
 import PasswordBtn from "../../__atoms/PasswordBtn/PasswordBtn";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebase/config";
-import { useLogIn } from "@/app/common/hooks/zustand/CreateAccState";
 import { FirebaseError } from "firebase/app";
 import { PassSignType, SignPassForm } from "@/app/common/Types/Common";
+import {
+  useLogIn,
+  useRegistrationSteps,
+  useSeenPassword,
+} from "@/app/common/hooks/Store";
 
 function PasswordSign({ onClose, email, name }: PassSignType) {
   const setOpenLogIn = useLogIn((state) => state.setOpenLogIn);

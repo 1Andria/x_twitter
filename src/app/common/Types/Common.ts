@@ -53,6 +53,11 @@ export type SeenTypes = {
   setSeen: () => void;
 };
 
+export type UserFoundTypes = {
+  userNotFound: boolean;
+  setUserNotFound: (value: boolean) => void;
+};
+
 export type RegisterStepTypes = {
   firstLevel: boolean;
   passwordLevel: boolean;
@@ -78,4 +83,12 @@ export type CrAccType = {
 export type LogInType = {
   openLogIn: boolean;
   setOpenLogIn: (value: boolean) => void;
+};
+
+export type LogInStore = {
+  email: string;
+  setEmail: (email: string) => void;
+
+  password: string;
+  setPassword: (password: string) => void;
 };
