@@ -8,7 +8,6 @@ import Link from "next/link";
 import Eye from "@/app/common/icons/Eye";
 import PasswordBtn from "../../__atoms/PasswordBtn/PasswordBtn";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../firebase/config";
 import { FirebaseError } from "firebase/app";
 import { PassSignType, SignPassForm } from "@/app/common/Types/Common";
 import {
@@ -16,6 +15,8 @@ import {
   useRegistrationSteps,
   useSeenPassword,
 } from "@/app/common/hooks/Store";
+import { setDoc, doc } from "firebase/firestore";
+import { auth, db } from "@/app/firebase/config";
 
 function PasswordSign({ onClose, email, name }: PassSignType) {
   const setOpenLogIn = useLogIn((state) => state.setOpenLogIn);
@@ -34,7 +35,6 @@ function PasswordSign({ onClose, email, name }: PassSignType) {
   );
 
   const password = watch("password");
-
   const onSubmitPassword = async (data: SignPassForm) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -42,13 +42,26 @@ function PasswordSign({ onClose, email, name }: PassSignType) {
         email,
         data.password
       );
+
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        name: name,
+        email: email,
+      });
     } catch (error) {
       if (error instanceof FirebaseError) {
-        console.error("Registration Error:", error.message);
+        if (error.code === "auth/email-already-in-use") {
+          alert("This email is already in use. Please try another one.");
+          return;
+        } else {
+          console.error("Registration Error:", error.message);
+        }
       } else {
         console.error("Unknown Error:", error);
       }
     }
+
     reset();
     onClose();
     setToPasswordLevelReverse();
@@ -90,6 +103,7 @@ function PasswordSign({ onClose, email, name }: PassSignType) {
               </Link>
             </strong>
           </p>
+
           <div className="relative mt-[30px]">
             <SignInp
               register={register}

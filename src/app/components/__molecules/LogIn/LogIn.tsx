@@ -13,9 +13,10 @@ import {
   useLogInStore,
   useNotFound,
 } from "@/app/common/hooks/Store";
-import { auth } from "@/app/firebase/config";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
+import { getDoc, doc } from "firebase/firestore";
+import { auth, db } from "@/app/firebase/config";
 
 function LogIn() {
   const openLogIn = useLogIn((state) => state.openLogIn);
@@ -38,13 +39,21 @@ function LogIn() {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const res = await signInWithEmailAndPassword(email, password);
-    if (res) {
-      setEmail("");
-      setPassword("");
-      setOpenLogIn(false);
-      router.push("xpage/username");
-      useNotFound.getState().setUserNotFound(false);
+    if (res && res.user) {
+      const userDoc = await getDoc(doc(db, "users", res.user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        const username = userData?.name;
+
+        setEmail("");
+        setPassword("");
+        setOpenLogIn(false);
+
+        router.push(`xpage/${username}`);
+        useNotFound.getState().setUserNotFound(false);
+      }
     } else {
       useNotFound.getState().setUserNotFound(true);
     }
