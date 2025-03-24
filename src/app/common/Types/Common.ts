@@ -92,3 +92,9 @@ export type LogInStore = {
   password: string;
   setPassword: (password: string) => void;
 };
+
+export type ParamsType = {
+  params: {
+    id: string;
+  };
+};
