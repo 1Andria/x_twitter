@@ -1,8 +1,11 @@
 import { create } from "zustand";
 import {
   CrAccType,
+  ForYouTypes,
   LogInStore,
   LogInType,
+  PostState,
+  PostsType,
   UserFoundTypes,
 } from "../Types/Common";
 import { SeenTypes } from "../Types/Common";
@@ -65,4 +68,22 @@ export const useLogInStore = create<LogInStore>((set) => ({
 export const useNotFound = create<UserFoundTypes>((set) => ({
   userNotFound: false,
   setUserNotFound: (value) => set(() => ({ userNotFound: value })),
+}));
+
+export const useForYou = create<ForYouTypes>((set) => ({
+  forYou: true,
+  setForYou: () => set((state) => ({ forYou: !state.forYou })),
+}));
+
+export const usePostImage = create<PostState>((set) => ({
+  image: "",
+  setImage: (image) => set({ image }),
+}));
+
+export const usePostStore = create<PostsType>((set) => ({
+  text: "",
+  file: null,
+
+  setText: (value) => set({ text: value }),
+  setFile: (file) => set({ file }),
 }));

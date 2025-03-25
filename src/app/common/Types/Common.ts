@@ -98,3 +98,31 @@ export type ParamsType = {
     id: string;
   };
 };
+export type ForYouBtnType = {
+  forYou: boolean;
+  btnTxt: string;
+};
+export type ForYouTypes = {
+  forYou: boolean;
+  setForYou: () => void;
+};
+
+export type PostState = {
+  image: string;
+  setImage: (image: string) => void;
+};
+
+export type PostsType = {
+  text: string;
+  file: File | null;
+  setText: (value: string) => void;
+  setFile: (file: File | null) => void;
+};
+
+export type PostContextType = {
+  id: string;
+  text: string;
+  imageUrl: string;
+  authorEmail: string;
+  name: string;
+};

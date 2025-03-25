@@ -1,5 +1,6 @@
 import { ParamsType } from "@/app/common/Types/Common";
 import NavBar from "@/app/components/__molecules/NavBar/NavBar";
+import HomeContext from "@/app/components/__organisms/HomeContext/HomeContext";
 import React from "react";
 export const metadata = {
   title: "Home / X",
@@ -13,6 +14,7 @@ function xpage({ params }: ParamsType) {
     <div className="w-full bg-black flex justify-center items-center">
       <div className="max-w-[1640px] w-full min-h-screen h-auto  flex">
         <NavBar pathName={pathName} />
+        <HomeContext />
       </div>
     </div>
   );

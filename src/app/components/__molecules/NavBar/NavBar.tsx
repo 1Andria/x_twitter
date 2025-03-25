@@ -10,9 +10,10 @@ import ProfileIcon from "@/app/common/icons/ProfileIcon";
 import SearchIcon from "@/app/common/icons/SearchIcon";
 import VerifiedOrgs from "@/app/common/icons/VerifiedOrgs";
 import XIcon from "@/app/common/icons/xIcon";
+// import { Label } from "@mui/icons-material";
+// import { Switch } from "@mui/material";
 import Link from "next/link";
 import React from "react";
-// import SwitchMode from "../../__atoms/SwitchMode/SwitchMode";
 
 type NavBar = {
   pathName: string;
@@ -20,9 +21,13 @@ type NavBar = {
 
 function NavBar({ pathName }: NavBar) {
   return (
-    <div className="max-w-[320px] w-full h-full fixed border-r border-r-[#2F3336] flex flex-col items-start justify-between pl-[50px] pt-[20px] pb-[20px] ">
+    <div className="max-w-[380px] w-full h-screen sticky top-0  border-r border-r-[#2F3336] flex flex-col items-start justify-between pl-[50px] pt-[20px] pb-[20px]">
       <div className="flex flex-col gap-[20px]">
-        {/* <SwitchMode /> */}
+        {/* <Switch
+          {...Label}
+          defaultChecked
+          color="info"
+        /> */}
         <div className="w-[30px] h-[30px] ">
           <XIcon />
         </div>
@@ -64,7 +69,7 @@ function NavBar({ pathName }: NavBar) {
         </Link>
         <div className="w-auto gap-[10px] flex items-center ">
           <div className="w-[30px] h-[30px] text-[18px]">
-            <GrokIcon />
+            <GrokIcon color="white" />
           </div>
           <h1 className="text-white text-[18px]">Grok</h1>
         </div>
