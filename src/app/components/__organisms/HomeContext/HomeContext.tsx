@@ -4,6 +4,7 @@ import React from "react";
 import ForYouBtn from "../../__atoms/ForYouBtn/ForYouBtn";
 import AddPost from "../../__molecules/AddPost/AddPost";
 import Post from "../../__molecules/Post/Post";
+import SuggestFollowers from "../../__molecules/SuggestFollowers/SuggestFollowers";
 
 function HomeContext() {
   const forYou = useForYou((state) => state.forYou);
@@ -14,8 +15,9 @@ function HomeContext() {
         <ForYouBtn forYou={forYou} btnTxt="For you" />
         <ForYouBtn forYou={!forYou} btnTxt="Following" />
       </div>
-      <AddPost />
-      <Post />
+      {forYou && <AddPost />}
+      {forYou && <Post />}
+      {!forYou && <SuggestFollowers />}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 import {
   FieldErrors,
   UseFormRegister,
@@ -125,4 +126,18 @@ export type PostContextType = {
   imageUrl: string;
   authorEmail: string;
   name: string;
+  createdAt: Timestamp | null;
+  likes: string[];
+  bookmarks: string[];
+};
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+};
+
+export type UserStore = {
+  users: User[];
+  setUsers: (users: User[]) => void;
 };

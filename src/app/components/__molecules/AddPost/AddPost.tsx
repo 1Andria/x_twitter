@@ -36,8 +36,15 @@ function AddPost() {
   const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user = auth.currentUser;
+    if (text.trim() === "" && !image) {
+      alert("Empty post. Either text or image is required.");
+      return;
+    }
 
     try {
+      setText("");
+      setImage("");
+      setFile(null);
       await addDoc(collection(db, "posts"), {
         text,
         authorEmail: user?.email || "anonymous",
@@ -47,12 +54,8 @@ function AddPost() {
         likes: [],
         bookmarks: [],
       });
-
-      setText("");
-      setImage("");
-      setFile(null);
     } catch (err) {
-      console.error("Error adding post: ", err);
+      console.error("Error post: ", err);
     }
   };
 

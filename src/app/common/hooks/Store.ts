@@ -7,6 +7,7 @@ import {
   PostState,
   PostsType,
   UserFoundTypes,
+  UserStore,
 } from "../Types/Common";
 import { SeenTypes } from "../Types/Common";
 import { DateState } from "../Types/Common";
@@ -86,4 +87,9 @@ export const usePostStore = create<PostsType>((set) => ({
 
   setText: (value) => set({ text: value }),
   setFile: (file) => set({ file }),
+}));
+
+export const useUserStore = create<UserStore>((set) => ({
+  users: [],
+  setUsers: (users) => set({ users }),
 }));
