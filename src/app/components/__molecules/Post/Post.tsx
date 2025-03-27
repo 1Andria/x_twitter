@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { auth, db } from "../../../firebase/config";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { onSnapshot } from "firebase/firestore";
@@ -13,15 +13,17 @@ import StatisticIcon from "@/app/common/icons/StatisticIcon";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import DownoloadIcon from "@/app/common/icons/DownoloadIcon";
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
-TimeAgo.addDefaultLocale(en);
 import ReactTimeAgo from "react-time-ago";
 import { updateDoc, doc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { useHoverStore, usePostData } from "@/app/common/hooks/Store";
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
+TimeAgo.addDefaultLocale(en);
 
 function Post() {
-  const [posts, setPosts] = useState<PostContextType[]>([]);
+  const posts = usePostData((state) => state.posts);
+  const setPosts = usePostData((state) => state.setPosts);
 
   useEffect(() => {
     const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
@@ -92,6 +94,9 @@ function Post() {
     }
   };
 
+  const moreColor = useHoverStore((state) => state.moreColor);
+  const setMoreColor = useHoverStore((state) => state.setMoreColor);
+
   return (
     <>
       <div className="flex flex-col w-full">
@@ -100,22 +105,45 @@ function Post() {
             key={post.id}
             className="border border-[#2F3336] p-[15px] flex gap-[8px] "
           >
-            <div className="w-[40px] h-[40px] rounded-[50px] bg-[green]"></div>
+            <div className="w-[40px] h-[35px] rounded-[50px] bg-[green]"></div>
             <div className="flex flex-col items-start w-full">
-              <div className="flex items-center gap-[8px] ">
-                <h3 className="text-white font-bold ">{post.name}</h3>
-                <h3 className="text-[#71767B] text-[14px] font-semibold ">
-                  @{post.authorEmail.split("@")[0]}
-                </h3>
-                <div className="w-[3px] h-[3px] rounded-[50px] bg-[#71767B]"></div>
-                <h3 className="text-[#71767B] text-[14px] font-semibold ">
-                  {post.createdAt && (
-                    <ReactTimeAgo
-                      date={post.createdAt.toDate()}
-                      locale="en-US"
-                    />
-                  )}
-                </h3>
+              <div className="flex items-center justify-between  w-full ">
+                <div className="flex items-center gap-[8px]">
+                  <h3 className="text-white font-bold ">{post.name}</h3>
+                  <h3 className="text-[#71767B] text-[14px] font-semibold ">
+                    @{post.authorEmail.split("@")[0]}
+                  </h3>
+                  <div className="w-[3px] h-[3px] rounded-[50px] bg-[#71767B]"></div>
+                  <h3 className="text-[#71767B] text-[14px] font-semibold ">
+                    {post.createdAt && (
+                      <ReactTimeAgo
+                        date={post.createdAt.toDate()}
+                        locale="en-US"
+                      />
+                    )}
+                  </h3>
+                </div>
+                <div
+                  onMouseEnter={() => setMoreColor(post.id)}
+                  onMouseLeave={() => setMoreColor(null)}
+                  className="flex gap-[2px]  cursor-pointer pt-[15px] pb-[15px] pl-[10px] pr-[10px] rounded-[50px] hover:bg-[#0A171F] "
+                >
+                  <div
+                    className={`w-[3px] h-[3px] rounded-[50px] ${
+                      moreColor === post.id ? "bg-[#1D9BF0]" : "bg-[#71767B]"
+                    }`}
+                  ></div>
+                  <div
+                    className={`w-[3px] h-[3px] rounded-[50px] ${
+                      moreColor === post.id ? "bg-[#1D9BF0]" : "bg-[#71767B]"
+                    }`}
+                  ></div>{" "}
+                  <div
+                    className={`w-[3px] h-[3px] rounded-[50px] ${
+                      moreColor === post.id ? "bg-[#1D9BF0]" : "bg-[#71767B]"
+                    }`}
+                  ></div>
+                </div>
               </div>
               <h1 className="text-white">{post.text}</h1>
               {post.imageUrl && (

@@ -130,6 +130,10 @@ export type PostContextType = {
   likes: string[];
   bookmarks: string[];
 };
+export type PostStore = {
+  posts: PostContextType[];
+  setPosts: (posts: PostContextType[]) => void;
+}
 
 export type User = {
   id: string;
@@ -141,3 +145,17 @@ export type UserStore = {
   users: User[];
   setUsers: (users: User[]) => void;
 };
+
+export type PostBtnProps = {
+  disabled: boolean;
+};
+
+export type WorldType = {
+  world: boolean;
+  setWorld: (value: boolean) => void;
+};
+
+export type HoverStore = {
+  moreColor: string | null;
+  setMoreColor: (id: string | null) => void;
+}

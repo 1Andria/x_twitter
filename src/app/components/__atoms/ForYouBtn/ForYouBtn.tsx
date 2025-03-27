@@ -9,7 +9,7 @@ function ForYouBtn({ forYou, btnTxt }: ForYouBtnType) {
     <>
       <button
         onClick={ChangeForYou}
-        className="w-full h-full flex pt-[15px] items-center justify-center "
+        className="w-full h-full hover:bg-[#181818] flex pt-[15px] items-center justify-center "
       >
         <h1
           className={`h-full align-middle text-white font-semibold  ${

@@ -8,10 +8,14 @@ import {
   PostsType,
   UserFoundTypes,
   UserStore,
+  WorldType,
+  SeenTypes,
+  DateState,
+  RegisterStepTypes,
+  HoverStore,
+  PostContextType,
+  PostStore,
 } from "../Types/Common";
-import { SeenTypes } from "../Types/Common";
-import { DateState } from "../Types/Common";
-import { RegisterStepTypes } from "../Types/Common";
 
 export const useCreateAcc = create<CrAccType>((set) => ({
   open: false,
@@ -92,4 +96,19 @@ export const usePostStore = create<PostsType>((set) => ({
 export const useUserStore = create<UserStore>((set) => ({
   users: [],
   setUsers: (users) => set({ users }),
+}));
+
+export const useWorldState = create<WorldType>((set) => ({
+  world: false,
+  setWorld: (value) => set((state) => ({ world: value })),
+}));
+
+export const useHoverStore = create<HoverStore>((set) => ({
+  moreColor: null,
+  setMoreColor: (id) => set({ moreColor: id }),
+}));
+
+export const usePostData = create<PostStore>((set) => ({
+  posts: [],
+  setPosts: (posts) => set({ posts }),
 }));
