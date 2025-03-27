@@ -15,8 +15,10 @@ import {
   useRegistrationSteps,
   useSeenPassword,
 } from "@/app/common/hooks/Store";
-import { setDoc, doc } from "firebase/firestore";
-import { auth, db } from "@/app/firebase/config";
+import { setDoc } from "firebase/firestore";
+import { auth } from "@/app/firebase/config";
+import { runTransaction, doc } from "firebase/firestore";
+import { db } from "@/app/firebase/config";
 
 function PasswordSign({ onClose, email, name }: PassSignType) {
   const setOpenLogIn = useLogIn((state) => state.setOpenLogIn);
@@ -35,6 +37,25 @@ function PasswordSign({ onClose, email, name }: PassSignType) {
   );
 
   const password = watch("password");
+  const generateUsername = async (): Promise<string> => {
+    const counterRef = doc(db, "counters", "userCounter");
+
+    const newUsername = await runTransaction(db, async (transaction) => {
+      const counterSnap = await transaction.get(counterRef);
+
+      let count = 1;
+      if (counterSnap.exists()) {
+        count = counterSnap.data().count + 1;
+      }
+
+      transaction.set(counterRef, { count });
+
+      const padded = String(count).padStart(3, "0");
+      return `user${padded}`;
+    });
+
+    return newUsername;
+  };
   const onSubmitPassword = async (data: SignPassForm) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -45,10 +66,20 @@ function PasswordSign({ onClose, email, name }: PassSignType) {
 
       const user = userCredential.user;
 
+      const username = await generateUsername();
+
       await setDoc(doc(db, "users", user.uid), {
         name: name,
         email: email,
+        username: username,
+        profilePicture:
+          "https://i.pinimg.com/736x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg",
       });
+
+      reset();
+      onClose();
+      setToPasswordLevelReverse();
+      setOpenLogIn(true);
     } catch (error) {
       if (error instanceof FirebaseError) {
         if (error.code === "auth/email-already-in-use") {
@@ -61,11 +92,6 @@ function PasswordSign({ onClose, email, name }: PassSignType) {
         console.error("Unknown Error:", error);
       }
     }
-
-    reset();
-    onClose();
-    setToPasswordLevelReverse();
-    setOpenLogIn(true);
   };
 
   const seen = useSeenPassword((state) => state.seen);

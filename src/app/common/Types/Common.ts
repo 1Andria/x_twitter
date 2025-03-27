@@ -99,6 +99,9 @@ export type ParamsType = {
     id: string;
   };
 };
+export type PropsType = {
+  pathName: string;
+};
 export type ForYouBtnType = {
   forYou: boolean;
   btnTxt: string;
@@ -133,7 +136,7 @@ export type PostContextType = {
 export type PostStore = {
   posts: PostContextType[];
   setPosts: (posts: PostContextType[]) => void;
-}
+};
 
 export type User = {
   id: string;
@@ -158,4 +161,16 @@ export type WorldType = {
 export type HoverStore = {
   moreColor: string | null;
   setMoreColor: (id: string | null) => void;
-}
+};
+
+export type CurrentUserType = {
+  name: string;
+  email: string;
+  username: string;
+  setCurrentUser: (user: {
+    name: string;
+    email: string;
+    username: string;
+  }) => void;
+  clearCurrentUser: () => void;
+};

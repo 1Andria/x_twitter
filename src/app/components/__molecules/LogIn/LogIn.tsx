@@ -45,7 +45,7 @@ function LogIn() {
       const userDoc = await getDoc(doc(db, "users", res.user.uid));
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        const username = userData?.name;
+        const username = userData?.username;
 
         setEmail("");
         setPassword("");

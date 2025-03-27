@@ -15,6 +15,7 @@ import {
   HoverStore,
   PostContextType,
   PostStore,
+  CurrentUserType,
 } from "../Types/Common";
 
 export const useCreateAcc = create<CrAccType>((set) => ({
@@ -111,4 +112,17 @@ export const useHoverStore = create<HoverStore>((set) => ({
 export const usePostData = create<PostStore>((set) => ({
   posts: [],
   setPosts: (posts) => set({ posts }),
+}));
+
+export const useCurrentUser = create<CurrentUserType>((set) => ({
+  name: "",
+  email: "",
+  username: "",
+  setCurrentUser: (user) =>
+    set({
+      name: user.name,
+      email: user.email,
+      username: user.username,
+    }),
+  clearCurrentUser: () => set({ name: "", email: "", username: "" }),
 }));

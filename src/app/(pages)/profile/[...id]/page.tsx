@@ -1,5 +1,6 @@
 import { ParamsType } from "@/app/common/Types/Common";
 import NavBar from "@/app/components/__molecules/NavBar/NavBar";
+import ProfileContext from "@/app/components/__molecules/ProfileContext/ProfileContext";
 import React from "react";
 
 export const metadata = {
@@ -14,7 +15,8 @@ function Profile({ params }: ParamsType) {
     <>
       <div className="w-full bg-black flex justify-center items-center">
         <div className="max-w-[1640px] w-full min-h-screen h-auto  flex">
-          <NavBar pathName={pathName} />
+          <NavBar />
+          <ProfileContext pathName={pathName} />
         </div>
       </div>
     </>
