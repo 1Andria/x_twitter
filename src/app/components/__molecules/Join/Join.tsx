@@ -10,6 +10,7 @@ import LogIn from "../LogIn/LogIn";
 import { useCreateAcc, useLogIn } from "@/app/common/hooks/Store";
 import { OpenGoogle } from "@/app/common/functions/OpnGglAcc";
 import { OpenApple } from "@/app/common/functions/OpnAplAcc";
+import XIcon from "@/app/common/icons/xIcon";
 
 function Join() {
   const setOpen = useCreateAcc((state) => state.setOpen);
@@ -17,9 +18,14 @@ function Join() {
 
   return (
     <>
-      <div className="flex flex-col">
-        <h1 className="text-white font-extrabold text-[80px]">Happening now</h1>
-        <div className="flex flex-col max-w-[340px] w-full gap-[10px] mt-[35px] ">
+      <div className="flex flex-col mb-[15px]">
+        <div className="w-[50px] h-[50px] min-[1060px]:hidden mt-[20px]">
+          <XIcon />
+        </div>
+        <h1 className="text-white font-extrabold text-[80px] max-[1060px]:text-[40px]">
+          Happening now
+        </h1>
+        <div className="flex flex-col max-w-[340px] w-full gap-[10px] max-[430px]:mt-[5px] mt-[35px] ">
           <h3 className="text-white font-bold text-[40px] mb-[15px] ">
             join today.
           </h3>
@@ -80,7 +86,7 @@ function Join() {
               .
             </p>
           </div>
-          <div className="flex flex-col gap-[15px] mt-[35px]">
+          <div className="flex flex-col gap-[15px] max-[430px]:mt-[10px] mt-[35px]">
             <h2 className="text-white font-semibold">
               Already have an account?
             </h2>

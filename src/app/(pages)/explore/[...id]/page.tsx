@@ -13,7 +13,7 @@ function Explore({ params }: ParamsType) {
     <>
       <div className="w-full bg-black flex justify-center items-center">
         <div className="max-w-[1640px] w-full min-h-screen h-auto  flex">
-          <NavBar pathName={pathName} />
+          <NavBar />
         </div>
       </div>
     </>

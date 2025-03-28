@@ -132,6 +132,8 @@ export type PostContextType = {
   createdAt: Timestamp | null;
   likes: string[];
   bookmarks: string[];
+  profilePicture: string;
+  username: string;
 };
 export type PostStore = {
   posts: PostContextType[];
@@ -142,6 +144,8 @@ export type User = {
   id: string;
   name: string;
   email: string;
+  profilePicture: string;
+  username: string;
 };
 
 export type UserStore = {
@@ -173,4 +177,15 @@ export type CurrentUserType = {
     username: string;
   }) => void;
   clearCurrentUser: () => void;
+};
+
+export type UserProfileStore = {
+  name: string;
+  setName: (name: string) => void;
+
+  postsCount: number;
+  setPostsCount: (count: number) => void;
+
+  profilePicture: string;
+  setProfilePicture: (url: string) => void;
 };

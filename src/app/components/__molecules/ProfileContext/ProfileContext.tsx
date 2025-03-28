@@ -1,16 +1,17 @@
 "use client";
-import ArrowIcon from "@/app/common/icons/ArrowIcon";
 import { PropsType } from "@/app/common/Types/Common";
 import { auth, db } from "@/app/firebase/config";
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   query,
   updateDoc,
   where,
-  getDoc,
 } from "firebase/firestore";
+import ArrowIcon from "@/app/common/icons/ArrowIcon";
+import Image from "next/image";
 import React, { ChangeEvent, useEffect, useState } from "react";
 
 function ProfileContext({ pathName }: PropsType) {
@@ -19,11 +20,23 @@ function ProfileContext({ pathName }: PropsType) {
   const [profilePicture, setProfilePicture] = useState<string>(
     "https://i.pinimg.com/736x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg"
   );
+  const [currentUsername, setCurrentUsername] = useState<string>("");
 
   const cleanPathName = Array.isArray(pathName) ? pathName[0] : pathName;
 
   useEffect(() => {
-    const fetchUserAndPosts = async () => {
+    const fetchCurrentUsername = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          setCurrentUsername(userSnap.data().username);
+        }
+      }
+    };
+
+    const fetchUserProfile = async () => {
       const userQuery = query(
         collection(db, "users"),
         where("username", "==", cleanPathName)
@@ -32,8 +45,9 @@ function ProfileContext({ pathName }: PropsType) {
 
       if (!userSnapshot.empty) {
         const userData = userSnapshot.docs[0].data();
-        setName(userData.name);
+        const email = userData.email;
 
+        setName(userData.name);
         setProfilePicture(
           userData.profilePicture ||
             "https://i.pinimg.com/736x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg"
@@ -41,16 +55,17 @@ function ProfileContext({ pathName }: PropsType) {
 
         const postsQuery = query(
           collection(db, "posts"),
-          where("authorEmail", "==", userData.email)
+          where("authorEmail", "==", email)
         );
         const postsSnapshot = await getDocs(postsQuery);
         setPostsCount(postsSnapshot.size);
       } else {
-        console.warn("No user found with that username");
+        console.warn("User not found");
       }
     };
 
-    fetchUserAndPosts();
+    fetchCurrentUsername();
+    fetchUserProfile();
   }, [cleanPathName]);
 
   const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -96,24 +111,28 @@ function ProfileContext({ pathName }: PropsType) {
 
       <div className="w-[100px] h-[100px] mt-[20px] ml-[15px] rounded-[50px] overflow-hidden bg-[#3e3e3e]">
         {profilePicture ? (
-          <img
+          <Image
             src={profilePicture}
             alt="Profile"
             className="w-full h-full object-cover"
+            width={500}
+            height={500}
           />
         ) : (
           <p className="text-white text-center pt-[35px] text-sm">No Photo</p>
         )}
       </div>
 
-      <form className="ml-[15px] mt-[10px]">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileUpload}
-          className="text-white"
-        />
-      </form>
+      {currentUsername === cleanPathName && (
+        <form className="ml-[15px] mt-[10px]">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileUpload}
+            className="text-white"
+          />
+        </form>
+      )}
     </div>
   );
 }

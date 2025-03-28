@@ -12,6 +12,8 @@ import {
 import { useUserStore } from "@/app/common/hooks/Store";
 import { User } from "@/app/common/Types/Common";
 import { auth, db } from "../../../firebase/config";
+import Image from "next/image";
+import Link from "next/link";
 
 function SuggestFollowers() {
   const users = useUserStore((state) => state.users);
@@ -25,11 +27,15 @@ function SuggestFollowers() {
         const usersSnapshot = await getDocs(usersRef);
 
         const usersArray: User[] = usersSnapshot.docs.map((doc) => {
-          const data = doc.data() as { name: string; email: string };
+          const data = doc.data();
           return {
             id: doc.id,
             name: data.name,
             email: data.email,
+            username: data.username,
+            profilePicture:
+              data.profilePicture ||
+              "https://i.pinimg.com/736x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg",
           };
         });
 
@@ -101,39 +107,55 @@ function SuggestFollowers() {
 
   return (
     <>
-      <h1 className="text-white font-bold text-[20px] mt-[20px] ml-[10px] mb-[10px]">
-        Suggested for you:
-      </h1>
-      {users
-        .filter((user) => user.email !== auth.currentUser?.email)
-        .map((user) => {
-          const isFollowing = followedUsers.includes(user.email);
+      <>
+        <h1 className="text-white font-bold text-[20px] mt-[20px] ml-[10px] mb-[10px]">
+          Suggested for you:
+        </h1>
+        {users
+          .filter((user) => user.email !== auth.currentUser?.email)
+          .map((user) => {
+            const isFollowing = followedUsers.includes(user.email);
 
-          return (
-            <div
-              key={user.id}
-              className="w-full h-[100px] pl-[15px] pr-[15px] items-center flex justify-between "
-            >
-              <div className="flex items-center gap-[10px]">
-                <div className="w-[50px] h-[50px] rounded-[50px] bg-[green]"></div>
-                <div>
-                  <h1 className="text-white">{user.name}</h1>
-                  <h1 className="text-[#71767B]">{user.email}</h1>
-                </div>
-              </div>
-              <button
-                onClick={() => handleFollow(user)}
-                className={`pr-[15px] pl-[15px] pt-[5px] pb-[5px] font-semibold rounded-[30px] transition-all duration-200 ${
-                  isFollowing
-                    ? "bg-[#0F1419] text-white border border-white"
-                    : "bg-white text-black"
-                }`}
+            return (
+              <div
+                key={user.id}
+                className="w-full h-[100px] pl-[15px] pr-[15px] gap-[10px] items-center flex justify-between "
               >
-                {isFollowing ? "Following" : "Follow"}
-              </button>
-            </div>
-          );
-        })}
+                <Link
+                  href={`/profile/${user.username}`}
+                  className="flex items-center gap-[10px]"
+                >
+                  <div className="w-[50px] h-[50px] rounded-[50px] overflow-hidden">
+                    <Image
+                      src={user.profilePicture}
+                      alt="Profile"
+                      className="w-full h-full object-cover rounded-[50px]"
+                      width={50}
+                      height={50}
+                    />
+                  </div>
+                  <div>
+                    <h1 className="text-white">{user.name}</h1>
+                    <h1 className="text-[#71767B] max-[450px]:hidden">
+                      {user.email}
+                    </h1>
+                  </div>
+                </Link>
+
+                <button
+                  onClick={() => handleFollow(user)}
+                  className={`pr-[15px] pl-[15px] pt-[5px] pb-[5px] font-semibold rounded-[30px] transition-all duration-200 ${
+                    isFollowing
+                      ? "bg-[#0F1419] text-white border border-white"
+                      : "bg-white text-black"
+                  }`}
+                >
+                  {isFollowing ? "Following" : "Follow"}
+                </button>
+              </div>
+            );
+          })}
+      </>
     </>
   );
 }

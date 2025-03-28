@@ -11,12 +11,14 @@ import PostBtn from "../../__atoms/PostBtn/PostBtn";
 import {
   usePostImage,
   usePostStore,
+  useUserProfile,
   useWorldState,
 } from "@/app/common/hooks/Store";
 import { db } from "../../../firebase/config";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { auth } from "../../../firebase/config";
 import World from "@/app/common/icons/World";
+import Image from "next/image";
 
 function AddPost() {
   const image = usePostImage((state) => state.image);
@@ -68,6 +70,7 @@ function AddPost() {
 
   const world = useWorldState((state) => state.world);
   const setWorld = useWorldState((state) => state.setWorld);
+  const profilePicture = useUserProfile((state) => state.profilePicture);
 
   return (
     <>
@@ -75,7 +78,15 @@ function AddPost() {
         onSubmit={handlePostSubmit}
         className="w-full h-auto min-h-[120px] border-b border-b-[#2F3336] flex items-start pl-[15px] pr-[15px] pt-[20px] gap-[10px]"
       >
-        <div className="w-[55px] h-[50px] bg-[green] rounded-[50px]"></div>
+        <div className="w-[55px] h-[50px]  rounded-[50px]">
+          <Image
+            src={profilePicture}
+            alt="Profile"
+            className="w-full h-full object-cover rounded-[50px]"
+            width={500}
+            height={500}
+          />
+        </div>
         <div className="flex flex-col h-full w-full mt-[8px]">
           <div className="w-full h-full flex flex-col pb-[20px] border-b border-b-[#2F3336]">
             <TextareaAutosize

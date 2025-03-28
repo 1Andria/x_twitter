@@ -16,6 +16,7 @@ import {
   PostContextType,
   PostStore,
   CurrentUserType,
+  UserProfileStore,
 } from "../Types/Common";
 
 export const useCreateAcc = create<CrAccType>((set) => ({
@@ -76,6 +77,18 @@ export const useNotFound = create<UserFoundTypes>((set) => ({
   setUserNotFound: (value) => set(() => ({ userNotFound: value })),
 }));
 
+export const useUserProfile = create<UserProfileStore>((set) => ({
+  name: "",
+  setName: (name) => set({ name }),
+
+  postsCount: 0,
+  setPostsCount: (count) => set({ postsCount: count }),
+
+  profilePicture:
+    "https://i.pinimg.com/736x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg",
+  setProfilePicture: (url) => set({ profilePicture: url }),
+}));
+
 export const useForYou = create<ForYouTypes>((set) => ({
   forYou: true,
   setForYou: () => set((state) => ({ forYou: !state.forYou })),
@@ -126,3 +139,5 @@ export const useCurrentUser = create<CurrentUserType>((set) => ({
     }),
   clearCurrentUser: () => set({ name: "", email: "", username: "" }),
 }));
+
+
