@@ -11,7 +11,11 @@ import YearSelector from "../../__atoms/YearSelector/YearSelector";
 import NextBtnSign from "../../__atoms/NextBtnSign/NextBtnSign";
 import PasswordSign from "../PasswordSign/PasswordSign";
 import { SignUpForm } from "@/app/common/Types/Common";
-import { useCreateAcc, useDate, useRegistrationSteps } from "@/app/common/hooks/Store";
+import {
+  useCreateAcc,
+  useDate,
+  useRegistrationSteps,
+} from "@/app/common/hooks/Store";
 
 function CreateAcc() {
   const open = useCreateAcc((state) => state.open);
@@ -74,7 +78,7 @@ function CreateAcc() {
         {firstLevel && (
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="max-w-[570px] w-full ml-[10px] mr-[10px] h-[640px] rounded-[20px] pr-[60px] pl-[60px] bg-black flex justify-between flex-col pt-[15px] pb-[40px] relative"
+            className="max-w-[570px] max-[630px]:w-[350px] max-[630px]:pr-[30px] max-[630px]:pl-[30px] w-full ml-[10px] mr-[10px] h-[640px] rounded-[20px] pr-[60px]  pl-[60px] bg-black flex justify-between flex-col pt-[15px] pb-[40px] relative"
           >
             <div
               onClick={onClose}
@@ -113,7 +117,7 @@ function CreateAcc() {
                 this account is for a business, a pet, or something else.
               </p>
             </div>
-            <div className="flex w-full justify-between">
+            <div className="flex w-full gap-[5px] max-[630px]:mt-[10px] justify-between">
               <MonthSelector />
               <DaySeletor />
               <YearSelector />

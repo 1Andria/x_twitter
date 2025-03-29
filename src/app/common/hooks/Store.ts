@@ -13,10 +13,10 @@ import {
   DateState,
   RegisterStepTypes,
   HoverStore,
-  PostContextType,
   PostStore,
   CurrentUserType,
   UserProfileStore,
+  MoreDivTypes,
 } from "../Types/Common";
 
 export const useCreateAcc = create<CrAccType>((set) => ({
@@ -140,4 +140,7 @@ export const useCurrentUser = create<CurrentUserType>((set) => ({
   clearCurrentUser: () => set({ name: "", email: "", username: "" }),
 }));
 
-
+export const useMoreInfo = create<MoreDivTypes>((set) => ({
+  moreDiv: null,
+  setMoreDiv: (id) => set(() => ({ moreDiv: id })),
+}));

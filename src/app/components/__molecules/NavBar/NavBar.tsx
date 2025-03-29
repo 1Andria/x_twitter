@@ -172,7 +172,7 @@ function NavBar() {
       </div>
 
       <div className="flex gap-[20px] max-[650px]:gap-[0px]">
-        <div className="h-[50px] rounded-[50px] w-[50px] ">
+        <div className="h-[50px] rounded-[50px]  w-[50px] ">
           <Image
             src={profilePicture}
             alt="Profile"

@@ -5,7 +5,6 @@ import Google from "@/app/common/icons/Google";
 import Apple from "@/app/common/icons/Apple";
 import Link from "next/link";
 import CreateAcc from "../CreateAccount/CreateAcc";
-
 import LogIn from "../LogIn/LogIn";
 import { useCreateAcc, useLogIn } from "@/app/common/hooks/Store";
 import { OpenGoogle } from "@/app/common/functions/OpnGglAcc";

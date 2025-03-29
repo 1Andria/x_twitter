@@ -93,7 +93,7 @@ function LogIn() {
         >
           <form
             onSubmit={handleSignIn}
-            className="w-[470px] ml-[10px] mr-[10px] h-[640px] rounded-[20px] pr-[65px] pl-[65px] bg-black flex flex-col pt-[15px] pb-[80px] relative items-center justify-between"
+            className="w-[570px] max-[630px]:w-[350px] max-[630px]:pr-[30px] max-[630px]:pl-[30px]  ml-[10px] mr-[10px] h-[640px] rounded-[20px] pr-[65px] pl-[65px] bg-black flex flex-col pt-[15px] pb-[80px] relative items-center justify-between"
           >
             <div
               onClick={onClose}

@@ -101,7 +101,7 @@ function PasswordSign({ onClose, email, name }: PassSignType) {
     <>
       <form
         onSubmit={handleSubmit(onSubmitPassword)}
-        className="w-[570px]  ml-[20px] mr-[20px] h-[640px] rounded-[20px] pr-[60px] pl-[60px] bg-black flex  flex-col pt-[15px] pb-[40px] relative justify-between"
+        className="w-[570px] max-[630px]:w-[350px] max-[630px]:pr-[30px] max-[630px]:pl-[30px]  ml-[20px] mr-[20px] h-[640px] rounded-[20px] pr-[60px] pl-[60px] bg-black flex  flex-col pt-[15px] pb-[40px] relative justify-between"
       >
         <div>
           <div

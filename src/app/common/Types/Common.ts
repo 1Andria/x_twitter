@@ -189,3 +189,8 @@ export type UserProfileStore = {
   profilePicture: string;
   setProfilePicture: (url: string) => void;
 };
+
+export type MoreDivTypes = {
+  moreDiv: string | null;
+  setMoreDiv: (id: string | null) => void;
+};
