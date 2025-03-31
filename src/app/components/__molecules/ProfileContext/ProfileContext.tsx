@@ -50,6 +50,12 @@ function ProfileContext({ pathName }: PropsType) {
   const setFollowingCount = useUserProfile((state) => state.setFollowingCount);
   const followers = useUserProfile((state) => state.followersCount);
   const posts = usePostData((state) => state.posts);
+  const UserPost = posts.filter((post) => post.authorEmail === email);
+  const LikedPosts = posts.filter((post) => post.likes.includes(email));
+  const bookmarkedPosts = posts.filter((post) =>
+    post.bookmarks.includes(email)
+  );
+  const hasBookmarks = bookmarkedPosts.length > 0;
 
   const AboutArray = [
     "Posts",
@@ -90,16 +96,13 @@ function ProfileContext({ pathName }: PropsType) {
       if (!userSnapshot.empty) {
         const userData = userSnapshot.docs[0].data();
         const email = userData.email;
-
-        setName(userData.name);
-        setEmail(email);
-
         const followers = userData.followers || [];
         const following = userData.followings || [];
 
+        setName(userData.name);
+        setEmail(email);
         setFollowersCount(followers.length);
         setFollowingCount(following.length);
-
         setProfilePicture(userData.profilePicture);
         setCoverPhoto(userData.coverPhoto || "");
 
@@ -116,13 +119,6 @@ function ProfileContext({ pathName }: PropsType) {
 
     fetchUserProfile();
   }, [cleanPathName]);
-
-  const UserPost = posts.filter((post) => post.authorEmail === email);
-  const LikedPosts = posts.filter((post) => post.likes.includes(email));
-  const bookmarkedPosts = posts.filter((post) =>
-    post.bookmarks.includes(email)
-  );
-  const hasBookmarks = bookmarkedPosts.length > 0;
 
   return (
     <div className="max-w-[650px] relative w-full min-h-screen h-auto border-r border-r-[#2F3336]">
