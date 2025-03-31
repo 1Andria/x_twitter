@@ -7,7 +7,6 @@ import {
   getDoc,
   getDocs,
   query,
-  updateDoc,
   where,
 } from "firebase/firestore";
 import ArrowIcon from "@/app/common/icons/ArrowIcon";
@@ -15,23 +14,54 @@ import Image from "next/image";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { Box, Modal } from "@mui/material";
-import XIcon from "@/app/common/icons/xIcon";
-import PhotoIcon from "@/app/common/icons/PhotoIcon";
+import {
+  useCover,
+  useEditProfile,
+  useLogInStore,
+  usePostData,
+  useUserProfile,
+} from "@/app/common/hooks/Store";
+import ProfilePictureUpload from "../ProfilePictureUpload/ProfilePictureUpload";
+import CoverPictureUpload from "../CoverPictureUpload/CoverPictureUpload";
+import ProfileBtn from "../../__atoms/ProfileBtn/ProfileBtn";
+import PostItem from "../PostItem/PostItem";
+import SuggestFollowers from "../SuggestFollowers/SuggestFollowers";
+import PostFetcher from "@/app/common/functions/PostFetcher";
 
 function ProfileContext({ pathName }: PropsType) {
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [postsCount, setPostsCount] = useState<number>(0);
-  const [profilePicture, setProfilePicture] = useState<string>(
-    "https://i.pinimg.com/736x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg"
-  );
-  const [coverPhoto, setCoverPhoto] = useState<string>("");
-  const [currentUsername, setCurrentUsername] = useState<string>("");
   const cleanPathName = Array.isArray(pathName) ? pathName[0] : pathName;
-  const [editProfile, setEditProfile] = useState(false);
-  const [toCover, setToCover] = useState(false);
+  const [currentUsername, setCurrentUsername] = useState<string>("");
+  const [profilePicture, setProfilePicture] = useState<string>("");
+  const [activeTab, setActiveTab] = useState("Posts");
+  const email = useLogInStore((state) => state.email);
+  const setEmail = useLogInStore((state) => state.setEmail);
+  const postsCount = useUserProfile((state) => state.postsCount);
+  const setPostsCount = useUserProfile((state) => state.setPostsCount);
+  const coverPhoto = useUserProfile((state) => state.coverPhoto);
+  const setCoverPhoto = useUserProfile((state) => state.setCoverPhoto);
+  const editProfile = useEditProfile((state) => state.editProfile);
+  const setEditProfile = useEditProfile((state) => state.setEditProfile);
+  const toCover = useCover((state) => state.toCover);
+  const setToCover = useCover((state) => state.setToCover);
+  const name = useUserProfile((state) => state.name);
+  const setName = useUserProfile((state) => state.setName);
+  const following = useUserProfile((state) => state.followingCount);
+  const setFollowersCount = useUserProfile((state) => state.setFollowersCount);
+  const setFollowingCount = useUserProfile((state) => state.setFollowingCount);
+  const followers = useUserProfile((state) => state.followersCount);
+  const posts = usePostData((state) => state.posts);
+
+  const AboutArray = [
+    "Posts",
+    "Replies",
+    "Bookmarks",
+    "Articles",
+    "Media",
+    "Likes",
+  ];
+
   function ChangeEditProfile() {
-    setEditProfile(!editProfile);
+    setEditProfile();
     setToCover(false);
   }
 
@@ -64,10 +94,13 @@ function ProfileContext({ pathName }: PropsType) {
         setName(userData.name);
         setEmail(email);
 
-        setProfilePicture(
-          userData.profilePicture ||
-            "https://i.pinimg.com/736x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg"
-        );
+        const followers = userData.followers || [];
+        const following = userData.followings || [];
+
+        setFollowersCount(followers.length);
+        setFollowingCount(following.length);
+
+        setProfilePicture(userData.profilePicture);
         setCoverPhoto(userData.coverPhoto || "");
 
         const postsQuery = query(
@@ -84,62 +117,16 @@ function ProfileContext({ pathName }: PropsType) {
     fetchUserProfile();
   }, [cleanPathName]);
 
-  const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      if (reader.result) {
-        const imageURL = reader.result.toString();
-        setProfilePicture(imageURL);
-
-        const user = auth.currentUser;
-        if (!user) return;
-
-        const userRef = doc(db, "users", user.uid);
-        try {
-          await updateDoc(userRef, {
-            profilePicture: imageURL,
-          });
-        } catch (error) {
-          console.error("Error updating profile picture: ", error);
-        }
-      }
-    };
-
-    reader.readAsDataURL(file);
-  };
-  const handleCoverUpload = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      if (reader.result) {
-        const imageURL = reader.result.toString();
-        setCoverPhoto(imageURL);
-
-        const user = auth.currentUser;
-        if (!user) return;
-
-        const userRef = doc(db, "users", user.uid);
-        try {
-          await updateDoc(userRef, {
-            coverPhoto: imageURL,
-          });
-        } catch (error) {
-          console.error("Error updating cover photo: ", error);
-        }
-      }
-    };
-
-    reader.readAsDataURL(file);
-  };
+  const UserPost = posts.filter((post) => post.authorEmail === email);
+  const LikedPosts = posts.filter((post) => post.likes.includes(email));
+  const bookmarkedPosts = posts.filter((post) =>
+    post.bookmarks.includes(email)
+  );
+  const hasBookmarks = bookmarkedPosts.length > 0;
 
   return (
     <div className="max-w-[650px] relative w-full min-h-screen h-auto border-r border-r-[#2F3336]">
-      <div className="w-full sticky  top-0 pl-[15px] h-[60px] flex bg-black border-b border-b-[#2F3336] items-center gap-[30px]">
+      <div className="w-full sticky  top-0 pl-[15px] bg-black h-[60px] flex  border-b border-b-[#2F3336] items-center gap-[30px]">
         <div className="w-[50px] h-[50px] rounded-[50px] flex items-center justify-center">
           <div className="w-[20px] h-[20px]">
             <ArrowIcon />
@@ -175,6 +162,7 @@ function ProfileContext({ pathName }: PropsType) {
                   className="w-full h-full object-cover"
                   width={500}
                   height={500}
+                  priority
                 />
               )}
             </div>
@@ -182,16 +170,118 @@ function ProfileContext({ pathName }: PropsType) {
               {name}
             </h1>
             <h3 className="text-[#71767B] ml-[15px] text-[16px]">{email}</h3>
+            <div className="flex ml-[15px] gap-[10px] mt-[10px]">
+              <h1 className="text-white">
+                {following} <span className="text-[#71767B]">following</span>
+              </h1>
+              <h1 className="text-white">
+                {followers} <span className="text-[#71767B]">followers</span>
+              </h1>
+            </div>
           </div>
-          {currentUsername === cleanPathName && (
-            <button
-              onClick={ChangeEditProfile}
-              className="text-[white] hover:bg-[#111313] border-[1px] mr-[15px] mt-[10px] border-[#536471] h-[40px] pl-[15px] pr-[15px] rounded-[20px]"
-            >
-              Set up profile
-            </button>
-          )}
+          {currentUsername === cleanPathName && <ProfileBtn />}
         </div>
+        <div className="flex  justify-between">
+          {AboutArray.map((item) => (
+            <button
+              key={item}
+              onClick={() => setActiveTab(item)}
+              className={` border-b-[#2F3336] border-b-[1px] h-[50px] w-full mt-[20px] hover:bg-[#111313] text-[16px] font-semibold transition-colors duration-200 pl-[12px] pr-[12px] ${
+                activeTab === item ? "text-white" : "text-[#71767B]"
+              }`}
+            >
+              <h1
+                className={`h-full   flex items-center justify-center border-b-[2px] ${
+                  activeTab === item
+                    ? "border-b-[3px] border-b-[#1D9BF0]"
+                    : "border-b-[3px] border-b-transparent"
+                }`}
+              >
+                {item}
+              </h1>
+            </button>
+          ))}
+        </div>
+        {activeTab === "Posts" && (
+          <>
+            <h1 className="text-white text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]">
+              {currentUsername === cleanPathName
+                ? `Your posts:`
+                : `${name}'s posts:`}
+            </h1>
+            {UserPost.map((post) => (
+              <PostItem key={post.id} post={post} />
+            ))}
+          </>
+        )}
+        {activeTab === "Bookmarks" &&
+          !hasBookmarks &&
+          currentUsername === cleanPathName && (
+            <div className="w-full h-full flex flex-col items-center">
+              <h2 className="text-white  font-semibold text-[30px] mt-[50px] text-start">
+                Save posts for later
+              </h2>
+              <p className="text-[#71767B]">
+                Bookmark posts to easily find them again in the future.
+              </p>
+            </div>
+          )}
+        {activeTab === "Bookmarks" &&
+          !hasBookmarks &&
+          currentUsername != cleanPathName && (
+            <h1 className="text-white text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]">
+              This information is private
+            </h1>
+          )}
+        {activeTab === "Bookmarks" && hasBookmarks && (
+          <>
+            {currentUsername === cleanPathName && (
+              <>
+                <h1 className="text-white text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]">
+                  Posts you have bookmarked:
+                </h1>
+                {bookmarkedPosts.map((post) => (
+                  <PostItem key={post.id} post={post} />
+                ))}
+              </>
+            )}
+          </>
+        )}
+        {activeTab === "Articles" && (
+          <>
+            <h1 className="text-white text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]">
+              {currentUsername === cleanPathName
+                ? `Your articles:`
+                : `${name}'s articles:`}
+            </h1>
+            {UserPost.map((post) => (
+              <PostItem key={post.id} post={post} />
+            ))}
+          </>
+        )}
+        {activeTab === "Media" && (
+          <div className="max-w-[650px] w-full min-h-screen h-auto border-r border-r-[#2F3336]">
+            <SuggestFollowers />
+          </div>
+        )}
+        {activeTab === "Likes" && (
+          <>
+            {currentUsername === cleanPathName ? (
+              <>
+                <h1 className="text-white text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]">
+                  Posts you have liked:
+                </h1>
+                {LikedPosts.map((post) => (
+                  <PostItem key={post.id} post={post} />
+                ))}
+              </>
+            ) : (
+              <h1 className="text-white text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]">
+                This information is private
+              </h1>
+            )}
+          </>
+        )}
       </div>
       <Modal
         open={editProfile}
@@ -216,111 +306,11 @@ function ProfileContext({ pathName }: PropsType) {
             transform: "translate(-50%, -50%)",
           }}
         >
-          {!toCover && (
-            <div className="w-[590px] max-[630px]:w-[350px] max-[630px]:pr-[30px] max-[630px]:pl-[30px]  ml-[10px] mr-[10px] h-[640px] rounded-[20px] pr-[65px] pl-[65px] bg-black flex flex-col pt-[15px] pb-[40px] relative  justify-between">
-              <div className="w-full flex justify-center">
-                <div className="w-[25px] h-[25px]">
-                  <XIcon />
-                </div>
-              </div>
-              <div className="mt-[20px]">
-                <h2 className="text-white font-semibold text-[30px]">
-                  Pick a profile picture
-                </h2>
-                <p className="text-[#71767B]">
-                  Have a favorite selfie? Upload it now.
-                </p>
-              </div>
-              <div className="w-full h-full flex justify-center items-center">
-                <div className="w-[200px] mb-[40px] h-[200px] rounded-[100%] border-[3px] border-white relative">
-                  <Image
-                    src={profilePicture}
-                    alt="Profile"
-                    className="w-full opacity-[0.7] h-full object-cover border-black border-[1px] rounded-[100%]"
-                    width={500}
-                    height={500}
-                  />
-
-                  <label
-                    htmlFor="profileUpload"
-                    className="cursor-pointer hover:bg-[#353D44] w-[45px] bg-[#273038] flex justify-center items-center h-[45px] rounded-full absolute top-[40%] left-[40%]"
-                  >
-                    <div className="w-[20px] h-[20px]">
-                      <PhotoIcon />
-                    </div>
-                  </label>
-
-                  <input
-                    type="file"
-                    id="profileUpload"
-                    accept="image/*"
-                    onChange={handleFileUpload}
-                    className="hidden"
-                  />
-                </div>
-              </div>
-
-              <button
-                onClick={() => setToCover(true)}
-                className="w-full h-[70px] hover:bg-[#111313] rounded-[30px] bg-black border-[#536471] border-[1px] text-white font-semibold"
-              >
-                Next
-              </button>
-            </div>
-          )}
-          {toCover && (
-            <div className="w-[590px] max-[630px]:w-[350px] max-[630px]:pr-[30px] max-[630px]:pl-[30px]  ml-[10px] mr-[10px] h-[640px] rounded-[20px] pr-[65px] pl-[65px] bg-black flex flex-col pt-[15px] pb-[40px] relative  justify-between">
-              <div className="w-full flex justify-center">
-                <div className="w-[25px] h-[25px]">
-                  <XIcon />
-                </div>
-              </div>
-              <div className="mt-[20px]">
-                <h2 className="text-white font-semibold text-[30px]">
-                  Pick a header
-                </h2>
-                <p className="text-[#71767B]">
-                  People who visit your profile will see it. Show your style.
-                </p>
-              </div>
-              <div className="w-full h-full flex justify-center items-center">
-                <div className="w-[300px] mb-[40px] h-[200px] rounded-[30px] border-[3px] border-white relative">
-                  <Image
-                    src={coverPhoto}
-                    alt="Cover"
-                    className="w-full opacity-[0.7] h-full object-cover border-black border-[1px] rounded-[30px]"
-                    width={1200}
-                    height={250}
-                  />
-
-                  <label
-                    htmlFor="profileUpload"
-                    className="cursor-pointer hover:bg-[#353D44] w-[45px] bg-[#273038] flex justify-center items-center h-[45px] rounded-full absolute top-[40%] left-[40%]"
-                  >
-                    <div className="w-[20px] h-[20px]">
-                      <PhotoIcon />
-                    </div>
-                  </label>
-
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleCoverUpload}
-                    className="hidden"
-                  />
-                </div>
-              </div>
-
-              <button
-                onClick={ChangeEditProfile}
-                className="w-full h-[70px] hover:bg-[#111313] rounded-[30px] bg-black border-[#536471] border-[1px] text-white font-semibold"
-              >
-                Finish
-              </button>
-            </div>
-          )}
+          {!toCover && <ProfilePictureUpload />}
+          {toCover && <CoverPictureUpload />}
         </Box>
       </Modal>
+      <PostFetcher />
     </div>
   );
 }

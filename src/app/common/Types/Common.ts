@@ -186,8 +186,17 @@ export type UserProfileStore = {
   postsCount: number;
   setPostsCount: (count: number) => void;
 
+  followersCount: number;
+  setFollowersCount: (count: number) => void;
+
+  followingCount: number;
+  setFollowingCount: (count: number) => void;
+
   profilePicture: string;
   setProfilePicture: (url: string) => void;
+
+  coverPhoto: string;
+  setCoverPhoto: (url: string) => void;
 };
 
 export type MoreDivTypes = {

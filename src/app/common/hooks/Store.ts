@@ -76,6 +76,7 @@ export const useNotFound = create<UserFoundTypes>((set) => ({
   userNotFound: false,
   setUserNotFound: (value) => set(() => ({ userNotFound: value })),
 }));
+import ProfilePicture from "../icons/profile.jpg";
 
 export const useUserProfile = create<UserProfileStore>((set) => ({
   name: "",
@@ -84,9 +85,17 @@ export const useUserProfile = create<UserProfileStore>((set) => ({
   postsCount: 0,
   setPostsCount: (count) => set({ postsCount: count }),
 
-  profilePicture:
-    "https://i.pinimg.com/736x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg",
+  profilePicture: ProfilePicture.src,
   setProfilePicture: (url) => set({ profilePicture: url }),
+
+  coverPhoto: "",
+  setCoverPhoto: (url) => set((state) => ({ coverPhoto: url })),
+
+  followersCount: 0,
+  setFollowersCount: (count) => set({ followersCount: count }),
+
+  followingCount: 0,
+  setFollowingCount: (count) => set({ followingCount: count }),
 }));
 
 export const useForYou = create<ForYouTypes>((set) => ({
@@ -143,4 +152,24 @@ export const useCurrentUser = create<CurrentUserType>((set) => ({
 export const useMoreInfo = create<MoreDivTypes>((set) => ({
   moreDiv: null,
   setMoreDiv: (id) => set(() => ({ moreDiv: id })),
+}));
+
+export type CoverTypes = {
+  toCover: boolean;
+  setToCover: (value: boolean) => void;
+};
+
+export const useCover = create<CoverTypes>((set) => ({
+  toCover: false,
+  setToCover: (value) => set(() => ({ toCover: value })),
+}));
+
+export type EditProfileTypes = {
+  editProfile: boolean;
+  setEditProfile: () => void;
+};
+
+export const useEditProfile = create<EditProfileTypes>((set) => ({
+  editProfile: false,
+  setEditProfile: () => set((state) => ({ editProfile: !state.editProfile })),
 }));
