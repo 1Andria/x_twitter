@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { PostContextType, PropsType } from "@/app/common/Types/Common";
+import { PostContextType, PostItemProps } from "@/app/common/Types/Common";
 import { auth, db } from "@/app/firebase/config";
 import {
   arrayRemove,
@@ -22,30 +22,30 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { Checkbox } from "@mui/material";
 import ReactTimeAgo from "react-time-ago";
-import { useHoverStore, useMoreInfo } from "@/app/common/hooks/Store";
+import {
+  useAddComment,
+  useHoverStore,
+  useMoreInfo,
+} from "@/app/common/hooks/Store";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import Delete from "@/app/common/icons/Delete";
 import ReportIcon from "@/app/common/icons/ReportIcon";
 import EditIcon from "@/app/common/icons/EditIcon";
 import Unsmile from "@/app/common/icons/Unsmile";
+import AddComment from "../AddComment/AddComment";
 TimeAgo.addDefaultLocale(en);
 
-type Props = {
-  post: PostContextType;
-};
-
-const PostItem = ({ post }: Props) => {
+const PostItem = ({ post }: PostItemProps) => {
   const currentUserEmail = auth.currentUser?.email;
   const moreColor = useHoverStore((state) => state.moreColor);
   const setMoreColor = useHoverStore((state) => state.setMoreColor);
   const moreDiv = useMoreInfo((state) => state.moreDiv);
   const setMoreDiv = useMoreInfo((state) => state.setMoreDiv);
-
   const [currentUsername, setCurrentUsername] = useState<string>("");
-
   const [edit, setEdit] = useState(false);
   const [editText, setEditText] = useState(post.text);
+  const setCommentModal = useAddComment((state) => state.setCommentModal);
 
   const divRef = useRef<HTMLDivElement | null>(null);
   const EditDivRef = useRef<HTMLDivElement | null>(null);
@@ -284,10 +284,13 @@ const PostItem = ({ post }: Props) => {
 
         <div className="w-full h-[40px] flex items-center justify-between mt-[25px] pr-[10px]">
           <div className="flex items-center">
-            <div className="w-[20px] h-[20px]">
+            <div
+              onClick={() => setCommentModal(post.id)}
+              className="w-[20px] h-[20px] cursor-pointer"
+            >
               <CommentIcon />
             </div>
-            <h3 className="text-[#6D7176]">2k</h3>
+            <h3 className="text-[#6D7176]">2</h3>
           </div>
           <div className="flex items-center">
             <div className="w-[20px] h-[20px]">
@@ -321,6 +324,13 @@ const PostItem = ({ post }: Props) => {
           </div>
         </div>
       </div>
+      <AddComment
+        postProfilePicture={post.profilePicture}
+        postId={post.id}
+        postAuthorName={post.name}
+        postAuthorEmail={post.authorEmail}
+        postCreatedAt={post.createdAt?.toDate()}
+      />
     </div>
   );
 };

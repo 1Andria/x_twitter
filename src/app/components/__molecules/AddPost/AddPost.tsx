@@ -8,25 +8,23 @@ import SmileIcon from "@/app/common/icons/SmileIcon";
 import React, { ChangeEvent } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import PostBtn from "../../__atoms/PostBtn/PostBtn";
-import {
-  usePostImage,
-  usePostStore,
-  useUserProfile,
-  useWorldState,
-} from "@/app/common/hooks/Store";
-import { db } from "../../../firebase/config";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { auth } from "../../../firebase/config";
+import { useWorldState } from "@/app/common/hooks/Store";
 import World from "@/app/common/icons/World";
 import Image from "next/image";
-
-function AddPost() {
-  const image = usePostImage((state) => state.image);
-  const setImage = usePostImage((state) => state.setImage);
-  const text = usePostStore((state) => state.text);
-  const setText = usePostStore((state) => state.setText);
-  const setFile = usePostStore((state) => state.setFile);
-
+import { AddPostProps } from "@/app/common/Types/Common";
+function AddPost({
+  onSubmit,
+  placeholder,
+  text,
+  setText,
+  image,
+  setImage,
+  setFile,
+  profilePicture,
+  btnText,
+  hidden,
+  inputId,
+}: AddPostProps) {
   const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const uploadedFile = e.target.files?.[0];
     if (uploadedFile) {
@@ -40,42 +38,16 @@ function AddPost() {
       reader.readAsDataURL(uploadedFile);
     }
   };
-  const handlePostSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const user = auth.currentUser;
-    if (text.trim() === "" && !image) {
-      alert("Empty post. Either text or image is required.");
-      return;
-    }
-
-    try {
-      setText("");
-      setImage("");
-      setFile(null);
-      await addDoc(collection(db, "posts"), {
-        text,
-        authorEmail: user?.email || "anonymous",
-        createdAt: serverTimestamp(),
-        imageUrl: image || null,
-        videoUrl: null,
-        likes: [],
-        bookmarks: [],
-      });
-    } catch (err) {
-      console.error("Error post: ", err);
-    }
-  };
 
   const isPostDisabled = text.trim() === "" && !image;
 
   const world = useWorldState((state) => state.world);
   const setWorld = useWorldState((state) => state.setWorld);
-  const profilePicture = useUserProfile((state) => state.profilePicture);
 
   return (
     <>
       <form
-        onSubmit={handlePostSubmit}
+        onSubmit={onSubmit}
         className="w-full h-auto min-h-[120px] border-b border-b-[#2F3336] flex items-start pl-[15px] pr-[15px] pt-[20px] gap-[10px]"
       >
         <div className="w-[55px] h-[50px]  rounded-[50px]">
@@ -91,18 +63,18 @@ function AddPost() {
           <div className="w-full h-full flex flex-col pb-[20px] border-b border-b-[#2F3336]">
             <TextareaAutosize
               maxLength={260}
-              placeholder="What's happening?"
+              placeholder={placeholder}
               className="w-full focus:outline-none text-[20px] text-white bg-transparent resize-none "
               value={text}
               onChange={(e) => setText(e.target.value)}
               onFocus={() => setWorld(true)}
             />
             <div
-              className={`flex mt-[10px] gap-[3px] items-center  ${
+              className={` ${hidden} flex mt-[10px] gap-[3px] items-center  ${
                 world ? "flex" : "hidden"
               }`}
             >
-              <div className="w-[17px] h-[17px]">
+              <div className={`w-[17px] h-[17px]`}>
                 <World />
               </div>
               <h4 className="text-[#1D9BF0] text-[15px]">Everyone can reply</h4>
@@ -113,7 +85,7 @@ function AddPost() {
             <div className="flex gap-[14px]">
               <div className="w-[25px] h-[25px] relative">
                 <label
-                  htmlFor="image-upload"
+                  htmlFor={inputId}
                   className="cursor-pointer w-full h-full flex items-center justify-center"
                 >
                   <Gallery />
@@ -121,7 +93,7 @@ function AddPost() {
                 <input
                   onChange={handleFileUpload}
                   type="file"
-                  id="image-upload"
+                  id={inputId}
                   className="hidden"
                 />
               </div>
@@ -144,7 +116,7 @@ function AddPost() {
                 <Location />
               </div>
             </div>
-            <PostBtn disabled={isPostDisabled} />
+            <PostBtn btnText={btnText} disabled={isPostDisabled} />
           </div>
         </div>
       </form>

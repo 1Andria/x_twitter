@@ -112,8 +112,8 @@ export type ForYouTypes = {
 };
 
 export type PostState = {
-  image: string;
-  setImage: (image: string) => void;
+  image: string | null;
+  setImage: (image: string | null) => void;
 };
 
 export type PostsType = {
@@ -155,6 +155,7 @@ export type UserStore = {
 
 export type PostBtnProps = {
   disabled: boolean;
+  btnText: string;
 };
 
 export type WorldType = {
@@ -202,4 +203,30 @@ export type UserProfileStore = {
 export type MoreDivTypes = {
   moreDiv: string | null;
   setMoreDiv: (id: string | null) => void;
+};
+
+export type AddCommentProps = {
+  postId: string;
+  postAuthorName: string;
+  postAuthorEmail: string;
+  postCreatedAt?: Date;
+  postProfilePicture: string;
+};
+
+export type AddPostProps = {
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  placeholder?: string;
+  text: string;
+  setText: (text: string) => void;
+  image: string | null;
+  setImage: (img: string | null) => void;
+  setFile: (file: File | null) => void;
+  profilePicture: string;
+  btnText: string;
+  hidden?: string;
+  inputId: string;
+};
+
+export type PostItemProps = {
+  post: PostContextType;
 };

@@ -1,7 +1,7 @@
 import { PostBtnProps } from "@/app/common/Types/Common";
 import React from "react";
 
-function PostBtn({ disabled }: PostBtnProps) {
+function PostBtn({ disabled, btnText }: PostBtnProps) {
   return (
     <>
       <button
@@ -11,7 +11,7 @@ function PostBtn({ disabled }: PostBtnProps) {
           disabled ? "bg-[#787A7A] cursor-auto" : "bg-white cursor-pointer"
         }  text-black font-semibold rounded-[30px]`}
       >
-        Post
+        {btnText}
       </button>
     </>
   );

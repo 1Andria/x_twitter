@@ -104,7 +104,7 @@ export const useForYou = create<ForYouTypes>((set) => ({
 }));
 
 export const usePostImage = create<PostState>((set) => ({
-  image: "",
+  image: null,
   setImage: (image) => set({ image }),
 }));
 
@@ -172,4 +172,32 @@ export type EditProfileTypes = {
 export const useEditProfile = create<EditProfileTypes>((set) => ({
   editProfile: false,
   setEditProfile: () => set((state) => ({ editProfile: !state.editProfile })),
+}));
+
+export type AddCommentTypes = {
+  commentModal: string | null;
+  setCommentModal: (postId: string | null) => void;
+};
+
+export const useAddComment = create<AddCommentTypes>((set) => ({
+  commentModal: null,
+  setCommentModal: (postId) => set({ commentModal: postId }),
+}));
+
+type CommentState = {
+  text: string;
+  image: string | null;
+  file: File | null;
+  setText: (text: string) => void;
+  setImage: (image: string | null) => void;
+  setFile: (file: File | null) => void;
+};
+
+export const useCommentStore = create<CommentState>((set) => ({
+  text: "",
+  image: null,
+  file: null,
+  setText: (text) => set({ text }),
+  setImage: (image) => set({ image }),
+  setFile: (file) => set({ file }),
 }));
