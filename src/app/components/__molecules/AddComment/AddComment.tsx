@@ -44,6 +44,7 @@ function AddComment({
     }
 
     try {
+      setCommentModal(null);
       setText("");
       setImage("");
       setFile(null);
@@ -84,7 +85,7 @@ function AddComment({
           }}
         >
           <div className="w-[570px] max-[630px]:w-[350px]   ml-[10px] mr-[10px] rounded-[20px]  bg-black flex  flex-col pt-[15px]  relative">
-            <div className="w-full flex justify-start pl-[10px]">
+            <div className="w-full flex justify-start pl-[10px] mb-[15px]">
               <div
                 onClick={() => setCommentModal(null)}
                 className="w-[40px] h-[40px] cursor-pointer  hover:bg-[grey] rounded-[100%] flex justify-center items-center "

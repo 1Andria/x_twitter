@@ -5,9 +5,11 @@ import { auth, db } from "@/app/firebase/config";
 import {
   arrayRemove,
   arrayUnion,
+  collection,
   deleteDoc,
   doc,
   getDoc,
+  onSnapshot,
   updateDoc,
 } from "firebase/firestore";
 import Image from "next/image";
@@ -24,6 +26,7 @@ import { Checkbox } from "@mui/material";
 import ReactTimeAgo from "react-time-ago";
 import {
   useAddComment,
+  useCommentModal,
   useHoverStore,
   useMoreInfo,
 } from "@/app/common/hooks/Store";
@@ -34,6 +37,7 @@ import ReportIcon from "@/app/common/icons/ReportIcon";
 import EditIcon from "@/app/common/icons/EditIcon";
 import Unsmile from "@/app/common/icons/Unsmile";
 import AddComment from "../AddComment/AddComment";
+import CommentModal from "../CommentModal/CommentModal";
 TimeAgo.addDefaultLocale(en);
 
 const PostItem = ({ post }: PostItemProps) => {
@@ -46,9 +50,22 @@ const PostItem = ({ post }: PostItemProps) => {
   const [edit, setEdit] = useState(false);
   const [editText, setEditText] = useState(post.text);
   const setCommentModal = useAddComment((state) => state.setCommentModal);
+  const setAllComments = useCommentModal((state) => state.setAllComments);
+
+  const [commentCount, setCommentCount] = useState<number>(0);
 
   const divRef = useRef<HTMLDivElement | null>(null);
   const EditDivRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const commentsRef = collection(db, "posts", post.id, "comments");
+
+    const unsubscribe = onSnapshot(commentsRef, (snapshot) => {
+      setCommentCount(snapshot.size);
+    });
+
+    return () => unsubscribe();
+  }, [post.id]);
 
   const handleLike = async () => {
     if (!currentUserEmail) return;
@@ -243,7 +260,10 @@ const PostItem = ({ post }: PostItemProps) => {
         </div>
 
         {!edit && (
-          <div className="w-full max-w-full break-words">
+          <div
+            onClick={() => setAllComments(post.id)}
+            className="w-full max-w-full break-words cursor-pointer"
+          >
             <p className="text-white break-words whitespace-pre-wrap">
               {post.text}
             </p>
@@ -271,7 +291,10 @@ const PostItem = ({ post }: PostItemProps) => {
         )}
 
         {post.imageUrl && (
-          <div className="w-full pr-[10px] max-h-[500px]">
+          <div
+            onClick={() => setAllComments(post.id)}
+            className="w-full pr-[10px] max-h-[500px] cursor-pointer"
+          >
             <Image
               height={700}
               width={700}
@@ -283,14 +306,14 @@ const PostItem = ({ post }: PostItemProps) => {
         )}
 
         <div className="w-full h-[40px] flex items-center justify-between mt-[25px] pr-[10px]">
-          <div className="flex items-center">
+          <div className="flex items-center gap-[5px]">
             <div
               onClick={() => setCommentModal(post.id)}
               className="w-[20px] h-[20px] cursor-pointer"
             >
               <CommentIcon />
             </div>
-            <h3 className="text-[#6D7176]">2</h3>
+            <h3 className="text-[#6D7176]">{commentCount}</h3>
           </div>
           <div className="flex items-center">
             <div className="w-[20px] h-[20px]">
@@ -331,6 +354,7 @@ const PostItem = ({ post }: PostItemProps) => {
         postAuthorEmail={post.authorEmail}
         postCreatedAt={post.createdAt?.toDate()}
       />
+      <CommentModal postId={post.id} />
     </div>
   );
 };

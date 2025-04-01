@@ -205,6 +205,11 @@ export type MoreDivTypes = {
   setMoreDiv: (id: string | null) => void;
 };
 
+export type CommentMoreDivTypes = {
+  commentMoreDiv: string | null;
+  setCommentMoreDiv:(id: string | null) => void
+};
+
 export type AddCommentProps = {
   postId: string;
   postAuthorName: string;
@@ -229,4 +234,21 @@ export type AddPostProps = {
 
 export type PostItemProps = {
   post: PostContextType;
+};
+
+export type CommentType = {
+  id: string;
+  commentText: string;
+  commentAuthor: string;
+  commentCreatedAt: any;
+  commentImage?: string;
+};
+
+export type CommentProps = {
+  postId: string;
+  comment: CommentType;
+  onDelete: () => void;
+};
+export type CommentModalTypes = {
+  postId: string;
 };

@@ -17,6 +17,7 @@ import {
   CurrentUserType,
   UserProfileStore,
   MoreDivTypes,
+  CommentMoreDivTypes,
 } from "../Types/Common";
 
 export const useCreateAcc = create<CrAccType>((set) => ({
@@ -131,6 +132,11 @@ export const useHoverStore = create<HoverStore>((set) => ({
   setMoreColor: (id) => set({ moreColor: id }),
 }));
 
+export const useCommentMoreDiv = create<CommentMoreDivTypes>((set) => ({
+  commentMoreDiv: null,
+  setCommentMoreDiv: (id) => set(() => ({ commentMoreDiv: id })),
+}));
+
 export const usePostData = create<PostStore>((set) => ({
   posts: [],
   setPosts: (posts) => set({ posts }),
@@ -182,6 +188,16 @@ export type AddCommentTypes = {
 export const useAddComment = create<AddCommentTypes>((set) => ({
   commentModal: null,
   setCommentModal: (postId) => set({ commentModal: postId }),
+}));
+
+export type CommentModal = {
+  allComments: string | null;
+  setAllComments: (postId: string | null) => void;
+};
+
+export const useCommentModal = create<CommentModal>((set) => ({
+  allComments: null,
+  setAllComments: (postId) => set({ allComments: postId }),
 }));
 
 type CommentState = {
