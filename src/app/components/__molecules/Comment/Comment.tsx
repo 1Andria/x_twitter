@@ -27,7 +27,6 @@ function Comment({ comment, postId, onDelete }: CommentProps) {
     name: string;
     profilePicture: string;
   } | null>(null);
-
   const commentMoreDiv = useCommentMoreDiv((state) => state.commentMoreDiv);
   const [currentUsername, setCurrentUsername] = useState<string>("");
   const setCommentMoreDiv = useCommentMoreDiv(
@@ -35,6 +34,7 @@ function Comment({ comment, postId, onDelete }: CommentProps) {
   );
   const divRef = useRef<HTMLDivElement | null>(null);
   const EditDivRef = useRef<HTMLDivElement | null>(null);
+  const TextAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -112,8 +112,6 @@ function Comment({ comment, postId, onDelete }: CommentProps) {
   const showMoreOptions = () => {
     setCommentMoreDiv(comment.id);
   };
-
-  const TextAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const handleDeleteComment = async () => {
     try {

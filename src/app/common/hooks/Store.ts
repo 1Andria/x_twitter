@@ -217,3 +217,13 @@ export const useCommentStore = create<CommentState>((set) => ({
   setImage: (image) => set({ image }),
   setFile: (file) => set({ file }),
 }));
+
+export type NavBarPostTypes = {
+  navBarPost: boolean;
+  setNavBarPost: (value: boolean) => void;
+};
+
+export const useNavBarPost = create<NavBarPostTypes>((set) => ({
+  navBarPost: false,
+  setNavBarPost: (value) => set((state) => ({ navBarPost: value })),
+}));

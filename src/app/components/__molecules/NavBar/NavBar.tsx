@@ -4,7 +4,11 @@ import Link from "next/link";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/app/firebase/config";
-import { useCurrentUser, useUserProfile } from "@/app/common/hooks/Store";
+import {
+  useCurrentUser,
+  useNavBarPost,
+  useUserProfile,
+} from "@/app/common/hooks/Store";
 import XIcon from "@/app/common/icons/xIcon";
 import HomeIcon from "@/app/common/icons/HomeIcon";
 import SearchIcon from "@/app/common/icons/SearchIcon";
@@ -18,11 +22,18 @@ import VerifiedOrgs from "@/app/common/icons/VerifiedOrgs";
 import ProfileIcon from "@/app/common/icons/ProfileIcon";
 import MoreIcon from "@/app/common/icons/MoreIcon";
 import Image from "next/image";
+import NavBarPost from "../NavBarPost/NavBarPost";
+import { usePathname } from "next/navigation";
 
 function NavBar() {
   const { name, email, username, setCurrentUser } = useCurrentUser();
   const profilePicture = useUserProfile((state) => state.profilePicture);
   const setProfilePicture = useUserProfile((state) => state.setProfilePicture);
+  const setNavBarPost = useNavBarPost((state) => state.setNavBarPost);
+
+  function OpenNavBarPost() {
+    setNavBarPost(true);
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -166,9 +177,13 @@ function NavBar() {
           <h1 className="text-white text-[18px] max-[650px]:hidden">More</h1>
         </div>
 
-        <button className="w-[200px] rounded-[15px] h-[50px] bg-white flex justify-center items-center font-semibold max-[780px]:hidden">
+        <button
+          onClick={OpenNavBarPost}
+          className="w-[200px] rounded-[15px] h-[50px] bg-white flex justify-center items-center font-semibold max-[780px]:hidden"
+        >
           Post
         </button>
+        <NavBarPost />
       </div>
 
       <div className="flex gap-[20px] max-[650px]:gap-[0px]">

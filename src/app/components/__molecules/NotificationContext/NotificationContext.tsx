@@ -9,6 +9,7 @@ type Notification = {
   username: string;
   name: string;
   profilePicture: string;
+  message: string;
 };
 
 function NotificationContext() {
@@ -20,23 +21,61 @@ function NotificationContext() {
       if (user?.email) {
         setCurrentEmail(user.email);
 
-        const userQuery = query(
+        const followersQuery = query(
           collection(db, "users"),
           where("followings", "array-contains", user.email)
         );
+        const followersSnapshot = await getDocs(followersQuery);
 
-        const snapshot = await getDocs(userQuery);
+        const followersData: Notification[] = followersSnapshot.docs.map(
+          (doc) => {
+            const data = doc.data();
+            return {
+              username: data.username,
+              name: data.name,
+              profilePicture: data.profilePicture,
+              message: "started following you",
+            };
+          }
+        );
 
-        const followersData = snapshot.docs.map((doc) => {
+        const postsQuery = query(
+          collection(db, "posts"),
+          where("authorEmail", "==", user.email)
+        );
+        const postsSnapshot = await getDocs(postsQuery);
+
+        let likerEmails: string[] = [];
+
+        postsSnapshot.docs.forEach((doc) => {
           const data = doc.data();
-          return {
-            username: data.username,
-            name: data.name,
-            profilePicture: data.profilePicture,
-          };
+          if (Array.isArray(data.likes)) {
+            likerEmails.push(...data.likes);
+          }
         });
 
-        setNotifications(followersData);
+        const filteredEmails = likerEmails.filter(
+          (email) => email !== user.email
+        );
+
+        let likeNotifs: Notification[] = [];
+
+        for (const email of filteredEmails) {
+          const usersRef = collection(db, "users");
+          const userQuery = query(usersRef, where("email", "==", email));
+          const userSnapshot = await getDocs(userQuery);
+
+          userSnapshot.forEach((doc) => {
+            const data = doc.data();
+            likeNotifs.push({
+              username: data.username,
+              name: data.name,
+              profilePicture: data.profilePicture,
+              message: "liked your post",
+            });
+          });
+        }
+        setNotifications([...followersData, ...likeNotifs]);
       }
     });
 
@@ -49,10 +88,10 @@ function NotificationContext() {
         Notifications:
       </h1>
       <div className="flex flex-col gap-[16px] p-[16px]">
-        {notifications.map((user) => (
+        {notifications.map((user, key) => (
           <div
-            key={user.username}
-            className="flex items-center gap-[12px] border-[1px] border-[#536471]  p-[16px] rounded-xl"
+            key={key}
+            className="flex items-center gap-[12px] border-[1px] border-[#536471] p-[16px] rounded-xl"
           >
             <div className="w-[45px] h-[45px] rounded-full overflow-hidden">
               <Image
@@ -66,10 +105,7 @@ function NotificationContext() {
             <div className="text-white">
               <h1>
                 {user.name}
-
-                <span className="text-[#71767B] ml-[10px]">
-                  started following you
-                </span>
+                <span className="text-[#71767B] ml-[10px]">{user.message}</span>
               </h1>
             </div>
           </div>
