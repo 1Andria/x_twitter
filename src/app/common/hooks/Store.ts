@@ -227,3 +227,13 @@ export const useNavBarPost = create<NavBarPostTypes>((set) => ({
   navBarPost: false,
   setNavBarPost: (value) => set((state) => ({ navBarPost: value })),
 }));
+
+export type SearchValueTypes = {
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+};
+
+export const useSearchValue = create<SearchValueTypes>((set) => ({
+  searchValue: "",
+  setSearchValue: (value) => set((state) => ({ searchValue: value })),
+}));

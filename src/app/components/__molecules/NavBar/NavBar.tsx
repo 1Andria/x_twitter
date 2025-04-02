@@ -32,8 +32,6 @@ function NavBar() {
   const setProfilePicture = useUserProfile((state) => state.setProfilePicture);
   const setNavBarPost = useNavBarPost((state) => state.setNavBarPost);
 
-  console.log(path);
-
   function OpenNavBarPost() {
     setNavBarPost(true);
   }
@@ -63,7 +61,11 @@ function NavBar() {
   }, [setCurrentUser, setProfilePicture]);
 
   return (
-    <div className="max-w-[380px] w-full h-screen sticky top-0 border-r border-r-[#2F3336] flex flex-col items-start justify-between max-[650px]:items-center pl-[50px] max-[780px]:pl-[5px] pt-[20px] pb-[20px]">
+    <div
+      className={`max-w-[360px] w-full h-screen sticky top-0 border-r border-r-[#2F3336] flex flex-col items-start justify-between max-[650px]:items-center pl-[50px] max-[780px]:pl-[5px] pt-[20px] pb-[20px] ${
+        path === "/" ? "hidden" : "flex"
+      }`}
+    >
       <div className="flex flex-col gap-[5px]">
         <Link
           href={`/xpage/${username}`}

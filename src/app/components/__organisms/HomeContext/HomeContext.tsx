@@ -16,7 +16,6 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 function HomeContext() {
   const forYou = useForYou((state) => state.forYou);
-
   const image = usePostImage((state) => state.image);
   const setImage = usePostImage((state) => state.setImage);
   const text = usePostStore((state) => state.text);

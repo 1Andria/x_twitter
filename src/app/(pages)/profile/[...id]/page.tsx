@@ -14,7 +14,7 @@ function Profile({ params }: ParamsType) {
   return (
     <>
       <div className="w-full bg-black flex justify-center items-center">
-        <div className="max-w-[1640px] w-full min-h-screen h-auto  flex">
+        <div className="max-w-[1440px] w-full min-h-screen h-auto  flex">
           <NavBar />
           <ProfileContext pathName={pathName} />
         </div>
