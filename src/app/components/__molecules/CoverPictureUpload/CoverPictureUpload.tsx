@@ -1,8 +1,4 @@
-import {
-  useCover,
-  useEditProfile,
-  useUserProfile,
-} from "@/app/common/hooks/Store";
+import { useEditProfile, useUserProfile } from "@/app/common/hooks/Store";
 import PhotoIcon from "@/app/common/icons/PhotoIcon";
 import XIcon from "@/app/common/icons/xIcon";
 import { auth, db } from "@/app/firebase/config";
@@ -12,7 +8,6 @@ import React, { ChangeEvent } from "react";
 
 function CoverPictureUpload() {
   const setEditProfile = useEditProfile((state) => state.setEditProfile);
-  const setToCover = useCover((state) => state.setToCover);
   const coverPhoto = useUserProfile((state) => state.coverPhoto);
   const setCoverPhoto = useUserProfile((state) => state.setCoverPhoto);
 

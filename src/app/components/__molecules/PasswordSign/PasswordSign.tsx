@@ -116,10 +116,10 @@ function PasswordSign({ onClose, email, name }: PassSignType) {
             </div>
           </div>
           <h1 className="text-white text-[30px] font-semibold mt-[30px]">
-            You'll need a password
+            You&apos;ll need a password
           </h1>
           <p className="text-[#6C7075] mt-[5px]">
-            Make sure it's 8 characters or more. <br />
+            Make sure it&apos;s 8 characters or more. <br />
             <strong className="hover:underline cursor-pointer">
               <Link
                 target="_blank"

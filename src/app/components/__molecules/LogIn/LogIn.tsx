@@ -193,7 +193,7 @@ function LogIn() {
             <LogPass />
             <div className="w-full flex justify-start">
               <h4 className="text-[#6C7075]">
-                Don't have an account?
+                Don&apos;t have an account?
                 <span
                   onClick={ToSignUp}
                   className="hover:underline cursor-pointer text-[#1976d2]"

@@ -14,13 +14,10 @@ type Notification = {
 
 function NotificationContext() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [currentEmail, setCurrentEmail] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user?.email) {
-        setCurrentEmail(user.email);
-
         const followersQuery = query(
           collection(db, "users"),
           where("followings", "array-contains", user.email)
