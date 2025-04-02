@@ -14,8 +14,11 @@ import { User } from "@/app/common/Types/Common";
 import { auth, db } from "../../../firebase/config";
 import Image from "next/image";
 import Link from "next/link";
+type SuggestProps = {
+  hidden?: string;
+};
 
-function SuggestFollowers() {
+function SuggestFollowers({ hidden }: SuggestProps) {
   const users = useUserStore((state) => state.users);
   const setUsers = useUserStore((state) => state.setUsers);
   const [followedUsers, setFollowedUsers] = useState<string[]>([]);
@@ -136,7 +139,9 @@ function SuggestFollowers() {
                   </div>
                   <div>
                     <h1 className="text-white">{user.name}</h1>
-                    <h1 className="text-[#71767B] max-[450px]:hidden">
+                    <h1
+                      className={`text-[#71767B] max-[450px]:hidden ${hidden}`}
+                    >
                       {user.email}
                     </h1>
                   </div>

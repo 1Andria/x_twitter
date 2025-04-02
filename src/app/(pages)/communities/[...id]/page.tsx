@@ -1,5 +1,6 @@
 import { ParamsType } from "@/app/common/Types/Common";
 import NavBar from "@/app/components/__molecules/NavBar/NavBar";
+import SideSection from "@/app/components/__molecules/SideSection/SideSection";
 import SuggestFollowers from "@/app/components/__molecules/SuggestFollowers/SuggestFollowers";
 import React from "react";
 export const metadata = {
@@ -18,6 +19,7 @@ function Communities({ params }: ParamsType) {
           <div className="max-w-[650px] w-full min-h-screen h-auto border-r border-r-[#2F3336]">
             <SuggestFollowers />
           </div>
+          <SideSection />
         </div>
       </div>
     </>

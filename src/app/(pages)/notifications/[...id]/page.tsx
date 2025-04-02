@@ -1,6 +1,7 @@
 import { ParamsType } from "@/app/common/Types/Common";
 import NavBar from "@/app/components/__molecules/NavBar/NavBar";
 import NotificationContext from "@/app/components/__molecules/NotificationContext/NotificationContext";
+import SideSection from "@/app/components/__molecules/SideSection/SideSection";
 import React from "react";
 
 export const metadata = {
@@ -19,6 +20,8 @@ function Notification({ params }: ParamsType) {
           <div className="max-w-[650px] w-full min-h-screen h-auto border-r border-r-[#2F3336]">
             <NotificationContext />
           </div>
+          <SideSection />
+
         </div>
       </div>
     </>
