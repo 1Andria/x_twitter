@@ -1,12 +1,13 @@
 import React from "react";
+import { IconProps } from "../Types/Common";
 
-function FavoritedIcon() {
+function FavoritedIcon({ username, path }: IconProps) {
   return (
     <>
       <svg
         viewBox="0 0 24 24"
         aria-hidden="true"
-        fill="black"
+        fill={`${path === `/bookmarks/${username}` ? "white" : "black"}`}
         stroke="white"
         strokeWidth="2"
       >

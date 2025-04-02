@@ -252,3 +252,7 @@ export type CommentProps = {
 export type CommentModalTypes = {
   postId: string;
 };
+export type IconProps = {
+  username: string;
+  path: string;
+};

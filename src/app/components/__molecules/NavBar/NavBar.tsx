@@ -26,10 +26,13 @@ import NavBarPost from "../NavBarPost/NavBarPost";
 import { usePathname } from "next/navigation";
 
 function NavBar() {
+  const path = usePathname();
   const { name, email, username, setCurrentUser } = useCurrentUser();
   const profilePicture = useUserProfile((state) => state.profilePicture);
   const setProfilePicture = useUserProfile((state) => state.setProfilePicture);
   const setNavBarPost = useNavBarPost((state) => state.setNavBarPost);
+
+  console.log(path);
 
   function OpenNavBarPost() {
     setNavBarPost(true);
@@ -64,7 +67,7 @@ function NavBar() {
       <div className="flex flex-col gap-[5px]">
         <Link
           href={`/xpage/${username}`}
-          className="ml-[9px] w-[30px] h-[30px]"
+          className={`ml-[9px]  w-[30px] h-[30px]`}
         >
           <XIcon />
         </Link>
@@ -74,9 +77,17 @@ function NavBar() {
           className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
         >
           <div className="w-[30px] h-[30px]">
-            <HomeIcon />
+            <HomeIcon path={path} username={username} />
           </div>
-          <h1 className="text-white text-[18px] max-[650px]:hidden">Home</h1>
+          <h1
+            className={`text-white ${
+              path === `/xpage/${username}`
+                ? "text-[20px] font-bold"
+                : "text-[18px] font-normal"
+            } max-[650px]:hidden`}
+          >
+            Home
+          </h1>
         </Link>
 
         <Link
@@ -84,9 +95,17 @@ function NavBar() {
           className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
         >
           <div className="w-[30px] h-[30px]">
-            <SearchIcon />
+            <SearchIcon path={path} username={username} />
           </div>
-          <h1 className="text-white text-[18px] max-[650px]:hidden">Explore</h1>
+          <h1
+            className={`text-white ${
+              path === `/explore/${username}`
+                ? "text-[20px] font-bold"
+                : "text-[18px] font-normal"
+            } max-[650px]:hidden`}
+          >
+            Explore
+          </h1>
         </Link>
 
         <Link
@@ -94,9 +113,15 @@ function NavBar() {
           className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
         >
           <div className="w-[30px] h-[30px]">
-            <NotificationIcon />
+            <NotificationIcon path={path} username={username} />
           </div>
-          <h1 className="text-white text-[18px] max-[650px]:hidden">
+          <h1
+            className={`text-white ${
+              path === `/notifications/${username}`
+                ? "text-[20px] font-bold"
+                : "text-[18px] font-normal"
+            } max-[650px]:hidden`}
+          >
             Notifications
           </h1>
         </Link>
@@ -106,9 +131,15 @@ function NavBar() {
           className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
         >
           <div className="w-[30px] h-[30px]">
-            <MessagesIcon />
+            <MessagesIcon path={path} username={username} />
           </div>
-          <h1 className="text-white text-[18px] max-[650px]:hidden">
+          <h1
+            className={`text-white ${
+              path === `/messages/${username}`
+                ? "text-[20px] font-bold"
+                : "text-[18px] font-normal"
+            } max-[650px]:hidden`}
+          >
             Messages
           </h1>
         </Link>
@@ -125,9 +156,15 @@ function NavBar() {
           className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
         >
           <div className="w-[30px] h-[30px]">
-            <FavoritedIcon />
+            <FavoritedIcon path={path} username={username} />
           </div>
-          <h1 className="text-white text-[18px] max-[650px]:hidden">
+          <h1
+            className={`text-white ${
+              path === `/bookmarks/${username}`
+                ? "text-[20px] font-bold"
+                : "text-[18px] font-normal"
+            } max-[650px]:hidden`}
+          >
             Bookmarks
           </h1>
         </Link>
@@ -137,9 +174,15 @@ function NavBar() {
           className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
         >
           <div className="w-[30px] h-[30px]">
-            <CommunitiesIcon />
+            <CommunitiesIcon path={path} username={username} />
           </div>
-          <h1 className="text-white text-[18px] max-[650px]:hidden">
+          <h1
+            className={`text-white ${
+              path === `/communities/${username}`
+                ? "text-[20px] font-bold"
+                : "text-[18px] font-normal"
+            } max-[650px]:hidden`}
+          >
             Communities
           </h1>
         </Link>
@@ -165,9 +208,17 @@ function NavBar() {
           className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
         >
           <div className="w-[30px] h-[30px]">
-            <ProfileIcon />
+            <ProfileIcon path={path} username={username} />
           </div>
-          <h1 className="text-white text-[18px] max-[650px]:hidden">Profile</h1>
+          <h1
+            className={`text-white ${
+              path === `/profile/${username}`
+                ? "text-[20px] font-bold"
+                : "text-[18px] font-normal"
+            } max-[650px]:hidden`}
+          >
+            Profile
+          </h1>
         </Link>
 
         <div className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]">
