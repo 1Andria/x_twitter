@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import ArrowIcon from "@/app/common/icons/ArrowIcon";
 import Image from "next/image";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { Box, Modal } from "@mui/material";
 import {

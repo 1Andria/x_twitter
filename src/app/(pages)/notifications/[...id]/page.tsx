@@ -1,4 +1,3 @@
-import { ParamsType } from "@/app/common/Types/Common";
 import NavBar from "@/app/components/__molecules/NavBar/NavBar";
 import NotificationContext from "@/app/components/__molecules/NotificationContext/NotificationContext";
 import SideSection from "@/app/components/__molecules/SideSection/SideSection";
@@ -9,9 +8,7 @@ export const metadata = {
   description: "Notification page",
 };
 
-function Notification({ params }: ParamsType) {
-  const pathName = params.id;
-
+function Notification() {
   return (
     <>
       <div className="w-full bg-black flex justify-center items-center">
@@ -21,7 +18,6 @@ function Notification({ params }: ParamsType) {
             <NotificationContext />
           </div>
           <SideSection />
-
         </div>
       </div>
     </>

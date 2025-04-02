@@ -119,7 +119,7 @@ function PasswordSign({ onClose, email, name }: PassSignType) {
             You'll need a password
           </h1>
           <p className="text-[#6C7075] mt-[5px]">
-            Make sure it’s 8 characters or more. <br />
+            Make sure it's 8 characters or more. <br />
             <strong className="hover:underline cursor-pointer">
               <Link
                 target="_blank"

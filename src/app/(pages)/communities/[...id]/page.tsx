@@ -1,4 +1,3 @@
-import { ParamsType } from "@/app/common/Types/Common";
 import NavBar from "@/app/components/__molecules/NavBar/NavBar";
 import SideSection from "@/app/components/__molecules/SideSection/SideSection";
 import SuggestFollowers from "@/app/components/__molecules/SuggestFollowers/SuggestFollowers";
@@ -8,9 +7,7 @@ export const metadata = {
   description: "Communities page",
 };
 
-function Communities({ params }: ParamsType) {
-  const pathName = params.id;
-
+function Communities() {
   return (
     <>
       <div className="w-full bg-black flex justify-center items-center">

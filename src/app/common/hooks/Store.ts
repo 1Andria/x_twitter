@@ -90,7 +90,7 @@ export const useUserProfile = create<UserProfileStore>((set) => ({
   setProfilePicture: (url) => set({ profilePicture: url }),
 
   coverPhoto: "",
-  setCoverPhoto: (url) => set((state) => ({ coverPhoto: url })),
+  setCoverPhoto: (url) => set(() => ({ coverPhoto: url })),
 
   followersCount: 0,
   setFollowersCount: (count) => set({ followersCount: count }),
@@ -124,7 +124,7 @@ export const useUserStore = create<UserStore>((set) => ({
 
 export const useWorldState = create<WorldType>((set) => ({
   world: false,
-  setWorld: (value) => set((state) => ({ world: value })),
+  setWorld: (value) => set(() => ({ world: value })),
 }));
 
 export const useHoverStore = create<HoverStore>((set) => ({
@@ -225,7 +225,7 @@ export type NavBarPostTypes = {
 
 export const useNavBarPost = create<NavBarPostTypes>((set) => ({
   navBarPost: false,
-  setNavBarPost: (value) => set((state) => ({ navBarPost: value })),
+  setNavBarPost: (value) => set(() => ({ navBarPost: value })),
 }));
 
 export type SearchValueTypes = {
@@ -235,5 +235,5 @@ export type SearchValueTypes = {
 
 export const useSearchValue = create<SearchValueTypes>((set) => ({
   searchValue: "",
-  setSearchValue: (value) => set((state) => ({ searchValue: value })),
+  setSearchValue: (value) => set(() => ({ searchValue: value })),
 }));

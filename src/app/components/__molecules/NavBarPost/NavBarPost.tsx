@@ -6,7 +6,7 @@ import {
   useUserProfile,
 } from "@/app/common/hooks/Store";
 import { Box, Modal } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import AddPost from "../AddPost/AddPost";
 import { auth, db } from "@/app/firebase/config";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";

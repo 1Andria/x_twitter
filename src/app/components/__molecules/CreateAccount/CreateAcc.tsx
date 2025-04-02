@@ -32,7 +32,7 @@ function CreateAcc() {
     resolver: yupResolver(SignUpSchema),
   });
 
-  const onSubmit = (data: SignUpForm) => {
+  const onSubmit = () => {
     ToPasswordLevel();
   };
 

@@ -1,6 +1,5 @@
 "use client";
 import {
-  useAddComment,
   useCommentModal,
   useCommentStore,
   useUserProfile,

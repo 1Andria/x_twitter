@@ -80,7 +80,15 @@ function AddPost({
               <h4 className="text-[#1D9BF0] text-[15px]">Everyone can reply</h4>
             </div>
           </div>
-          {image && <img src={image} alt="Chosed image" />}
+          {image && (
+            <Image
+              width={500}
+              height={500}
+              src={image}
+              alt="Chosed image "
+              className="w-auto h-auto mt-[10px]"
+            />
+          )}
           <div className="w-full h-[50px] pl-[10px] pr-[10px] mt-[10px] flex  items-center justify-between">
             <div className="flex gap-[14px]">
               <div className="w-[25px] h-[25px] relative">

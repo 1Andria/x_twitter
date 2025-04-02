@@ -45,7 +45,7 @@ function NotificationContext() {
         );
         const postsSnapshot = await getDocs(postsQuery);
 
-        let likerEmails: string[] = [];
+        const likerEmails: string[] = [];
 
         postsSnapshot.docs.forEach((doc) => {
           const data = doc.data();
@@ -58,7 +58,7 @@ function NotificationContext() {
           (email) => email !== user.email
         );
 
-        let likeNotifs: Notification[] = [];
+        const likeNotifs: Notification[] = [];
 
         for (const email of filteredEmails) {
           const usersRef = collection(db, "users");

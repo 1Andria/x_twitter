@@ -42,10 +42,7 @@ function CoverPictureUpload() {
 
     reader.readAsDataURL(file);
   };
-  function ChangeEditProfile() {
-    setEditProfile;
-    setToCover(false);
-  }
+
   return (
     <>
       <div className="w-[590px] max-[630px]:w-[350px] max-[630px]:pr-[30px] max-[630px]:pl-[30px]  ml-[10px] mr-[10px] h-[640px] rounded-[20px] pr-[65px] pl-[65px] bg-black flex flex-col pt-[15px] pb-[40px] relative  justify-between">

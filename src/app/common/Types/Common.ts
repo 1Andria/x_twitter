@@ -207,7 +207,7 @@ export type MoreDivTypes = {
 
 export type CommentMoreDivTypes = {
   commentMoreDiv: string | null;
-  setCommentMoreDiv:(id: string | null) => void
+  setCommentMoreDiv: (id: string | null) => void;
 };
 
 export type AddCommentProps = {
@@ -240,7 +240,7 @@ export type CommentType = {
   id: string;
   commentText: string;
   commentAuthor: string;
-  commentCreatedAt: any;
+  commentCreatedAt: Timestamp;
   commentImage?: string;
 };
 

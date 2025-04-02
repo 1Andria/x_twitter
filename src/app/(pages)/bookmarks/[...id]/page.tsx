@@ -1,4 +1,3 @@
-import { ParamsType } from "@/app/common/Types/Common";
 import BookmarkContext from "@/app/components/__molecules/BookmarkContext/BookmarkContext";
 import NavBar from "@/app/components/__molecules/NavBar/NavBar";
 import SideSection from "@/app/components/__molecules/SideSection/SideSection";
@@ -8,9 +7,7 @@ export const metadata = {
   description: "Bookmarks page",
 };
 
-function bookmarks({ params }: ParamsType) {
-  const pathName = params.id;
-
+function bookmarks() {
   return (
     <>
       <div className="w-full bg-black flex justify-center items-center">

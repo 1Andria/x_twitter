@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { PostContextType, PostItemProps } from "@/app/common/Types/Common";
+import { PostItemProps } from "@/app/common/Types/Common";
 import { auth, db } from "@/app/firebase/config";
 import {
   arrayRemove,

@@ -1,4 +1,3 @@
-import { ParamsType } from "@/app/common/Types/Common";
 import NavBar from "@/app/components/__molecules/NavBar/NavBar";
 import React from "react";
 
@@ -7,9 +6,7 @@ export const metadata = {
   description: "Messages page",
 };
 
-function Messages({ params }: ParamsType) {
-  const pathName = params.id;
-
+function Messages() {
   return (
     <>
       <div className="w-full bg-black flex justify-center items-center">

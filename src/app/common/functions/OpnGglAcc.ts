@@ -6,5 +6,7 @@ export const OpenGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 };
