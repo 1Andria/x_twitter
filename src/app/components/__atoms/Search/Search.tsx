@@ -11,6 +11,7 @@ function Search() {
       <div className="w-full relative">
         <input
           onChange={(e) => setSearchValue(e.target.value)}
+          placeholder="Search..."
           type="text"
           className="w-full h-[45px] bg-transparent text-white rounded-[20px] 
 focus:outline-[#1A8CD8] border-[2px] border-[#2F3336] pl-[35px] text-[18px]"

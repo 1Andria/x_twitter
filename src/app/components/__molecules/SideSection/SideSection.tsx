@@ -6,7 +6,7 @@ import SideSectionSuggest from "../../__atoms/SideSectionSuggest/SideSectionSugg
 function SideSection() {
   return (
     <>
-      <div className="w-[380px] sticky top-0 ml-[20px] h-screen mt-[10px] flex flex-col">
+      <div className="w-[380px] sticky top-0 ml-[20px] h-screen pt-[10px] flex flex-col">
         <Search />
         <Subscribe />
         <SideSectionSuggest />
