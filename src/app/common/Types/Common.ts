@@ -256,3 +256,9 @@ export type IconProps = {
   username: string;
   path: string;
 };
+export type UserType = {
+  id: string;
+  name: string;
+  email: string;
+  profilePicture: string;
+};
