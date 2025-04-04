@@ -18,6 +18,7 @@ import {
   UserProfileStore,
   MoreDivTypes,
   CommentMoreDivTypes,
+  UserType,
 } from "../Types/Common";
 
 export const useCreateAcc = create<CrAccType>((set) => ({
@@ -78,6 +79,8 @@ export const useNotFound = create<UserFoundTypes>((set) => ({
   setUserNotFound: (value) => set(() => ({ userNotFound: value })),
 }));
 import ProfilePicture from "../icons/profile.jpg";
+import { selectClasses } from "@mui/material";
+import { SelectedUserType } from "@/app/components/__molecules/MessagesContext/MessagesContext";
 
 export const useUserProfile = create<UserProfileStore>((set) => ({
   name: "",
@@ -130,6 +133,15 @@ export const useWorldState = create<WorldType>((set) => ({
 export const useHoverStore = create<HoverStore>((set) => ({
   moreColor: null,
   setMoreColor: (id) => set({ moreColor: id }),
+}));
+export type SelectedUserTypes = {
+  selectedUser: SelectedUserType | null;
+  setSelectedUser: (user: SelectedUserType | null) => void;
+};
+
+export const useSelectedUser = create<SelectedUserTypes>((set) => ({
+  selectedUser: null,
+  setSelectedUser: (id) => set({ selectedUser: id }),
 }));
 
 export const useCommentMoreDiv = create<CommentMoreDivTypes>((set) => ({
@@ -236,4 +248,24 @@ export type SearchValueTypes = {
 export const useSearchValue = create<SearchValueTypes>((set) => ({
   searchValue: "",
   setSearchValue: (value) => set(() => ({ searchValue: value })),
+}));
+
+type MessageInputStore = {
+  text: string;
+  image: string | null;
+  file: File | null;
+  setText: (text: string) => void;
+  setImage: (image: string | null) => void;
+  setFile: (file: File | null) => void;
+  reset: () => void;
+};
+
+export const useMessageInputStore = create<MessageInputStore>((set) => ({
+  text: "",
+  image: null,
+  file: null,
+  setText: (text) => set({ text }),
+  setImage: (image) => set({ image }),
+  setFile: (file) => set({ file }),
+  reset: () => set({ text: "", image: null, file: null }),
 }));

@@ -3,17 +3,18 @@ import React, { useEffect, useState } from "react";
 import {
   collection,
   getDocs,
-  getDoc,
   updateDoc,
   doc,
   arrayUnion,
   arrayRemove,
+  onSnapshot,
 } from "firebase/firestore";
 import { useUserStore } from "@/app/common/hooks/Store";
 import { User } from "@/app/common/Types/Common";
 import { auth, db } from "../../../firebase/config";
 import Image from "next/image";
 import Link from "next/link";
+import { onAuthStateChanged } from "firebase/auth";
 type SuggestProps = {
   hidden?: string;
 };
@@ -52,26 +53,20 @@ function SuggestFollowers({ hidden }: SuggestProps) {
   }, [setUsers]);
 
   useEffect(() => {
-    const fetchFollowings = async () => {
-      const currentUser = auth.currentUser;
-      if (!currentUser) return;
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const currentUserRef = doc(db, "users", user.uid);
 
-      try {
-        const currentUserRef = doc(db, "users", currentUser.uid);
-        const currentSnap = await getDoc(currentUserRef);
-        const currentData = currentSnap.data();
+        const unsubscribeSnap = onSnapshot(currentUserRef, (docSnap) => {
+          const data = docSnap.data();
+          setFollowedUsers(data?.followings || []);
+        });
 
-        if (currentData?.followings) {
-          setFollowedUsers(currentData.followings);
-        } else {
-          setFollowedUsers([]);
-        }
-      } catch (err) {
-        console.error("Error fetching followings: ", err);
+        return () => unsubscribeSnap();
       }
-    };
+    });
 
-    fetchFollowings();
+    return () => unsubscribeAuth();
   }, []);
 
   const handleFollow = async (targetUser: User) => {

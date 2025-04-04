@@ -24,6 +24,7 @@ function AddPost({
   btnText,
   hidden,
   inputId,
+  border,
 }: AddPostProps) {
   const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const uploadedFile = e.target.files?.[0];
@@ -48,7 +49,7 @@ function AddPost({
     <>
       <form
         onSubmit={onSubmit}
-        className="w-full h-auto min-h-[120px] border-b border-b-[#2F3336] flex items-start pl-[15px] pr-[15px] pt-[20px] gap-[10px]"
+        className={`w-full h-auto min-h-[120px] border-b border-b-[#2F3336] ${border}  flex items-start pl-[15px] pr-[15px] pt-[20px] gap-[10px]`}
       >
         <div className="w-[55px] h-[50px]  rounded-[50px]">
           <Image
@@ -72,7 +73,7 @@ function AddPost({
             <div
               className={` ${hidden} flex mt-[10px] gap-[3px] items-center  ${
                 world ? "flex" : "hidden"
-              }`}
+              } `}
             >
               <div className={`w-[17px] h-[17px]`}>
                 <World />

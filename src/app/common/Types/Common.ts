@@ -224,12 +224,15 @@ export type AddPostProps = {
   text: string;
   setText: (text: string) => void;
   image: string | null;
+  file?: File | null;
   setImage: (img: string | null) => void;
   setFile: (file: File | null) => void;
   profilePicture: string;
   btnText: string;
   hidden?: string;
   inputId: string;
+  border?: string;
+  topgap?: string;
 };
 
 export type PostItemProps = {

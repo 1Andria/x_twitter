@@ -71,12 +71,12 @@ function NavBarPost() {
         <Box
           sx={{
             position: "absolute",
-            top: "50%",
-            left: "50%",
+            top: "25%",
+            left: "47%",
             transform: "translate(-50%, -50%)",
           }}
         >
-          <div className="w-[570px] max-[630px]:w-[350px]  ml-[10px] mr-[10px] h-auto  rounded-[20px]  bg-black flex flex-col pt-[30px]   relative items-center justify-between">
+          <div className="w-[630px] max-[630px]:w-[350px]  ml-[10px] mr-[10px] h-auto  rounded-[20px]  bg-black flex flex-col pt-[30px]   relative items-center justify-between">
             <AddPost
               onSubmit={handlePostSubmit}
               placeholder="What's happening?"
@@ -88,6 +88,7 @@ function NavBarPost() {
               profilePicture={profilePicture}
               btnText="Post"
               inputId="post-image"
+              topgap="mt-[100px]"
             />
           </div>
         </Box>

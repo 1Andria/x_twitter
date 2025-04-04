@@ -9,7 +9,7 @@ function SideSection() {
       <div className="w-[380px] sticky top-0 ml-[20px]  pt-[10px] flex flex-col">
         <Search />
         <Subscribe />
-        <SideSectionSuggest />
+        {/* <SideSectionSuggest /> */}
       </div>
     </>
   );
