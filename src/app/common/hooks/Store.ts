@@ -18,7 +18,6 @@ import {
   UserProfileStore,
   MoreDivTypes,
   CommentMoreDivTypes,
-  UserType,
 } from "../Types/Common";
 
 export const useCreateAcc = create<CrAccType>((set) => ({
@@ -79,7 +78,6 @@ export const useNotFound = create<UserFoundTypes>((set) => ({
   setUserNotFound: (value) => set(() => ({ userNotFound: value })),
 }));
 import ProfilePicture from "../icons/profile.jpg";
-import { selectClasses } from "@mui/material";
 import { SelectedUserType } from "@/app/components/__molecules/MessagesContext/MessagesContext";
 
 export const useUserProfile = create<UserProfileStore>((set) => ({

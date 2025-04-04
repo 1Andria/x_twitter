@@ -1,7 +1,6 @@
 import React from "react";
 import Search from "../../__atoms/Search/Search";
 import Subscribe from "../../__atoms/Subscribe/Subscribe";
-import SideSectionSuggest from "../../__atoms/SideSectionSuggest/SideSectionSuggest";
 
 function SideSection() {
   return (
