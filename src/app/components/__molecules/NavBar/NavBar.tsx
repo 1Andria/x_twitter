@@ -62,7 +62,7 @@ function NavBar() {
 
   return (
     <div
-      className={`max-w-[360px] w-full h-screen sticky top-0 border-r border-r-[#2F3336] flex flex-col items-start justify-between max-[650px]:items-center pl-[50px] max-[780px]:pl-[5px] pt-[20px] pb-[20px] ${
+      className={`max-w-[360px] w-full h-screen sticky top-0 border-r border-r-[#2F3336] flex flex-col items-start justify-between max-[650px]:items-center pl-[50px] max-[950px]:pl-[5px] pt-[20px] pb-[20px] ${
         path === "/" ? "hidden" : "flex"
       }`}
     >
@@ -189,12 +189,16 @@ function NavBar() {
           </h1>
         </Link>
 
-        <div className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]">
+        <Link
+          href={"https://react-midterm1.vercel.app/"}
+          target="_blank"
+          className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
+        >
           <div className="w-[30px] h-[30px]">
             <PremiumIcon />
           </div>
           <h1 className="text-white text-[18px] max-[650px]:hidden">Premium</h1>
-        </div>
+        </Link>
 
         <div className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]">
           <div className="w-[30px] h-[30px]">
@@ -249,10 +253,10 @@ function NavBar() {
             height={500}
           />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col mr-[10px]">
           <h3 className="text-white max-[650px]:hidden">{name || "..."}</h3>
           <h3 className="text-[#71767B] max-[780px]:hidden">
-            @{email || "..."}
+            {email || "..."}
           </h3>
         </div>
       </div>

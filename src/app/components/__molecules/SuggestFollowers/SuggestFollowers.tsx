@@ -135,7 +135,7 @@ function SuggestFollowers({ hidden }: SuggestProps) {
                   <div>
                     <h1 className="text-white">{user.name}</h1>
                     <h1
-                      className={`text-[#71767B] max-[450px]:hidden ${hidden}`}
+                      className={`text-[#71767B] max-[550px]:hidden ${hidden}`}
                     >
                       {user.email}
                     </h1>
@@ -144,7 +144,7 @@ function SuggestFollowers({ hidden }: SuggestProps) {
 
                 <button
                   onClick={() => handleFollow(user)}
-                  className={`pr-[15px] pl-[15px] pt-[5px] pb-[5px] font-semibold rounded-[30px] transition-all duration-200 ${
+                  className={`pr-[15px] pl-[15px] max-[400px]:pl-[10px] max-[400px]:pr-[10px] pt-[5px] pb-[5px] font-semibold rounded-[30px] transition-all duration-200 ${
                     isFollowing
                       ? "bg-[#0F1419] text-white border border-white"
                       : "bg-white text-black"

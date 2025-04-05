@@ -57,14 +57,7 @@ function ProfileContext({ pathName }: PropsType) {
   );
   const hasBookmarks = bookmarkedPosts.length > 0;
 
-  const AboutArray = [
-    "Posts",
-    "Replies",
-    "Bookmarks",
-    "Articles",
-    "Media",
-    "Likes",
-  ];
+  const AboutArray = ["Posts", "Bookmarks", "Articles", "Media", "Likes"];
 
   function ChangeEditProfile() {
     setEditProfile();

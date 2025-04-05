@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function Subscribe() {
@@ -11,9 +12,13 @@ function Subscribe() {
           Subscribe to unlock new features and if <br /> eligible, receive a
           share of revenue.
         </p>
-        <button className="bg-[#1A8CD8] w-[120px] rounded-[20px] pt-[8px] pb-[8px] text-white font-semibold">
+        <Link
+          href={"https://react-midterm1.vercel.app/"}
+          target="_blank"
+          className="bg-[#1A8CD8] w-[120px] flex items-center justify-center rounded-[20px] pt-[8px] pb-[8px] text-white font-semibold"
+        >
           Subscribe
-        </button>
+        </Link>
       </div>
     </>
   );

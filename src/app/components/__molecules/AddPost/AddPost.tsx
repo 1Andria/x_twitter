@@ -51,11 +51,11 @@ function AddPost({
         onSubmit={onSubmit}
         className={`w-full h-auto min-h-[120px] border-b border-b-[#2F3336] ${border}  flex items-start pl-[15px] pr-[15px] pt-[20px] gap-[10px]`}
       >
-        <div className="w-[55px] h-[50px]  rounded-[50px]">
+        <div className="w-[50px] h-[50px] shrink-0 rounded-[50px]">
           <Image
             src={profilePicture}
             alt="Profile"
-            className="w-full h-full object-cover rounded-[50px]"
+            className="w-full h-full object-cover rounded-[50px] shrink-0"
             width={500}
             height={500}
           />
@@ -91,7 +91,7 @@ function AddPost({
             />
           )}
           <div className="w-full h-[50px] pl-[10px] pr-[10px] mt-[10px] flex  items-center justify-between">
-            <div className="flex gap-[14px]">
+            <div className="flex gap-[14px] mr-[10px]">
               <div className="w-[25px] h-[25px] relative">
                 <label
                   htmlFor={inputId}
@@ -106,13 +106,13 @@ function AddPost({
                   className="hidden"
                 />
               </div>
-              <div className="w-[25px] h-[25px]">
+              <div className="w-[25px] h-[25px] max-[570px]:hidden">
                 <Gif />
               </div>
-              <div className="w-[25px] h-[25px]">
+              <div className="w-[25px] h-[25px] max-[570px]:hidden">
                 <GrokIcon color="rgb(29, 155, 240)" />
               </div>
-              <div className="w-[25px] h-[25px]">
+              <div className="w-[25px] h-[25px] max-[570px]:hidden">
                 <SetIcon />
               </div>
               <div className="w-[25px] h-[25px]">
@@ -121,7 +121,7 @@ function AddPost({
               <div className="w-[25px] h-[25px]">
                 <Calendar />
               </div>
-              <div className="w-[25px] h-[25px]">
+              <div className="w-[25px] h-[25px] max-[570px]:hidden">
                 <Location />
               </div>
             </div>

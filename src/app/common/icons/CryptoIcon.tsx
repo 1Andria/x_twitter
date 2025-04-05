@@ -14,7 +14,7 @@ function CryptoIcon() {
           cy="100"
           r="90"
           fill="#121212"
-          stroke="white"
+          stroke="#1A8CD8"
           stroke-width="6"
         />
         <text
@@ -22,7 +22,7 @@ function CryptoIcon() {
           y="50%"
           font-family="Arial, sans-serif"
           font-size="90"
-          fill="#f2a900"
+          fill="#1A8CD8"
           font-weight="bold"
           text-anchor="middle"
           alignment-baseline="middle"
