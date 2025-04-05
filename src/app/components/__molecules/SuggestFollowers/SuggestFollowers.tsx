@@ -144,7 +144,7 @@ function SuggestFollowers({ hidden }: SuggestProps) {
 
                 <button
                   onClick={() => handleFollow(user)}
-                  className={`pr-[15px] pl-[15px] max-[400px]:pl-[10px] max-[400px]:pr-[10px] pt-[5px] pb-[5px] font-semibold rounded-[30px] transition-all duration-200 ${
+                  className={`pr-[15px] pl-[15px] max-[400px]:pl-[10px] max-[400px]:pr-[10px] pt-[5px] pb-[5px] max-[400px]:text-[12px] font-semibold rounded-[30px] transition-all  ${
                     isFollowing
                       ? "bg-[#0F1419] text-white border border-white"
                       : "bg-white text-black"

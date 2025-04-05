@@ -14,7 +14,7 @@ function Search() {
           placeholder="Search..."
           type="text"
           className="w-full h-[45px] bg-transparent text-white rounded-[20px] 
-focus:outline-[#1A8CD8] border-[2px] border-[#2F3336] pl-[35px] text-[18px]"
+focus:outline-none focus:border-[#1A8CD8] border-[2px] border-[#2F3336] pl-[35px] text-[18px]"
         />
         <div className="w-[20px] h-[20px] absolute left-[10px] top-[12px]">
           <SearchingIcon />

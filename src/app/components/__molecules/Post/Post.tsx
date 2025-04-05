@@ -9,9 +9,10 @@ function Post() {
 
   return (
     <div className="flex flex-col w-full">
-      {searchValue.length === 0 &&
+      {searchValue.trim() === "" &&
         posts.map((post) => <PostItem key={post.id} post={post} />)}
       {searchValue.length > 0 &&
+        searchValue.trim() != "" &&
         FilterByName.map((post) => <PostItem key={post.id} post={post} />)}
     </div>
   );

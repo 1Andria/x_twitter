@@ -57,7 +57,7 @@ function MessagesContext() {
   }, []);
 
   return (
-    <div className="max-w-[650px] w-full min-h-screen h-auto border-r border-r-[#2F3336] flex flex-col">
+    <div className="max-w-[650px] min-w-[300px] mr-[10px] pr-[10px] w-full min-h-screen h-auto border-r border-r-[#2F3336] flex flex-col">
       {!selectedUser && (
         <div className="w-full h-[70px] border-b border-b-[#2F3336] flex items-center pl-[20px]">
           <h1 className="text-white text-[20px] font-bold">Messages</h1>

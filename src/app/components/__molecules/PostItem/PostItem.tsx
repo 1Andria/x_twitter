@@ -183,18 +183,18 @@ const PostItem = ({ post }: PostItemProps) => {
         />
       </Link>
 
-      <div className="flex flex-col items-start w-full min-w-0">
+      <div className="flex flex-col items-start w-full min-w-[200px]">
         <div className="flex items-center justify-between w-full">
-          <div className="flex items-center gap-[8px]">
+          <div className="flex items-center gap-[8px] max-[600px]:flex-col">
             <Link href={`/profile/${post.username}`}>
               <h3 className="text-white font-bold hover:underline">
                 {post.name}
               </h3>
             </Link>
-            <h3 className="text-[#71767B] text-[14px] font-semibold">
+            <h3 className="text-[#71767B] max-[600px]:hidden text-[14px] font-semibold">
               @{post.authorEmail.split("@")[0]}
             </h3>
-            <div className="w-[3px] h-[3px] rounded-full bg-[#71767B]"></div>
+            <div className="w-[3px] h-[3px] rounded-full max-[600px]:hidden bg-[#71767B]"></div>
             <h3 className="text-[#71767B] text-[14px] font-semibold">
               {post.createdAt && (
                 <ReactTimeAgo date={post.createdAt.toDate()} locale="en-US" />
@@ -262,9 +262,9 @@ const PostItem = ({ post }: PostItemProps) => {
         {!edit && (
           <div
             onClick={() => setAllComments(post.id)}
-            className="w-full max-w-full break-words cursor-pointer"
+            className="w-full max-w-full min-w-0 cursor-pointer overflow-hidden"
           >
-            <p className="text-white break-words whitespace-pre-wrap">
+            <p className="text-white whitespace-pre-wrap break-words break-all">
               {post.text}
             </p>
           </div>
@@ -315,7 +315,7 @@ const PostItem = ({ post }: PostItemProps) => {
             </div>
             <h3 className="text-[#6D7176]">{commentCount}</h3>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center max-[600px]:hidden">
             <div className="w-[20px] h-[20px]">
               <ShareIcon />
             </div>
@@ -341,7 +341,7 @@ const PostItem = ({ post }: PostItemProps) => {
               icon={<BookmarkBorderIcon sx={{ color: "#6D7176" }} />}
               checkedIcon={<BookmarkIcon sx={{ color: "rgb(29, 155, 240)" }} />}
             />
-            <div className="w-[20px] h-[20px]">
+            <div className="w-[20px] h-[20px] max-[600px]:hidden">
               <DownoloadIcon />
             </div>
           </div>

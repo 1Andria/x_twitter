@@ -86,7 +86,7 @@ function Chat() {
   if (!selectedUser) return null;
 
   return (
-    <div className="text-white flex flex-col h-screen">
+    <div className="text-white min-w-[200px] flex flex-col h-screen">
       <div className="flex pt-[16px] border-b border-b-[gray] pb-[10px] pl-[16px] pr-[16px] items-center gap-4 mb-4">
         <button onClick={() => setSelectedUser(null)}>← Back</button>
         <h1 className="text-xl font-bold">Chat with {selectedUser.name}</h1>
@@ -151,21 +151,23 @@ function Chat() {
           <div ref={chatBottomRef}></div>
         </div>
 
-        <AddPost
-          onSubmit={handleSend}
-          placeholder="Send a message"
-          text={text}
-          setText={setText}
-          image={image}
-          setImage={setImage}
-          setFile={setFile}
-          file={file}
-          profilePicture={profilePicture}
-          btnText="Send"
-          hidden="hidden"
-          inputId="chat-image"
-          border="border-b-[transparent] border-t-[#2F3336] border-t "
-        />
+        <div className="ml-[-20px] mr-[-10px]">
+          <AddPost
+            onSubmit={handleSend}
+            placeholder="Send a message"
+            text={text}
+            setText={setText}
+            image={image}
+            setImage={setImage}
+            setFile={setFile}
+            file={file}
+            profilePicture={profilePicture}
+            btnText="Send"
+            hidden="hidden"
+            inputId="chat-image"
+            border="border-b-[transparent] border-t-[#2F3336] border-t "
+          />
+        </div>
       </div>
     </div>
   );

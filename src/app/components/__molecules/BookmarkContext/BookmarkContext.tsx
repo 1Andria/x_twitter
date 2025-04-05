@@ -33,10 +33,10 @@ function BookmarkContext() {
           <>
             <div className="w-full sticky top-0 pl-[15px] h-[60px] flex bg-black border-b border-b-[#2F3336] items-center gap-[30px]">
               <div className=" gap-[20px] flex items-center justify-center">
-                <div className="w-[20px] h-[20px]">
+                <button className="w-[20px] h-[20px]">
                   <ArrowIcon />
-                </div>
-                <h1 className="text-white text-[20px] w-full">
+                </button>
+                <h1 className="text-white font-bold text-[20px] w-full">
                   Bookmarked Posts:
                 </h1>
               </div>
