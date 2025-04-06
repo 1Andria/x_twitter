@@ -5,8 +5,8 @@ export const SignUpSchema = yup.object().shape({
     .string()
     .required("Can't be empty")
     .matches(/^(?=.*[a-zA-Z])[a-zA-Z0-9]+$/, "What's your name?")
-    .min(8, "At least 8 characters.")
-    .max(26, "26 is max"),
+    .min(3, "At least 3 characters.")
+    .max(16, "16 is max"),
   email: yup
     .string()
     .required("Email is required")
