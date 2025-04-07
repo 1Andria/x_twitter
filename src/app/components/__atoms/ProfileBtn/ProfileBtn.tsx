@@ -13,7 +13,7 @@ function ProfileBtn() {
     <>
       <button
         onClick={ChangeEditProfile}
-        className="text-[white] hover:bg-[#111313] border-[1px] mr-[15px] mt-[10px] border-[#536471] h-[40px] pl-[15px] pr-[15px] rounded-[20px]"
+        className="text-[white] hover:bg-[#111313] border-[1px] mr-[15px] mt-[10px] border-[#536471] h-[40px] max-[700px]:text-[12px] max-[700px]:w-[100px] max-[700px]:pr-[5px] max-[700px]:pl-[5px]  pl-[15px] pr-[15px] rounded-[20px]"
       >
         Set up profile
       </button>

@@ -19,6 +19,7 @@ import {
   useEditProfile,
   useLogInStore,
   usePostData,
+  useProfileContext,
   useUserProfile,
 } from "@/app/common/hooks/Store";
 import ProfilePictureUpload from "../ProfilePictureUpload/ProfilePictureUpload";
@@ -31,7 +32,6 @@ import PostFetcher from "@/app/common/functions/PostFetcher";
 function ProfileContext({ pathName }: PropsType) {
   const cleanPathName = Array.isArray(pathName) ? pathName[0] : pathName;
   const [currentUsername, setCurrentUsername] = useState<string>("");
-  const [profilePicture, setProfilePicture] = useState<string>("");
   const [activeTab, setActiveTab] = useState("Posts");
   const email = useLogInStore((state) => state.email);
   const setEmail = useLogInStore((state) => state.setEmail);
@@ -52,6 +52,11 @@ function ProfileContext({ pathName }: PropsType) {
   const posts = usePostData((state) => state.posts);
   const UserPost = posts.filter((post) => post.authorEmail === email);
   const LikedPosts = posts.filter((post) => post.likes.includes(email));
+  const profilePicture = useProfileContext((state) => state.profilePicture);
+  const setProfilePicture = useProfileContext(
+    (state) => state.setProfilePicture
+  );
+
   const bookmarkedPosts = posts.filter((post) =>
     post.bookmarks.includes(email)
   );
@@ -170,7 +175,7 @@ function ProfileContext({ pathName }: PropsType) {
           </div>
           {currentUsername === cleanPathName && <ProfileBtn />}
         </div>
-        <div className="flex  justify-between">
+        <div className="flex  justify-between min-w-[200px] max-[700px]:flex-wrap">
           {AboutArray.map((item) => (
             <button
               key={item}

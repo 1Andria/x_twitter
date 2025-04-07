@@ -152,6 +152,17 @@ export const usePostData = create<PostStore>((set) => ({
   setPosts: (posts) => set({ posts }),
 }));
 
+export type ProfileContextTypes = {
+  profilePicture: string;
+  setProfilePicture: (url: string) => void;
+
+};
+
+export const useProfileContext = create<ProfileContextTypes>((set) => ({
+  profilePicture: "",
+  setProfilePicture: (url) => set({ profilePicture: url }),
+}));
+
 export const useCurrentUser = create<CurrentUserType>((set) => ({
   name: "",
   email: "",
