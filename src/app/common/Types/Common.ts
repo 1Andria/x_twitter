@@ -265,3 +265,58 @@ export type UserType = {
   email: string;
   profilePicture: string;
 };
+
+export type ProfileContextTypes = {
+  profilePicture: string;
+  setProfilePicture: (url: string) => void;
+
+};
+export type MessageInputStore = {
+  text: string;
+  image: string | null;
+  file: File | null;
+  setText: (text: string) => void;
+  setImage: (image: string | null) => void;
+  setFile: (file: File | null) => void;
+  reset: () => void;
+};
+export type CoverTypes = {
+  toCover: boolean;
+  setToCover: (value: boolean) => void;
+};
+export type EditProfileTypes = {
+  editProfile: boolean;
+  setEditProfile: () => void;
+};
+
+export type AddCommentTypes = {
+  commentModal: string | null;
+  setCommentModal: (postId: string | null) => void;
+};
+export type CommentModal = {
+  allComments: string | null;
+  setAllComments: (postId: string | null) => void;
+};
+export type CommentState = {
+  text: string;
+  image: string | null;
+  file: File | null;
+  setText: (text: string) => void;
+  setImage: (image: string | null) => void;
+  setFile: (file: File | null) => void;
+};
+
+export type NavBarPostTypes = {
+  navBarPost: boolean;
+  setNavBarPost: (value: boolean) => void;
+};
+export type SearchValueTypes = {
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+};
+export type Notification = {
+  username: string;
+  name: string;
+  profilePicture: string;
+  message: string;
+};

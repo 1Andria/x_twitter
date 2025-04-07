@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
@@ -31,6 +31,25 @@ function NavBar() {
   const profilePicture = useUserProfile((state) => state.profilePicture);
   const setProfilePicture = useUserProfile((state) => state.setProfilePicture);
   const setNavBarPost = useNavBarPost((state) => state.setNavBarPost);
+  const [out, setOut] = useState(false);
+  const outRef = useRef<HTMLAnchorElement | null>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (outRef.current && !outRef.current.contains(event.target as Node)) {
+        setOut(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [out]);
+
+  function LogOut() {
+    setOut(!out);
+  }
 
   function OpenNavBarPost() {
     setNavBarPost(true);
@@ -112,7 +131,7 @@ function NavBar() {
 
         <Link
           href={`/notifications/${username}`}
-          className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
+          className=" relative flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
         >
           <div className="w-[30px] h-[30px]">
             <NotificationIcon path={path} username={username} />
@@ -227,11 +246,23 @@ function NavBar() {
           </h1>
         </Link>
 
-        <div className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]">
+        <div
+          onClick={LogOut}
+          className="flex cursor-pointer items-center relative gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
+        >
           <div className="w-[30px] h-[30px]">
             <MoreIcon />
           </div>
           <h1 className="text-white text-[18px] max-[650px]:hidden">More</h1>
+          {out && (
+            <Link
+              ref={outRef}
+              href={"/"}
+              className="z-[50000] w-[150px] text-[red] border border-white bg-black bottom-[-40px] rounded-[20px] h-[50px]  absolute flex justify-center items-center"
+            >
+              Log out
+            </Link>
+          )}
         </div>
 
         <button

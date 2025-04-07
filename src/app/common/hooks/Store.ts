@@ -18,6 +18,15 @@ import {
   UserProfileStore,
   MoreDivTypes,
   CommentMoreDivTypes,
+  ProfileContextTypes,
+  MessageInputStore,
+  CommentModal,
+  AddCommentTypes,
+  EditProfileTypes,
+  CoverTypes,
+  SearchValueTypes,
+  NavBarPostTypes,
+  CommentState,
 } from "../Types/Common";
 
 export const useCreateAcc = create<CrAccType>((set) => ({
@@ -152,12 +161,6 @@ export const usePostData = create<PostStore>((set) => ({
   setPosts: (posts) => set({ posts }),
 }));
 
-export type ProfileContextTypes = {
-  profilePicture: string;
-  setProfilePicture: (url: string) => void;
-
-};
-
 export const useProfileContext = create<ProfileContextTypes>((set) => ({
   profilePicture: "",
   setProfilePicture: (url) => set({ profilePicture: url }),
@@ -181,54 +184,25 @@ export const useMoreInfo = create<MoreDivTypes>((set) => ({
   setMoreDiv: (id) => set(() => ({ moreDiv: id })),
 }));
 
-export type CoverTypes = {
-  toCover: boolean;
-  setToCover: (value: boolean) => void;
-};
-
 export const useCover = create<CoverTypes>((set) => ({
   toCover: false,
   setToCover: (value) => set(() => ({ toCover: value })),
 }));
-
-export type EditProfileTypes = {
-  editProfile: boolean;
-  setEditProfile: () => void;
-};
 
 export const useEditProfile = create<EditProfileTypes>((set) => ({
   editProfile: false,
   setEditProfile: () => set((state) => ({ editProfile: !state.editProfile })),
 }));
 
-export type AddCommentTypes = {
-  commentModal: string | null;
-  setCommentModal: (postId: string | null) => void;
-};
-
 export const useAddComment = create<AddCommentTypes>((set) => ({
   commentModal: null,
   setCommentModal: (postId) => set({ commentModal: postId }),
 }));
 
-export type CommentModal = {
-  allComments: string | null;
-  setAllComments: (postId: string | null) => void;
-};
-
 export const useCommentModal = create<CommentModal>((set) => ({
   allComments: null,
   setAllComments: (postId) => set({ allComments: postId }),
 }));
-
-type CommentState = {
-  text: string;
-  image: string | null;
-  file: File | null;
-  setText: (text: string) => void;
-  setImage: (image: string | null) => void;
-  setFile: (file: File | null) => void;
-};
 
 export const useCommentStore = create<CommentState>((set) => ({
   text: "",
@@ -239,35 +213,15 @@ export const useCommentStore = create<CommentState>((set) => ({
   setFile: (file) => set({ file }),
 }));
 
-export type NavBarPostTypes = {
-  navBarPost: boolean;
-  setNavBarPost: (value: boolean) => void;
-};
-
 export const useNavBarPost = create<NavBarPostTypes>((set) => ({
   navBarPost: false,
   setNavBarPost: (value) => set(() => ({ navBarPost: value })),
 }));
 
-export type SearchValueTypes = {
-  searchValue: string;
-  setSearchValue: (value: string) => void;
-};
-
 export const useSearchValue = create<SearchValueTypes>((set) => ({
   searchValue: "",
   setSearchValue: (value) => set(() => ({ searchValue: value })),
 }));
-
-type MessageInputStore = {
-  text: string;
-  image: string | null;
-  file: File | null;
-  setText: (text: string) => void;
-  setImage: (image: string | null) => void;
-  setFile: (file: File | null) => void;
-  reset: () => void;
-};
 
 export const useMessageInputStore = create<MessageInputStore>((set) => ({
   text: "",

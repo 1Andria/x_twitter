@@ -29,8 +29,6 @@ function Chat() {
   const selectedUser = useSelectedUser((state) => state.selectedUser);
   const setSelectedUser = useSelectedUser((state) => state.setSelectedUser);
   const profilePicture = useUserProfile((state) => state.profilePicture);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const chatBottomRef = useRef<HTMLDivElement>(null);
   const text = useMessageInputStore((state) => state.text);
   const image = useMessageInputStore((state) => state.image);
   const file = useMessageInputStore((state) => state.file);
@@ -38,6 +36,8 @@ function Chat() {
   const setImage = useMessageInputStore((state) => state.setImage);
   const setFile = useMessageInputStore((state) => state.setFile);
   const reset = useMessageInputStore((state) => state.reset);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const chatBottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!selectedUser || !auth.currentUser) return;

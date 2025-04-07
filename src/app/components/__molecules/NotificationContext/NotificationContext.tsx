@@ -4,13 +4,8 @@ import { db, auth } from "@/app/firebase/config";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Image from "next/image";
 import { onAuthStateChanged } from "firebase/auth";
+import { Notification } from "@/app/common/Types/Common";
 
-type Notification = {
-  username: string;
-  name: string;
-  profilePicture: string;
-  message: string;
-};
 
 function NotificationContext() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -43,7 +38,6 @@ function NotificationContext() {
         const postsSnapshot = await getDocs(postsQuery);
 
         const likerEmails: string[] = [];
-
         postsSnapshot.docs.forEach((doc) => {
           const data = doc.data();
           if (Array.isArray(data.likes)) {
@@ -72,7 +66,9 @@ function NotificationContext() {
             });
           });
         }
-        setNotifications([...followersData, ...likeNotifs]);
+
+        const allNotifications = [...followersData, ...likeNotifs];
+        setNotifications(allNotifications);
       }
     });
 
