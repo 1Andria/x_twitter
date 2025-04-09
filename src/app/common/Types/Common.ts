@@ -269,7 +269,6 @@ export type UserType = {
 export type ProfileContextTypes = {
   profilePicture: string;
   setProfilePicture: (url: string) => void;
-
 };
 export type MessageInputStore = {
   text: string;

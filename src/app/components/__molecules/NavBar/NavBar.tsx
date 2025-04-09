@@ -41,12 +41,6 @@ function NavBar() {
     setOut(true);
   }
 
-  // useEffect(() => {
-  //   if (!username) {
-  //     router.push("/");
-  //   }
-  // }, [username]);
-
   function OpenNavBarPost() {
     setNavBarPost(true);
   }

@@ -56,6 +56,8 @@ function LogIn() {
       }
     } else {
       useNotFound.getState().setUserNotFound(true);
+      setEmail("");
+      setPassword("");
     }
   };
 
