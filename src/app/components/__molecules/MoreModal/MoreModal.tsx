@@ -115,6 +115,7 @@ function MoreModal() {
             <div className="w-full  flex gap-[8px] justify-between">
               {ElementColorArray.map((item) => (
                 <div
+                  key={item}
                   onClick={() => setElementColor(item)}
                   className={`cursor-pointer bg-[${item}] h-[30px] w-[30px] rounded-[100%] flex items-center justify-center`}
                 >
