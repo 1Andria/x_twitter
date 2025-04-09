@@ -29,6 +29,7 @@ import {
   useCommentModal,
   useHoverStore,
   useMoreInfo,
+  useThemeColors,
 } from "@/app/common/hooks/Store";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
@@ -51,6 +52,7 @@ const PostItem = ({ post }: PostItemProps) => {
   const [editText, setEditText] = useState(post.text);
   const setCommentModal = useAddComment((state) => state.setCommentModal);
   const setAllComments = useCommentModal((state) => state.setAllComments);
+  const contentColor = useThemeColors((state) => state.contentColor);
 
   const [commentCount, setCommentCount] = useState<number>(0);
 
@@ -187,7 +189,11 @@ const PostItem = ({ post }: PostItemProps) => {
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-[8px] max-[600px]:flex-col">
             <Link href={`/profile/${post.username}`}>
-              <h3 className="text-white font-bold hover:underline">
+              <h3
+                className={`${
+                  contentColor === "white" ? "text-black" : "text-white"
+                } font-bold hover:underline`}
+              >
                 {post.name}
               </h3>
             </Link>
@@ -205,13 +211,25 @@ const PostItem = ({ post }: PostItemProps) => {
           <div className="relative">
             {moreDiv === post.id && (
               <div ref={divRef} className="absolute right-0  z-50">
-                <div className="pt-[10px] pb-[10px] w-[170px] pl-[10px] pr-[10px] flex flex-col bg-black border border-white/20 shadow-white shadow-sm rounded-[10px] gap-[20px]">
+                <div
+                  className={`pt-[10px] pb-[10px] w-[170px] pl-[10px] pr-[10px] flex flex-col bg-[${contentColor}] border ${
+                    contentColor === "white"
+                      ? "border-[black] border-[1px]"
+                      : "border-[white] border-[1px]"
+                  }  shadow-white shadow-sm rounded-[10px] gap-[20px]`}
+                >
                   {currentUsername != post.username && (
                     <button onClick={ShowMoreDiv} className="flex gap-[10px]">
                       <div className="w-[25px] h-[25px]">
                         <ReportIcon />
                       </div>
-                      <h3 className="text-white">Report</h3>
+                      <h3
+                        className={`${
+                          contentColor === "white" ? "text-black" : "text-white"
+                        } `}
+                      >
+                        Report
+                      </h3>
                     </button>
                   )}
                   {currentUsername != post.username && (
@@ -219,7 +237,13 @@ const PostItem = ({ post }: PostItemProps) => {
                       <div className="w-[25px] h-[25px]">
                         <Unsmile />
                       </div>
-                      <h3 className="text-white">Not interested</h3>
+                      <h3
+                        className={`${
+                          contentColor === "white" ? "text-black" : "text-white"
+                        } `}
+                      >
+                        Not interested
+                      </h3>
                     </button>
                   )}
                   {currentUsername === post.username && (
@@ -227,7 +251,13 @@ const PostItem = ({ post }: PostItemProps) => {
                       <div className="w-[25px] h-[25px]">
                         <EditIcon />
                       </div>
-                      <h3 className="text-white">Edit text</h3>
+                      <h3
+                        className={`${
+                          contentColor === "white" ? "text-black" : "text-white"
+                        } `}
+                      >
+                        Edit text
+                      </h3>
                     </button>
                   )}
                   {currentUsername === post.username && (
@@ -244,7 +274,11 @@ const PostItem = ({ post }: PostItemProps) => {
             <div
               onMouseEnter={() => setMoreColor(post.id)}
               onMouseLeave={() => setMoreColor(null)}
-              className="flex gap-[2px] cursor-pointer pt-[15px] pb-[15px] pl-[10px] pr-[10px] rounded-full hover:bg-[#0A171F]"
+              className={`flex gap-[2px] cursor-pointer pt-[15px] pb-[15px] pl-[10px] pr-[10px] rounded-full ${
+                contentColor === "white"
+                  ? "hover:bg-[#E7E7E8]"
+                  : "hover:bg-[#181818] "
+              }`}
               onClick={ShowMoreDiv}
             >
               {[...Array(3)].map((_, i) => (
@@ -264,7 +298,11 @@ const PostItem = ({ post }: PostItemProps) => {
             onClick={() => setAllComments(post.id)}
             className="w-full max-w-full min-w-0 cursor-pointer overflow-hidden"
           >
-            <p className="text-white whitespace-pre-wrap break-words break-all">
+            <p
+              className={`${
+                contentColor === "white" ? "text-black" : "text-white"
+              } whitespace-pre-wrap break-words break-all`}
+            >
               {post.text}
             </p>
           </div>
@@ -277,13 +315,19 @@ const PostItem = ({ post }: PostItemProps) => {
           >
             <TextareaAutosize
               ref={TextAreaRef}
-              className="text-white w-full resize-none bg-transparent"
+              className={`${
+                contentColor === "white" ? "text-black" : "text-white"
+              } w-full resize-none bg-transparent`}
               value={editText}
               onChange={(e) => setEditText(e.target.value)}
             />
             <button
               onClick={handleSaveEdit}
-              className="bg-black h-[40px] border border-[1px]-white rounded-[10px] font-semibold pr-[10px] pl-[10px] text-white"
+              className={`${
+                contentColor === "white" ? "text-black" : "text-white"
+              } bg-[${
+                contentColor === "white" ? "bg-[black]" : "bg-[white]"
+              }}] h-[40px] border border-[1px]-white rounded-[10px] font-semibold pr-[10px] pl-[10px] `}
             >
               Edit
             </button>

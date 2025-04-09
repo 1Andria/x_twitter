@@ -8,7 +8,7 @@ import SmileIcon from "@/app/common/icons/SmileIcon";
 import React, { ChangeEvent } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import PostBtn from "../../__atoms/PostBtn/PostBtn";
-import { useWorldState } from "@/app/common/hooks/Store";
+import { useThemeColors, useWorldState } from "@/app/common/hooks/Store";
 import World from "@/app/common/icons/World";
 import Image from "next/image";
 import { AddPostProps } from "@/app/common/Types/Common";
@@ -26,6 +26,10 @@ function AddPost({
   inputId,
   border,
 }: AddPostProps) {
+  const isPostDisabled = text.trim() === "" && !image;
+  const contentColor = useThemeColors((state) => state.contentColor);
+  const world = useWorldState((state) => state.world);
+  const setWorld = useWorldState((state) => state.setWorld);
   const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const uploadedFile = e.target.files?.[0];
     if (uploadedFile) {
@@ -39,11 +43,6 @@ function AddPost({
       reader.readAsDataURL(uploadedFile);
     }
   };
-
-  const isPostDisabled = text.trim() === "" && !image;
-
-  const world = useWorldState((state) => state.world);
-  const setWorld = useWorldState((state) => state.setWorld);
 
   return (
     <>
@@ -65,7 +64,9 @@ function AddPost({
             <TextareaAutosize
               maxLength={260}
               placeholder={placeholder}
-              className="w-full focus:outline-none text-[20px] text-white bg-transparent resize-none "
+              className={`w-full focus:outline-none ${
+                contentColor === "white" ? "text-black" : "text-white"
+              } text-[20px] bg-transparent resize-none `}
               value={text}
               onChange={(e) => setText(e.target.value)}
               onFocus={() => setWorld(true)}

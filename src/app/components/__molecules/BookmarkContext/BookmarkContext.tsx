@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { usePostData } from "@/app/common/hooks/Store";
+import { usePostData, useThemeColors } from "@/app/common/hooks/Store";
 import { auth } from "@/app/firebase/config";
 import PostItem from "../PostItem/PostItem";
 import PostFetcher from "@/app/common/functions/PostFetcher";
@@ -13,6 +13,7 @@ function BookmarkContext() {
     post.bookmarks.includes(currentUserEmail || "")
   );
   const hasBookmarks = bookmarkedPosts.length > 0;
+  const contentColor = useThemeColors((state) => state.contentColor);
 
   return (
     <>
@@ -20,7 +21,11 @@ function BookmarkContext() {
         <PostFetcher />
         {!hasBookmarks && (
           <div className="w-full h-full flex flex-col items-center">
-            <h2 className="text-white  font-semibold text-[30px] mt-[50px] text-start">
+            <h2
+              className={` ${
+                contentColor === "white" ? "text-black" : "text-white   "
+              } font-semibold text-[30px] mt-[50px] text-start`}
+            >
               Save posts for later
             </h2>
             <p className="text-[#71767B]">
@@ -31,12 +36,18 @@ function BookmarkContext() {
 
         {hasBookmarks && (
           <>
-            <div className="w-full sticky top-0 pl-[15px] h-[60px] flex bg-black border-b border-b-[#2F3336] items-center gap-[30px]">
+            <div
+              className={`w-full sticky top-0 pl-[15px] h-[60px] flex bg-[${contentColor}] border-b border-b-[#2F3336] items-center gap-[30px]`}
+            >
               <div className=" gap-[20px] flex items-center justify-center">
                 <button className="w-[20px] h-[20px]">
                   <ArrowIcon />
                 </button>
-                <h1 className="text-white font-bold text-[20px] w-full">
+                <h1
+                  className={` font-bold text-[20px]  ${
+                    contentColor === "white" ? "text-black" : "text-white   "
+                  }  w-full`}
+                >
                   Bookmarked Posts:
                 </h1>
               </div>

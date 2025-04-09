@@ -1,6 +1,7 @@
 import {
   useAddComment,
   useCommentStore,
+  useThemeColors,
   useUserProfile,
 } from "@/app/common/hooks/Store";
 import { auth, db } from "@/app/firebase/config";
@@ -28,6 +29,8 @@ function AddComment({
   const setImage = useCommentStore((state) => state.setImage);
   const setFile = useCommentStore((state) => state.setFile);
   const profilePicture = useUserProfile((state) => state.profilePicture);
+  const contentColor = useThemeColors((state) => state.contentColor);
+
   function CloseCommentModal() {
     setCommentModal(null);
     setText("");
@@ -84,13 +87,21 @@ function AddComment({
             transform: "translate(-50%, -50%)",
           }}
         >
-          <div className="w-[570px] max-[630px]:w-[350px]   ml-[10px] mr-[10px] rounded-[20px]  bg-black flex  flex-col pt-[15px]  relative">
+          <div
+            className={`w-[570px] max-[630px]:w-[350px]   ml-[10px] mr-[10px] rounded-[20px]  bg-[${contentColor}] flex  flex-col pt-[15px]  relative`}
+          >
             <div className="w-full flex justify-start pl-[10px] mb-[15px]">
               <div
                 onClick={() => setCommentModal(null)}
                 className="w-[40px] h-[40px] cursor-pointer  hover:bg-[grey] rounded-[100%] flex justify-center items-center "
               >
-                <h1 className="text-white">X</h1>
+                <h1
+                  className={`${
+                    contentColor === "white" ? "text-black" : "text-white"
+                  }`}
+                >
+                  X
+                </h1>
               </div>
             </div>
             <div className="flex items-center gap-[5px] w-full pl-[20px]">
@@ -103,7 +114,13 @@ function AddComment({
                   height={500}
                 />
               </div>
-              <h2 className="text-white">{postAuthorName}</h2>
+              <h2
+                className={`font-semibold ${
+                  contentColor === "white" ? "text-black" : "text-white"
+                }`}
+              >
+                {postAuthorName}
+              </h2>
               <h3 className="text-[#71767B] text-[14px] font-semibold">
                 @{postAuthorEmail.split("@")[0]}
               </h3>

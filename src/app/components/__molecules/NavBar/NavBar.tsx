@@ -1,12 +1,14 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/app/firebase/config";
 import {
   useCurrentUser,
+  useMoreModal,
   useNavBarPost,
+  useThemeColors,
   useUserProfile,
 } from "@/app/common/hooks/Store";
 import XIcon from "@/app/common/icons/xIcon";
@@ -25,6 +27,7 @@ import Image from "next/image";
 import NavBarPost from "../NavBarPost/NavBarPost";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+import MoreModal from "../MoreModal/MoreModal";
 
 function NavBar() {
   const path = usePathname();
@@ -32,36 +35,18 @@ function NavBar() {
   const profilePicture = useUserProfile((state) => state.profilePicture);
   const setProfilePicture = useUserProfile((state) => state.setProfilePicture);
   const setNavBarPost = useNavBarPost((state) => state.setNavBarPost);
-  const [out, setOut] = useState(false);
-  const outRef = useRef<HTMLButtonElement | null>(null);
-  const router = useRouter();
+  const setOut = useMoreModal((state) => state.setOut);
+  const contentColor = useThemeColors((state) => state.contentColor);
 
-  function HandleLogOut() {
-    router.push("/");
+  function OpenMoreModal() {
+    setOut(true);
   }
 
-  useEffect(() => {
-    if (!username) {
-      router.push("/");
-    }
-  }, [username]);
-
-  useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (outRef.current && !outRef.current.contains(event.target as Node)) {
-        setOut(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleOutsideClick);
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, [out]);
-
-  function LogOut() {
-    setOut(!out);
-  }
+  // useEffect(() => {
+  //   if (!username) {
+  //     router.push("/");
+  //   }
+  // }, [username]);
 
   function OpenNavBarPost() {
     setNavBarPost(true);
@@ -93,7 +78,7 @@ function NavBar() {
 
   return (
     <div
-      className={`max-w-[360px] w-full h-screen sticky top-0 border-r border-r-[#2F3336] flex flex-col items-start justify-between max-[650px]:items-center pl-[50px] max-[950px]:pl-[5px] pt-[20px] pb-[20px] ${
+      className={`max-w-[360px] w-full h-screen sticky top-0 border-r border-r-[#2F3336] flex flex-col items-start justify-between max-[650px]:items-center pl-[50px] max-[950px]:pl-[5px] pt-[20px] pb-[20px] bg-[${contentColor}] ${
         path === "/" ? "hidden" : "flex"
       }`}
     >
@@ -107,13 +92,19 @@ function NavBar() {
 
         <Link
           href={`/xpage/${username}`}
-          className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
+          className={`flex items-center gap-[10px] ${
+            contentColor === "white"
+              ? "hover:bg-[#E7E7E8]"
+              : "hover:bg-[#181818] "
+          } p-[10px] rounded-[30px]`}
         >
           <div className="w-[30px] h-[30px]">
             <HomeIcon path={path} username={username} />
           </div>
           <h1
-            className={`text-white ${
+            className={` ${
+              contentColor === "white" ? "text-black" : "text-white"
+            } ${
               path === `/xpage/${username}`
                 ? "text-[20px] font-bold"
                 : "text-[18px] font-normal"
@@ -125,13 +116,19 @@ function NavBar() {
 
         <Link
           href={`/explore/${username}`}
-          className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
+          className={`flex items-center gap-[10px]  p-[10px] rounded-[30px] ${
+            contentColor === "white"
+              ? "hover:bg-[#E7E7E8]"
+              : "hover:bg-[#181818] "
+          }`}
         >
           <div className="w-[30px] h-[30px]">
             <SearchIcon path={path} username={username} />
           </div>
           <h1
-            className={`text-white ${
+            className={`${
+              contentColor === "white" ? "text-black" : "text-white"
+            } ${
               path === `/explore/${username}`
                 ? "text-[20px] font-bold"
                 : "text-[18px] font-normal"
@@ -143,13 +140,19 @@ function NavBar() {
 
         <Link
           href={`/notifications/${username}`}
-          className=" relative flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
+          className={`relative flex items-center gap-[10px] p-[10px] rounded-[30px] ${
+            contentColor === "white"
+              ? "hover:bg-[#E7E7E8]"
+              : "hover:bg-[#181818] "
+          }`}
         >
           <div className="w-[30px] h-[30px]">
             <NotificationIcon path={path} username={username} />
           </div>
           <h1
-            className={`text-white ${
+            className={`${
+              contentColor === "white" ? "text-black" : "text-white"
+            } ${
               path === `/notifications/${username}`
                 ? "text-[20px] font-bold"
                 : "text-[18px] font-normal"
@@ -161,13 +164,19 @@ function NavBar() {
 
         <Link
           href={`/messages/${username}`}
-          className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
+          className={`flex items-center gap-[10px]  p-[10px] ${
+            contentColor === "white"
+              ? "hover:bg-[#E7E7E8]"
+              : "hover:bg-[#181818] "
+          } rounded-[30px]`}
         >
           <div className="w-[30px] h-[30px]">
             <MessagesIcon path={path} username={username} />
           </div>
           <h1
-            className={`text-white ${
+            className={`${
+              contentColor === "white" ? "text-black" : "text-white"
+            } ${
               path === `/messages/${username}`
                 ? "text-[20px] font-bold"
                 : "text-[18px] font-normal"
@@ -177,22 +186,40 @@ function NavBar() {
           </h1>
         </Link>
 
-        <div className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]">
+        <div
+          className={`flex items-center gap-[10px] p-[10px] ${
+            contentColor === "white"
+              ? "hover:bg-[#E7E7E8]"
+              : "hover:bg-[#181818] "
+          } rounded-[30px]`}
+        >
           <div className="w-[30px] h-[30px]">
             <GrokIcon color="white" />
           </div>
-          <h1 className="text-white text-[18px] max-[650px]:hidden">Grok</h1>
+          <h1
+            className={`${
+              contentColor === "white" ? "text-black" : "text-white"
+            } text-[18px] max-[650px]:hidden`}
+          >
+            Grok
+          </h1>
         </div>
 
         <Link
           href={`/bookmarks/${username}`}
-          className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
+          className={`flex items-center gap-[10px]  p-[10px] ${
+            contentColor === "white"
+              ? "hover:bg-[#E7E7E8]"
+              : "hover:bg-[#181818] "
+          } rounded-[30px]`}
         >
           <div className="w-[30px] h-[30px]">
             <FavoritedIcon path={path} username={username} />
           </div>
           <h1
-            className={`text-white ${
+            className={`${
+              contentColor === "white" ? "text-black" : "text-white"
+            } ${
               path === `/bookmarks/${username}`
                 ? "text-[20px] font-bold"
                 : "text-[18px] font-normal"
@@ -204,13 +231,19 @@ function NavBar() {
 
         <Link
           href={`/communities/${username}`}
-          className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
+          className={`flex items-center gap-[10px] p-[10px] ${
+            contentColor === "white"
+              ? "hover:bg-[#E7E7E8]"
+              : "hover:bg-[#181818] "
+          } rounded-[30px]`}
         >
           <div className="w-[30px] h-[30px]">
             <CommunitiesIcon path={path} username={username} />
           </div>
           <h1
-            className={`text-white ${
+            className={`${
+              contentColor === "white" ? "text-black" : "text-white"
+            } ${
               path === `/communities/${username}`
                 ? "text-[20px] font-bold"
                 : "text-[18px] font-normal"
@@ -223,32 +256,58 @@ function NavBar() {
         <Link
           href={"https://react-midterm1.vercel.app/"}
           target="_blank"
-          className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
+          className={`flex items-center gap-[10px] ${
+            contentColor === "white"
+              ? "hover:bg-[#E7E7E8]"
+              : "hover:bg-[#181818] "
+          }  p-[10px] rounded-[30px]`}
         >
           <div className="w-[30px] h-[30px]">
             <PremiumIcon />
           </div>
-          <h1 className="text-white text-[18px] max-[650px]:hidden">Premium</h1>
+          <h1
+            className={`${
+              contentColor === "white" ? "text-black" : "text-white"
+            } text-[18px] max-[650px]:hidden`}
+          >
+            Premium
+          </h1>
         </Link>
 
-        <div className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]">
+        <div
+          className={`flex items-center gap-[10px] ${
+            contentColor === "white"
+              ? "hover:bg-[#E7E7E8]"
+              : "hover:bg-[#181818] "
+          }  p-[10px] rounded-[30px]`}
+        >
           <div className="w-[30px] h-[30px]">
             <VerifiedOrgs />
           </div>
-          <h1 className="text-white text-[18px] max-[650px]:hidden">
+          <h1
+            className={`${
+              contentColor === "white" ? "text-black" : "text-white"
+            }  text-[18px] max-[650px]:hidden`}
+          >
             Verified Orgs
           </h1>
         </div>
 
         <Link
           href={`/profile/${username}`}
-          className="flex items-center gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
+          className={`flex items-center gap-[10px]  p-[10px] ${
+            contentColor === "white"
+              ? "hover:bg-[#E7E7E8]"
+              : "hover:bg-[#181818] "
+          } rounded-[30px]`}
         >
           <div className="w-[30px] h-[30px]">
             <ProfileIcon path={path} username={username} />
           </div>
           <h1
-            className={`text-white ${
+            className={`${
+              contentColor === "white" ? "text-black" : "text-white"
+            } ${
               path === `/profile/${username}`
                 ? "text-[20px] font-bold"
                 : "text-[18px] font-normal"
@@ -259,27 +318,33 @@ function NavBar() {
         </Link>
 
         <div
-          onClick={LogOut}
-          className="flex cursor-pointer items-center relative gap-[10px] hover:bg-[#181818] p-[10px] rounded-[30px]"
+          onClick={OpenMoreModal}
+          className={`flex ${
+            contentColor === "white"
+              ? "hover:bg-[#E7E7E8]"
+              : "hover:bg-[#181818] "
+          } cursor-pointer items-center relative gap-[10px]  p-[10px] rounded-[30px]`}
         >
           <div className="w-[30px] h-[30px]">
             <MoreIcon />
           </div>
-          <h1 className="text-white text-[18px] max-[650px]:hidden">More</h1>
-          {out && (
-            <button
-              onClick={HandleLogOut}
-              ref={outRef}
-              className="z-[50000] w-[150px] text-[red] border border-white bg-black bottom-[-40px] rounded-[20px] h-[50px]  absolute flex justify-center items-center"
-            >
-              Log out
-            </button>
-          )}
+          <h1
+            className={`${
+              contentColor === "white" ? "text-black" : "text-white"
+            } text-[18px] max-[650px]:hidden`}
+          >
+            More
+          </h1>
         </div>
+        <MoreModal />
 
         <button
           onClick={OpenNavBarPost}
-          className="w-[200px] rounded-[15px] h-[50px] bg-white flex justify-center items-center font-semibold max-[780px]:hidden"
+          className={`w-[200px] ${
+            contentColor === "white" ? "text-white" : "text-black"
+          } ${
+            contentColor === "white" ? "bg-[black]" : "bg-[white]"
+          } rounded-[15px] h-[50px]  flex justify-center items-center font-semibold max-[780px]:hidden`}
         >
           Post
         </button>
@@ -297,7 +362,13 @@ function NavBar() {
           />
         </div>
         <div className="flex flex-col mr-[10px]">
-          <h3 className="text-white max-[650px]:hidden">{name || "..."}</h3>
+          <h3
+            className={`${
+              contentColor === "white" ? "text-black" : "text-white"
+            } max-[650px]:hidden`}
+          >
+            {name || "..."}
+          </h3>
           <h3 className="text-[#71767B] max-[780px]:hidden">
             {email || "..."}
           </h3>

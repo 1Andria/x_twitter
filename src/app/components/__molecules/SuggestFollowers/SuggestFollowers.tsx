@@ -9,7 +9,7 @@ import {
   arrayRemove,
   onSnapshot,
 } from "firebase/firestore";
-import { useUserStore } from "@/app/common/hooks/Store";
+import { useThemeColors, useUserStore } from "@/app/common/hooks/Store";
 import { User } from "@/app/common/Types/Common";
 import { auth, db } from "../../../firebase/config";
 import Image from "next/image";
@@ -23,6 +23,7 @@ function SuggestFollowers({ hidden }: SuggestProps) {
   const users = useUserStore((state) => state.users);
   const setUsers = useUserStore((state) => state.setUsers);
   const [followedUsers, setFollowedUsers] = useState<string[]>([]);
+  const contentColor = useThemeColors((state) => state.contentColor);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -106,7 +107,11 @@ function SuggestFollowers({ hidden }: SuggestProps) {
   return (
     <>
       <>
-        <h1 className="text-white font-bold text-[20px] mt-[20px] ml-[10px] mb-[10px]">
+        <h1
+          className={`${
+            contentColor === "white" ? "text-black" : "text-white"
+          } font-bold text-[20px] mt-[20px] ml-[10px] mb-[10px]`}
+        >
           Suggested for you:
         </h1>
         {users
@@ -133,7 +138,13 @@ function SuggestFollowers({ hidden }: SuggestProps) {
                     />
                   </div>
                   <div>
-                    <h1 className="text-white">{user.name}</h1>
+                    <h1
+                      className={`${
+                        contentColor === "white" ? "text-black" : "text-white"
+                      }`}
+                    >
+                      {user.name}
+                    </h1>
                     <h1
                       className={`text-[#71767B] max-[550px]:hidden ${hidden}`}
                     >
@@ -144,7 +155,7 @@ function SuggestFollowers({ hidden }: SuggestProps) {
 
                 <button
                   onClick={() => handleFollow(user)}
-                  className={`pr-[15px] pl-[15px] max-[400px]:pl-[10px] max-[400px]:pr-[10px] pt-[5px] pb-[5px] max-[400px]:text-[12px] font-semibold rounded-[30px] transition-all  ${
+                  className={`pr-[15px] pl-[15px] max-[400px]:pl-[10px] max-[400px]:pr-[10px] pt-[5px] pb-[5px] max-[400px]:text-[12px] font-semibold rounded-[30px] transition-all border-black border  ${
                     isFollowing
                       ? "bg-[#0F1419] text-white border border-white"
                       : "bg-white text-black"

@@ -1,14 +1,26 @@
+"use client";
+import { useThemeColors } from "@/app/common/hooks/Store";
 import Link from "next/link";
 import React from "react";
 
 function Subscribe() {
+  const contentColor = useThemeColors((state) => state.contentColor);
+
   return (
     <>
       <div className="w-full h-[170px] border-[1px] mt-[20px] border-[#2F3336] rounded-[20px] flex flex-col pt-[10px] pl-[20px] justify-between pb-[10px]">
-        <h1 className="text-white text-[25px] font-bold">
+        <h1
+          className={`${
+            contentColor === "white" ? "text-black" : "text-white"
+          }  text-[25px] font-bold`}
+        >
           Subscribe to Premium
         </h1>
-        <p className="text-white">
+        <p
+          className={`${
+            contentColor === "white" ? "text-black" : "text-white"
+          } `}
+        >
           Subscribe to unlock new features and if <br /> eligible, receive a
           share of revenue.
         </p>

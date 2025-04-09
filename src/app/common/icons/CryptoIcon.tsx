@@ -13,7 +13,7 @@ function CryptoIcon() {
           cx="100"
           cy="100"
           r="90"
-          fill="#121212"
+          fill="transparent"
           stroke="#1A8CD8"
           stroke-width="6"
         />

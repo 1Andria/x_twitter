@@ -2,6 +2,7 @@
 import {
   useCommentModal,
   useCommentStore,
+  useThemeColors,
   useUserProfile,
 } from "@/app/common/hooks/Store";
 import { auth, db } from "@/app/firebase/config";
@@ -30,6 +31,7 @@ function CommentModal({ postId }: CommentModalTypes) {
   const setFile = useCommentStore((state) => state.setFile);
   const profilePicture = useUserProfile((state) => state.profilePicture);
   const [comments, setComments] = useState<CommentType[]>([]);
+  const contentColor = useThemeColors((state) => state.contentColor);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -116,7 +118,9 @@ function CommentModal({ postId }: CommentModalTypes) {
           transform: "translate(-50%, -50%)",
         }}
       >
-        <div className="w-[570px] max-[630px]:w-[350px] h-[650px] ml-[10px] mr-[10px] rounded-[20px] bg-black flex flex-col pt-[15px] relative">
+        <div
+          className={`w-[570px] max-[630px]:w-[350px] h-[650px] ml-[10px] mr-[10px] rounded-[20px] bg-[${contentColor}] flex flex-col pt-[15px] relative`}
+        >
           <div className="pl-[5px]">
             <AddPost
               inputId={`comment-image-${postId}`}
@@ -135,7 +139,11 @@ function CommentModal({ postId }: CommentModalTypes) {
 
           <div className="w-full h-full overflow-y-auto ">
             {comments.length === 0 ? (
-              <p className="text-center text-white text-sm mt-4">
+              <p
+                className={`text-center ${
+                  contentColor === "white" ? "text-black" : "text-white"
+                } text-sm mt-[16px] font-semibold`}
+              >
                 No comments yet
               </p>
             ) : (

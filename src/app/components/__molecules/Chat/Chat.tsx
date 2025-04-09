@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   useMessageInputStore,
   useSelectedUser,
+  useThemeColors,
   useUserProfile,
 } from "@/app/common/hooks/Store";
 import AddPost from "../AddPost/AddPost";
@@ -38,6 +39,7 @@ function Chat() {
   const reset = useMessageInputStore((state) => state.reset);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const chatBottomRef = useRef<HTMLDivElement>(null);
+  const contentColor = useThemeColors((state) => state.contentColor);
 
   useEffect(() => {
     if (!selectedUser || !auth.currentUser) return;
@@ -88,11 +90,26 @@ function Chat() {
   return (
     <div className="text-white min-w-[200px] flex flex-col h-screen">
       <div className="flex pt-[16px] border-b border-b-[gray] pb-[10px] pl-[16px] pr-[16px] items-center gap-4 mb-4">
-        <button onClick={() => setSelectedUser(null)}>← Back</button>
-        <h1 className="text-xl font-bold">Chat with {selectedUser.name}</h1>
+        <button
+          className={`${
+            contentColor === "white" ? "text-black" : "text-white"
+          }`}
+          onClick={() => setSelectedUser(null)}
+        >
+          ← Back
+        </button>
+        <h1
+          className={`text-xl font-bold ${
+            contentColor === "white" ? "text-black" : "text-white"
+          }`}
+        >
+          Chat with {selectedUser.name}
+        </h1>
       </div>
 
-      <div className="flex-1 bg-[black] p-4 rounded flex flex-col justify-between overflow-y-auto">
+      <div
+        className={`flex-1 bg-[${contentColor}] p-4 rounded flex flex-col justify-between overflow-y-auto`}
+      >
         <div className="flex flex-col gap-3">
           {messages.map((msg, key) => {
             const isMine = msg.sender === auth.currentUser?.email;

@@ -1,14 +1,18 @@
 import React from "react";
 import { IconProps } from "../Types/Common";
+import { useThemeColors } from "../hooks/Store";
 
 function CommunitiesIcon({ username, path }: IconProps) {
+  const contentColor = useThemeColors((state) => state.contentColor);
+  
+
   return (
     <>
       <svg
         viewBox="0 0 24 24"
         aria-hidden="true"
-        fill="white"
-        stroke="white"
+        fill={` ${contentColor === "white" ? "black" : "white"}`}
+        stroke={` ${contentColor === "white" ? "black" : "white"}`}
         strokeWidth={` ${path === `/communities/${username}` ? "3" : "1"} `}
       >
         <g>

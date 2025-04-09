@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useCommentMoreDiv } from "@/app/common/hooks/Store";
+import { useCommentMoreDiv, useThemeColors } from "@/app/common/hooks/Store";
 import EditIcon from "@/app/common/icons/EditIcon";
 import ReportIcon from "@/app/common/icons/ReportIcon";
 import Unsmile from "@/app/common/icons/Unsmile";
@@ -35,6 +35,7 @@ function Comment({ comment, postId, onDelete }: CommentProps) {
   const divRef = useRef<HTMLDivElement | null>(null);
   const EditDivRef = useRef<HTMLDivElement | null>(null);
   const TextAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const contentColor = useThemeColors((state) => state.contentColor);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -166,7 +167,11 @@ function Comment({ comment, postId, onDelete }: CommentProps) {
       <div className="flex flex-col items-start w-full min-w-0">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-[8px]">
-            <h3 className="text-white font-bold hover:underline">
+            <h3
+              className={` ${
+                contentColor === "white" ? "text-black" : "text-white"
+              } font-bold hover:underline`}
+            >
               {authorData?.name}
             </h3>
             <h3 className="text-[#71767B] text-[14px] font-semibold">
@@ -186,7 +191,13 @@ function Comment({ comment, postId, onDelete }: CommentProps) {
           <div className="relative">
             {commentMoreDiv === comment.id && (
               <div ref={divRef} className="absolute right-0 z-50">
-                <div className="pt-[10px] pb-[10px] w-[170px] pl-[10px] pr-[10px] flex flex-col bg-black border border-white/20 shadow-white shadow-sm rounded-[10px] gap-[20px]">
+                <div
+                  className={` pt-[10px] pb-[10px] w-[170px] pl-[10px] pr-[10px] flex flex-col bg-[${contentColor}] ${
+                    contentColor === "white"
+                      ? "border border-black"
+                      : "border border-white"
+                  } shadow-white shadow-sm rounded-[10px] gap-[20px]`}
+                >
                   {currentUsername != comment.commentAuthor && (
                     <button
                       onClick={() => setCommentMoreDiv(null)}
@@ -195,7 +206,13 @@ function Comment({ comment, postId, onDelete }: CommentProps) {
                       <div className="w-[25px] h-[25px]">
                         <ReportIcon />
                       </div>
-                      <h3 className="text-white">Report</h3>
+                      <h3
+                        className={`${
+                          contentColor === "white" ? "text-black" : "text-white"
+                        }`}
+                      >
+                        Report
+                      </h3>
                     </button>
                   )}
                   {currentUsername != comment.commentAuthor && (
@@ -206,7 +223,13 @@ function Comment({ comment, postId, onDelete }: CommentProps) {
                       <div className="w-[25px] h-[25px]">
                         <Unsmile />
                       </div>
-                      <h3 className="text-white">Not interested</h3>
+                      <h3
+                        className={`${
+                          contentColor === "white" ? "text-black" : "text-white"
+                        }`}
+                      >
+                        Not interested
+                      </h3>
                     </button>
                   )}
                   {currentUsername === comment.commentAuthor && (
@@ -214,7 +237,13 @@ function Comment({ comment, postId, onDelete }: CommentProps) {
                       <div className="w-[25px] h-[25px]">
                         <EditIcon />
                       </div>
-                      <h3 className="text-white">Edit text</h3>
+                      <h3
+                        className={`${
+                          contentColor === "white" ? "text-black" : "text-white"
+                        }`}
+                      >
+                        Edit text
+                      </h3>
                     </button>
                   )}
                   {currentUsername === comment.commentAuthor && (
@@ -233,7 +262,11 @@ function Comment({ comment, postId, onDelete }: CommentProps) {
             )}
             <div
               onClick={showMoreOptions}
-              className="flex gap-[2px] cursor-pointer pt-[15px] pb-[15px] pl-[10px] pr-[10px] rounded-full hover:bg-[#0A171F]"
+              className={`flex gap-[2px] cursor-pointer pt-[15px] pb-[15px] pl-[10px] pr-[10px] rounded-full ${
+                contentColor === "white"
+                  ? "hover:bg-[#E7E7E8]"
+                  : "hover:bg-[#181818] "
+              }`}
             >
               {[...Array(3)].map((_, i) => (
                 <div
@@ -246,7 +279,11 @@ function Comment({ comment, postId, onDelete }: CommentProps) {
         </div>
 
         {!edit && (
-          <p className="text-white break-words whitespace-pre-wrap">
+          <p
+            className={` ${
+              contentColor === "white" ? "text-black" : "text-white"
+            } break-words whitespace-pre-wrap`}
+          >
             {comment.commentText}
           </p>
         )}
@@ -258,13 +295,17 @@ function Comment({ comment, postId, onDelete }: CommentProps) {
           >
             <TextareaAutosize
               ref={TextAreaRef}
-              className="text-white w-full resize-none bg-transparent"
+              className={`${
+                contentColor === "white" ? "text-black" : "text-white"
+              } w-full resize-none bg-transparent`}
               value={editText}
               onChange={(e) => setEditText(e.target.value)}
             />
             <button
               onClick={handleSaveEdit}
-              className="bg-black h-[40px] border border-white rounded-[10px] font-semibold px-[10px] text-white"
+              className={`bg-black h-[40px] border border-white rounded-[10px] font-semibold px-[10px] text-white ${
+                contentColor === "white" ? "text-black" : "text-white"
+              } `}
             >
               Save
             </button>

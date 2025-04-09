@@ -232,3 +232,27 @@ export const useMessageInputStore = create<MessageInputStore>((set) => ({
   setFile: (file) => set({ file }),
   reset: () => set({ text: "", image: null, file: null }),
 }));
+
+export type MoreModalTypes = {
+  out: boolean;
+  setOut: (value: boolean) => void;
+};
+
+export const useMoreModal = create<MoreModalTypes>((set) => ({
+  out: false,
+  setOut: (value) => set(() => ({ out: value })),
+}));
+
+export type ThemeColorTypes = {
+  themeColor: string;
+  setThemeColor: (value: string) => void;
+  contentColor: string;
+  setContentColor: (value: string) => void;
+};
+
+export const useThemeColors = create<ThemeColorTypes>((set) => ({
+  themeColor: "Default",
+  setThemeColor: (value) => set(() => ({ themeColor: value })),
+  contentColor: "black",
+  setContentColor: (value) => set(() => ({ contentColor: value })),
+}));
