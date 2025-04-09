@@ -80,7 +80,7 @@ function NotificationContext() {
     <>
       <h1
         className={`${
-          contentColor === "white" ? "bg-black" : "bg-white"
+          contentColor === "white" ? "text-black" : "text-white"
         } font-semibold ml-[16px] text-[30px] mt-[15px]`}
       >
         Notifications:
@@ -100,12 +100,12 @@ function NotificationContext() {
                 className="object-cover"
               />
             </div>
-            <div
-              className={`${
-                contentColor === "white" ? "bg-black" : "bg-white"
-              } `}
-            >
-              <h1>
+            <div>
+              <h1
+                className={`${
+                  contentColor === "white" ? "text-black" : "text-white"
+                } `}
+              >
                 {user.name}
                 <span className="text-[#71767B] ml-[10px]">{user.message}</span>
               </h1>
