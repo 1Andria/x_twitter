@@ -331,3 +331,13 @@ export type ElementColorType = {
   elementColor: string;
   setElementColor: (value: string) => void;
 };
+
+export type MoreModalTypes = {
+  out: boolean;
+  setOut: (value: boolean) => void;
+};
+
+export type LogedType = {
+  loged: boolean;
+  setLoged: (value: boolean) => void;
+};

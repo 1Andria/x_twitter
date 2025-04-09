@@ -29,6 +29,8 @@ import {
   CommentState,
   ThemeColorTypes,
   ElementColorType,
+  MoreModalTypes,
+  LogedType,
 } from "../Types/Common";
 
 export const useCreateAcc = create<CrAccType>((set) => ({
@@ -90,6 +92,7 @@ export const useNotFound = create<UserFoundTypes>((set) => ({
 }));
 import ProfilePicture from "../icons/profile.jpg";
 import { SelectedUserType } from "@/app/components/__molecules/MessagesContext/MessagesContext";
+import { persist } from "zustand/middleware";
 
 export const useUserProfile = create<UserProfileStore>((set) => ({
   name: "",
@@ -235,11 +238,6 @@ export const useMessageInputStore = create<MessageInputStore>((set) => ({
   reset: () => set({ text: "", image: null, file: null }),
 }));
 
-export type MoreModalTypes = {
-  out: boolean;
-  setOut: (value: boolean) => void;
-};
-
 export const useMoreModal = create<MoreModalTypes>((set) => ({
   out: false,
   setOut: (value) => set(() => ({ out: value })),
@@ -271,3 +269,16 @@ export const useElementColor = create<ElementColorType>((set) => ({
     set(() => ({ elementColor: value }));
   },
 }));
+
+export const useLoged = create<LogedType>()(
+  persist(
+    (set) => ({
+      loged: false,
+      setLoged: (value) => set({ loged: value }),
+    }),
+    {
+      name: "loged-storage",
+      partialize: (state) => ({ loged: state.loged }),
+    }
+  )
+);

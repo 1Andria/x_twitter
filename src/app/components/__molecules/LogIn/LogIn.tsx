@@ -9,6 +9,7 @@ import { OpenApple } from "@/app/common/functions/OpnAplAcc";
 import LogPass from "../../__atoms/LogPass/LogPass";
 import {
   useCreateAcc,
+  useLoged,
   useLogIn,
   useLogInStore,
   useNotFound,
@@ -22,6 +23,7 @@ function LogIn() {
   const openLogIn = useLogIn((state) => state.openLogIn);
   const setOpenLogIn = useLogIn((state) => state.setOpenLogIn);
   const setOpenSign = useCreateAcc((state) => state.setOpen);
+  const setLoged = useLoged((state) => state.setLoged);
 
   function ToSignUp() {
     setOpenLogIn(false);
@@ -53,6 +55,7 @@ function LogIn() {
 
         router.push(`xpage/${username}`);
         useNotFound.getState().setUserNotFound(false);
+        setLoged(true);
       }
     } else {
       useNotFound.getState().setUserNotFound(true);

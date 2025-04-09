@@ -6,6 +6,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/app/firebase/config";
 import {
   useCurrentUser,
+  useLoged,
   useMoreModal,
   useNavBarPost,
   useThemeColors,
@@ -25,7 +26,7 @@ import ProfileIcon from "@/app/common/icons/ProfileIcon";
 import MoreIcon from "@/app/common/icons/MoreIcon";
 import Image from "next/image";
 import NavBarPost from "../NavBarPost/NavBarPost";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import MoreModal from "../MoreModal/MoreModal";
 
 function NavBar() {
@@ -36,6 +37,13 @@ function NavBar() {
   const setNavBarPost = useNavBarPost((state) => state.setNavBarPost);
   const setOut = useMoreModal((state) => state.setOut);
   const contentColor = useThemeColors((state) => state.contentColor);
+  const loged = useLoged((state) => state.loged);
+
+  const router = useRouter();
+
+  if (!loged) {
+    router.push("/");
+  }
 
   function OpenMoreModal() {
     setOut(true);

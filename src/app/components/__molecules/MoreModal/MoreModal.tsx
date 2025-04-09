@@ -1,5 +1,6 @@
 import {
   useElementColor,
+  useLoged,
   useMoreModal,
   useThemeColors,
 } from "@/app/common/hooks/Store";
@@ -17,6 +18,8 @@ function MoreModal() {
   const setContentColor = useThemeColors((state) => state.setContentColor);
   const elementColor = useElementColor((state) => state.elementColor);
   const setElementColor = useElementColor((state) => state.setElementColor);
+  const setLoged = useLoged((state) => state.setLoged);
+
   const router = useRouter();
   const ThemeArray = ["Light", "Dim", "Default"];
 
@@ -43,6 +46,8 @@ function MoreModal() {
 
   function HandleLogOut() {
     router.push("/");
+    setOut(false);
+    setLoged(false);
   }
 
   return (
