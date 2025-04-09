@@ -24,6 +24,7 @@ import MoreIcon from "@/app/common/icons/MoreIcon";
 import Image from "next/image";
 import NavBarPost from "../NavBarPost/NavBarPost";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function NavBar() {
   const path = usePathname();
@@ -32,7 +33,18 @@ function NavBar() {
   const setProfilePicture = useUserProfile((state) => state.setProfilePicture);
   const setNavBarPost = useNavBarPost((state) => state.setNavBarPost);
   const [out, setOut] = useState(false);
-  const outRef = useRef<HTMLAnchorElement | null>(null);
+  const outRef = useRef<HTMLButtonElement | null>(null);
+  const router = useRouter();
+
+  function HandleLogOut() {
+    router.push("/");
+  }
+
+  useEffect(() => {
+    if (!username) {
+      router.push("/");
+    }
+  }, [username]);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -255,13 +267,13 @@ function NavBar() {
           </div>
           <h1 className="text-white text-[18px] max-[650px]:hidden">More</h1>
           {out && (
-            <Link
+            <button
+              onClick={HandleLogOut}
               ref={outRef}
-              href={"/"}
               className="z-[50000] w-[150px] text-[red] border border-white bg-black bottom-[-40px] rounded-[20px] h-[50px]  absolute flex justify-center items-center"
             >
               Log out
-            </Link>
+            </button>
           )}
         </div>
 
