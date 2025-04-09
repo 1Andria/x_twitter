@@ -5,10 +5,11 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import Image from "next/image";
 import { onAuthStateChanged } from "firebase/auth";
 import { Notification } from "@/app/common/Types/Common";
-
+import { useThemeColors } from "@/app/common/hooks/Store";
 
 function NotificationContext() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const contentColor = useThemeColors((state) => state.contentColor);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -77,7 +78,11 @@ function NotificationContext() {
 
   return (
     <>
-      <h1 className="text-white font-semibold ml-[16px] text-[30px] mt-[15px]">
+      <h1
+        className={`${
+          contentColor === "white" ? "bg-black" : "bg-white"
+        } font-semibold ml-[16px] text-[30px] mt-[15px]`}
+      >
         Notifications:
       </h1>
       <div className="flex flex-col gap-[16px] p-[16px]">
@@ -95,7 +100,11 @@ function NotificationContext() {
                 className="object-cover"
               />
             </div>
-            <div className="text-white">
+            <div
+              className={`${
+                contentColor === "white" ? "bg-black" : "bg-white"
+              } `}
+            >
               <h1>
                 {user.name}
                 <span className="text-[#71767B] ml-[10px]">{user.message}</span>
