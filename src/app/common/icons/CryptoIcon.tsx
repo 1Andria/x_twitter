@@ -1,6 +1,10 @@
+"use client";
 import React from "react";
+import { useElementColor } from "../hooks/Store";
 
 function CryptoIcon() {
+  const elementColor = useElementColor((state) => state.elementColor);
+
   return (
     <>
       <svg
@@ -14,7 +18,7 @@ function CryptoIcon() {
           cy="100"
           r="90"
           fill="transparent"
-          stroke="#1A8CD8"
+          stroke={`${elementColor}`}
           stroke-width="6"
         />
         <text
@@ -22,7 +26,7 @@ function CryptoIcon() {
           y="50%"
           font-family="Arial, sans-serif"
           font-size="90"
-          fill="#1A8CD8"
+          fill={`${elementColor}`}
           font-weight="bold"
           text-anchor="middle"
           alignment-baseline="middle"

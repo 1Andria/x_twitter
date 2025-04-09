@@ -1,4 +1,9 @@
-import { useMoreModal, useThemeColors } from "@/app/common/hooks/Store";
+import {
+  useElementColor,
+  useMoreModal,
+  useThemeColors,
+} from "@/app/common/hooks/Store";
+import CheckIcon from "@/app/common/icons/CheckIcon";
 import { Box, Modal } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -10,7 +15,19 @@ function MoreModal() {
   const setThemeColor = useThemeColors((state) => state.setThemeColor);
   const contentColor = useThemeColors((state) => state.contentColor);
   const setContentColor = useThemeColors((state) => state.setContentColor);
+  const elementColor = useElementColor((state) => state.elementColor);
+  const setElementColor = useElementColor((state) => state.setElementColor);
   const router = useRouter();
+  const ThemeArray = ["Light", "Dim", "Default"];
+
+  const ElementColorArray = [
+    "#1D9BF0",
+    "#FFD400",
+    "#F91880",
+    "#7856FF",
+    "#FF7A00",
+    "#00BA7C",
+  ];
 
   if (themeColor === "Default") {
     setContentColor("black");
@@ -27,8 +44,6 @@ function MoreModal() {
   function HandleLogOut() {
     router.push("/");
   }
-
-  const ThemeArray = ["Light", "Dim", "Default"];
 
   return (
     <>
@@ -88,6 +103,29 @@ function MoreModal() {
                 >
                   {item}
                 </button>
+              ))}
+            </div>
+            <h2
+              className={`font-bold text-[20px] mt-[20px] mb-[20px] ${
+                contentColor === "white" ? "text-black" : "text-white"
+              }`}
+            >
+              Element colors:
+            </h2>
+            <div className="w-full  flex gap-[8px] justify-between">
+              {ElementColorArray.map((item) => (
+                <div
+                  onClick={() => setElementColor(item)}
+                  className={`cursor-pointer bg-[${item}] h-[30px] w-[30px] rounded-[100%] flex items-center justify-center`}
+                >
+                  <div
+                    className={`${
+                      elementColor === item ? "flex" : "hidden"
+                    } w-[20px] h-[20px] `}
+                  >
+                    <CheckIcon />
+                  </div>
+                </div>
               ))}
             </div>
           </div>

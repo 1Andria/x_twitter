@@ -27,6 +27,7 @@ import ReactTimeAgo from "react-time-ago";
 import {
   useAddComment,
   useCommentModal,
+  useElementColor,
   useHoverStore,
   useMoreInfo,
   useThemeColors,
@@ -53,6 +54,7 @@ const PostItem = ({ post }: PostItemProps) => {
   const setCommentModal = useAddComment((state) => state.setCommentModal);
   const setAllComments = useCommentModal((state) => state.setAllComments);
   const contentColor = useThemeColors((state) => state.contentColor);
+  const elementColor = useElementColor((state) => state.elementColor);
 
   const [commentCount, setCommentCount] = useState<number>(0);
 
@@ -285,7 +287,9 @@ const PostItem = ({ post }: PostItemProps) => {
                 <div
                   key={i}
                   className={`w-[3px] h-[3px] rounded-full ${
-                    moreColor === post.id ? "bg-[#1D9BF0]" : "bg-[#71767B]"
+                    moreColor === post.id
+                      ? `bg-[${elementColor}]`
+                      : "bg-[#71767B]"
                   }`}
                 ></div>
               ))}

@@ -1,10 +1,11 @@
 "use client";
-import { useThemeColors } from "@/app/common/hooks/Store";
+import { useElementColor, useThemeColors } from "@/app/common/hooks/Store";
 import Link from "next/link";
 import React from "react";
 
 function Subscribe() {
   const contentColor = useThemeColors((state) => state.contentColor);
+  const elementColor = useElementColor((state) => state.elementColor);
 
   return (
     <>
@@ -27,7 +28,7 @@ function Subscribe() {
         <Link
           href={"https://react-midterm1.vercel.app/"}
           target="_blank"
-          className="bg-[#1A8CD8] w-[120px] flex items-center justify-center rounded-[20px] pt-[8px] pb-[8px] text-white font-semibold"
+          className={`bg-[${elementColor}] w-[120px] flex items-center justify-center rounded-[20px] pt-[8px] pb-[8px] text-white font-semibold`}
         >
           Subscribe
         </Link>

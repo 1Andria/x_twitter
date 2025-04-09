@@ -26,7 +26,6 @@ import MoreIcon from "@/app/common/icons/MoreIcon";
 import Image from "next/image";
 import NavBarPost from "../NavBarPost/NavBarPost";
 import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
 import MoreModal from "../MoreModal/MoreModal";
 
 function NavBar() {

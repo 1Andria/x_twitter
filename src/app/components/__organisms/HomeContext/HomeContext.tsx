@@ -1,5 +1,6 @@
 "use client";
 import {
+  useElementColor,
   useForYou,
   usePostImage,
   usePostStore,
@@ -24,6 +25,7 @@ function HomeContext() {
   const setFile = usePostStore((state) => state.setFile);
   const profilePicture = useUserProfile((state) => state.profilePicture);
   const [isScrolled, setIsScrolled] = useState(false);
+  const elementColor = useElementColor((state) => state.elementColor);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,7 +85,7 @@ function HomeContext() {
       {isScrolled && (
         <button
           onClick={scrollToTop}
-          className="fixed border-white border-[2px] z-50 text-white font-bold bg-[#1D9BF0] w-[100px] pt-[10px] pb-[10px] top-[30px] left-[43%] hover:opacity-[0.9] rounded-[20px] flex items-center justify-center gap-[8px]"
+          className={`fixed border-white border-[2px] z-50 text-white font-bold  w-[100px] pt-[10px] pb-[10px] top-[30px] left-[43%] hover:opacity-[0.9] rounded-[20px] flex items-center justify-center bg-[${elementColor}] gap-[8px]`}
         >
           <div className="w-[20px] h-[20px]">
             <UpIcon />

@@ -17,9 +17,11 @@ import { Box, Modal } from "@mui/material";
 import {
   useCover,
   useEditProfile,
+  useElementColor,
   useLogInStore,
   usePostData,
   useProfileContext,
+  useThemeColors,
   useUserProfile,
 } from "@/app/common/hooks/Store";
 import ProfilePictureUpload from "../ProfilePictureUpload/ProfilePictureUpload";
@@ -53,9 +55,12 @@ function ProfileContext({ pathName }: PropsType) {
   const UserPost = posts.filter((post) => post.authorEmail === email);
   const LikedPosts = posts.filter((post) => post.likes.includes(email));
   const profilePicture = useProfileContext((state) => state.profilePicture);
+  const contentColor = useThemeColors((state) => state.contentColor);
+
   const setProfilePicture = useProfileContext(
     (state) => state.setProfilePicture
   );
+  const elementColor = useElementColor((state) => state.elementColor);
 
   const bookmarkedPosts = posts.filter((post) =>
     post.bookmarks.includes(email)
@@ -120,14 +125,22 @@ function ProfileContext({ pathName }: PropsType) {
 
   return (
     <div className="max-w-[650px] relative w-full min-h-screen h-auto border-r border-r-[#2F3336]">
-      <div className="w-full sticky  top-0 pl-[15px] bg-black h-[60px] flex  border-b border-b-[#2F3336] items-center gap-[30px]">
+      <div
+        className={`w-full sticky  top-0 pl-[15px] bg-[${contentColor}] h-[60px] flex  border-b border-b-[#2F3336] items-center gap-[30px]`}
+      >
         <div className="w-[50px] h-[50px] rounded-[50px] flex items-center justify-center">
           <div className="w-[20px] h-[20px]">
             <ArrowIcon />
           </div>
         </div>
         <div className="flex flex-col">
-          <h1 className="text-white font-bold text-[20px]">{name || "..."}</h1>
+          <h1
+            className={` ${
+              contentColor === "white" ? "text-black" : "text-white"
+            } font-bold text-[20px]`}
+          >
+            {name || "..."}
+          </h1>
           <p className="text-[#71767B]">{postsCount} posts</p>
         </div>
       </div>
@@ -187,7 +200,7 @@ function ProfileContext({ pathName }: PropsType) {
               <h1
                 className={`h-full   flex items-center justify-center border-b-[2px] ${
                   activeTab === item
-                    ? "border-b-[3px] border-b-[#1D9BF0]"
+                    ? `border-b-[3px] border-b-[${elementColor}]`
                     : "border-b-[3px] border-b-transparent"
                 }`}
               >

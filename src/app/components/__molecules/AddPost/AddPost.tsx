@@ -8,7 +8,11 @@ import SmileIcon from "@/app/common/icons/SmileIcon";
 import React, { ChangeEvent } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import PostBtn from "../../__atoms/PostBtn/PostBtn";
-import { useThemeColors, useWorldState } from "@/app/common/hooks/Store";
+import {
+  useElementColor,
+  useThemeColors,
+  useWorldState,
+} from "@/app/common/hooks/Store";
 import World from "@/app/common/icons/World";
 import Image from "next/image";
 import { AddPostProps } from "@/app/common/Types/Common";
@@ -30,6 +34,8 @@ function AddPost({
   const contentColor = useThemeColors((state) => state.contentColor);
   const world = useWorldState((state) => state.world);
   const setWorld = useWorldState((state) => state.setWorld);
+  const elementColor = useElementColor((state) => state.elementColor);
+
   const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const uploadedFile = e.target.files?.[0];
     if (uploadedFile) {

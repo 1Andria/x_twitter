@@ -320,3 +320,15 @@ export type Notification = {
   profilePicture: string;
   message: string;
 };
+
+export type ThemeColorTypes = {
+  themeColor: string;
+  setThemeColor: (value: string) => void;
+  contentColor: string;
+  setContentColor: (value: string) => void;
+};
+
+export type ElementColorType = {
+  elementColor: string;
+  setElementColor: (value: string) => void;
+};

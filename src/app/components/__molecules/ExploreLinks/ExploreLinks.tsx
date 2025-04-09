@@ -9,10 +9,11 @@ import CryptoIcon from "@/app/common/icons/CryptoIcon";
 import GithubIcon from "@/app/common/icons/GithubIcon";
 import MovieIcon from "@/app/common/icons/MovieIcon";
 import JobIcon from "@/app/common/icons/JobIcon";
-import { useThemeColors } from "@/app/common/hooks/Store";
+import { useElementColor, useThemeColors } from "@/app/common/hooks/Store";
 
 function ExploreLinks() {
   const contentColor = useThemeColors((state) => state.contentColor);
+  const elementColor = useElementColor((state) => state.elementColor);
 
   return (
     <>
@@ -21,7 +22,9 @@ function ExploreLinks() {
         target="_blank"
         className="flex gap-[10px] items-center"
       >
-        <div className="w-[40px] h-[40px] bg-[#1A8CD8] rounded-[100%] ">
+        <div
+          className={`w-[40px] h-[40px] bg-[${elementColor}]  rounded-[100%] `}
+        >
           <SolarSystemIcon />
         </div>
         <h2
@@ -37,7 +40,9 @@ function ExploreLinks() {
         target="_blank"
         className="flex gap-[10px] items-center"
       >
-        <div className="w-[40px] h-[40px] bg-[#1A8CD8] rounded-[100%] ">
+        <div
+          className={`w-[40px] h-[40px] bg-[${elementColor}] rounded-[100%] `}
+        >
           <Image src={WorldIcon} height={40} width={40} alt="world" />
         </div>
         <h2
@@ -86,7 +91,9 @@ function ExploreLinks() {
         target="_blank"
         className="flex gap-[10px] items-center"
       >
-        <div className="w-[40px] h-[40px] bg-[#1A8CD8] rounded-[100%] ">
+        <div
+          className={`w-[40px] h-[40px] bg-[${elementColor}] rounded-[100%] `}
+        >
           <GithubIcon />
         </div>
         <h2
@@ -103,7 +110,9 @@ function ExploreLinks() {
         target="_blank"
         className="flex gap-[10px] items-center"
       >
-        <div className="w-[40px] h-[40px] bg-[#1A8CD8] flex justify-center items-center rounded-[100%] ">
+        <div
+          className={`w-[40px] h-[40px] bg-[${elementColor}] flex justify-center items-center rounded-[100%] `}
+        >
           <MovieIcon />
         </div>
         <h2
@@ -119,7 +128,9 @@ function ExploreLinks() {
         target="_blank"
         className="flex gap-[10px] items-center"
       >
-        <div className="w-[40px] h-[40px] bg-[#1A8CD8] flex justify-center items-center rounded-[100%] ">
+        <div
+          className={`w-[40px] h-[40px] bg-[${elementColor}] flex justify-center items-center rounded-[100%] `}
+        >
           <JobIcon />
         </div>
         <h2

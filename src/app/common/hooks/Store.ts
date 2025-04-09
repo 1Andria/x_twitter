@@ -27,6 +27,8 @@ import {
   SearchValueTypes,
   NavBarPostTypes,
   CommentState,
+  ThemeColorTypes,
+  ElementColorType,
 } from "../Types/Common";
 
 export const useCreateAcc = create<CrAccType>((set) => ({
@@ -243,16 +245,29 @@ export const useMoreModal = create<MoreModalTypes>((set) => ({
   setOut: (value) => set(() => ({ out: value })),
 }));
 
-export type ThemeColorTypes = {
-  themeColor: string;
-  setThemeColor: (value: string) => void;
-  contentColor: string;
-  setContentColor: (value: string) => void;
-};
-
 export const useThemeColors = create<ThemeColorTypes>((set) => ({
-  themeColor: "Default",
-  setThemeColor: (value) => set(() => ({ themeColor: value })),
-  contentColor: "black",
-  setContentColor: (value) => set(() => ({ contentColor: value })),
+  themeColor:
+    (typeof window !== "undefined" && localStorage.getItem("themeColor")) ||
+    "Default",
+  setThemeColor: (value) => {
+    localStorage.setItem("themeColor", value);
+    set(() => ({ themeColor: value }));
+  },
+  contentColor:
+    (typeof window !== "undefined" && localStorage.getItem("contentColor")) ||
+    "black",
+  setContentColor: (value) => {
+    localStorage.setItem("contentColor", value);
+    set(() => ({ contentColor: value }));
+  },
+}));
+
+export const useElementColor = create<ElementColorType>((set) => ({
+  elementColor:
+    (typeof window !== "undefined" && localStorage.getItem("elementColor")) ||
+    "#1D9BF0",
+  setElementColor: (value) => {
+    localStorage.setItem("elementColor", value);
+    set(() => ({ elementColor: value }));
+  },
 }));
