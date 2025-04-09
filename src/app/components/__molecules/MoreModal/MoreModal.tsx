@@ -71,11 +71,17 @@ function MoreModal() {
           }}
         >
           <div
-            className={`w-[570px] max-[630px]:w-[350px] max-[630px]:pr-[30px] max-[630px]:pl-[30px]  ml-[10px] mr-[10px] h-[640px] rounded-[20px] pr-[65px] pl-[65px] bg-[${contentColor}] flex flex-col pt-[15px] pb-[80px] relative items-center `}
+            className={`w-[570px] max-[630px]:w-[350px] max-[630px]:pr-[30px] max-[630px]:pl-[30px]  ml-[10px] mr-[10px] h-[400px] rounded-[20px] pr-[65px] pl-[65px] bg-[${contentColor}] flex flex-col justify-evenly pt-[25px] pb-[40px] relative items-center `}
           >
             <button
               onClick={HandleLogOut}
-              className=" w-[150px] text-[red] border border-white bg-black rounded-[20px] h-[50px]  flex justify-center items-center"
+              className={` ${
+                contentColor === "white"
+                  ? "hover:bg-[#E7E7E8]"
+                  : "hover:bg-[#181818] "
+              } w-[150px] text-[red] border  bg-[${contentColor}] ${
+                contentColor === "white" ? "border-black" : "border-white"
+              } rounded-[20px] h-[50px]  flex justify-center items-center`}
             >
               Log out
             </button>
