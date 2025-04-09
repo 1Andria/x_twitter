@@ -25,11 +25,10 @@ function ForYouBtn({ forYou, btnTxt }: ForYouBtnType) {
         <h1
           className={`h-full align-middle ${
             contentColor === "white" ? "text-black" : "text-white"
-          } font-semibold  ${
+          } font-semibold ${
             forYou ? "opacity-[1]" : "opacity-[0.5]"
-          } border-b-[3px] ${
-            forYou ? `border-b-[${elementColor}]` : "border-b-transparent"
-          }`}
+          } border-b-[3px] ${forYou ? "" : "border-b-transparent"}`}
+          style={forYou ? { borderBottomColor: elementColor } : {}}
         >
           {btnTxt}
         </h1>

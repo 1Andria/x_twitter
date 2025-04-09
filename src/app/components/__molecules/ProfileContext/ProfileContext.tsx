@@ -173,15 +173,27 @@ function ProfileContext({ pathName }: PropsType) {
                 />
               )}
             </div>
-            <h1 className="text-white ml-[15px] font-bold text-[20px]">
+            <h1
+              className={`${
+                contentColor === "white" ? "text-black" : "text-white"
+              } ml-[15px] font-bold text-[20px]`}
+            >
               {name}
             </h1>
             <h3 className="text-[#71767B] ml-[15px] text-[16px]">{email}</h3>
             <div className="flex ml-[15px] gap-[10px] mt-[10px]">
-              <h1 className="text-white">
+              <h1
+                className={`${
+                  contentColor === "white" ? "text-black" : "text-white"
+                }`}
+              >
                 {following} <span className="text-[#71767B]">following</span>
               </h1>
-              <h1 className="text-white">
+              <h1
+                className={`${
+                  contentColor === "white" ? "text-black" : "text-white"
+                }`}
+              >
                 {followers} <span className="text-[#71767B]">followers</span>
               </h1>
             </div>
@@ -193,16 +205,25 @@ function ProfileContext({ pathName }: PropsType) {
             <button
               key={item}
               onClick={() => setActiveTab(item)}
-              className={` border-b-[#2F3336] border-b-[1px] h-[50px] w-full mt-[20px] hover:bg-[#111313] text-[16px] font-semibold transition-colors duration-200 pl-[12px] pr-[12px] ${
-                activeTab === item ? "text-white" : "text-[#71767B]"
+              className={`border-b-[#2F3336] border-b-[1px] h-[50px] w-full mt-[20px] ${
+                contentColor === "white"
+                  ? "hover:bg-[#E7E7E8]"
+                  : "hover:bg-[#181818] "
+              } text-[16px] font-semibold transition-colors duration-200 pl-[12px] pr-[12px] ${
+                activeTab === item
+                  ? contentColor === "white"
+                    ? "text-black"
+                    : "text-white"
+                  : "text-[#71767B]"
               }`}
             >
               <h1
-                className={`h-full   flex items-center justify-center border-b-[2px] ${
-                  activeTab === item
-                    ? `border-b-[3px] border-b-[${elementColor}]`
-                    : "border-b-[3px] border-b-transparent"
+                className={`h-full flex items-center justify-center border-b-[3px] ${
+                  activeTab === item ? "border-b-[3px]" : "border-b-transparent"
                 }`}
+                style={
+                  activeTab === item ? { borderBottomColor: elementColor } : {}
+                }
               >
                 {item}
               </h1>
@@ -211,7 +232,11 @@ function ProfileContext({ pathName }: PropsType) {
         </div>
         {activeTab === "Posts" && (
           <>
-            <h1 className="text-white text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]">
+            <h1
+              className={`${
+                contentColor === "white" ? "text-black" : "text-white"
+              } text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]`}
+            >
               {currentUsername === cleanPathName
                 ? `Your posts:`
                 : `${name}'s posts:`}
@@ -225,7 +250,11 @@ function ProfileContext({ pathName }: PropsType) {
           !hasBookmarks &&
           currentUsername === cleanPathName && (
             <div className="w-full h-full flex flex-col items-center">
-              <h2 className="text-white  font-semibold text-[30px] mt-[50px] text-start">
+              <h2
+                className={` ${
+                  contentColor === "white" ? "text-black" : "text-white"
+                } font-semibold text-[30px] mt-[50px] text-start`}
+              >
                 Save posts for later
               </h2>
               <p className="text-[#71767B]">
@@ -236,7 +265,11 @@ function ProfileContext({ pathName }: PropsType) {
         {activeTab === "Bookmarks" &&
           !hasBookmarks &&
           currentUsername != cleanPathName && (
-            <h1 className="text-white text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]">
+            <h1
+              className={`${
+                contentColor === "white" ? "text-black" : "text-white"
+              } text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]`}
+            >
               This information is private
             </h1>
           )}
@@ -244,7 +277,11 @@ function ProfileContext({ pathName }: PropsType) {
           <>
             {currentUsername === cleanPathName && (
               <>
-                <h1 className="text-white text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]">
+                <h1
+                  className={`${
+                    contentColor === "white" ? "text-black" : "text-white"
+                  } text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]`}
+                >
                   Posts you have bookmarked:
                 </h1>
                 {bookmarkedPosts.map((post) => (
@@ -256,7 +293,11 @@ function ProfileContext({ pathName }: PropsType) {
         )}
         {activeTab === "Articles" && (
           <>
-            <h1 className="text-white text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]">
+            <h1
+              className={`${
+                contentColor === "white" ? "text-black" : "text-white"
+              } text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]`}
+            >
               {currentUsername === cleanPathName
                 ? `Your articles:`
                 : `${name}'s articles:`}
@@ -275,7 +316,11 @@ function ProfileContext({ pathName }: PropsType) {
           <>
             {currentUsername === cleanPathName ? (
               <>
-                <h1 className="text-white text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]">
+                <h1
+                  className={`${
+                    contentColor === "white" ? "text-black" : "text-white"
+                  } text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]`}
+                >
                   Posts you have liked:
                 </h1>
                 {LikedPosts.map((post) => (
@@ -283,7 +328,11 @@ function ProfileContext({ pathName }: PropsType) {
                 ))}
               </>
             ) : (
-              <h1 className="text-white text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]">
+              <h1
+                className={`${
+                  contentColor === "white" ? "text-black" : "text-white"
+                } text-[20px] font-semibold ml-[10px] mt-[20px] mb-[10px]`}
+              >
                 This information is private
               </h1>
             )}

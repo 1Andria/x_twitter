@@ -91,15 +91,13 @@ function MoreModal() {
                 <button
                   key={item}
                   onClick={() => setThemeColor(item)}
-                  className={`w-full ${
-                    item === "Light" ? "bg-white text-[black]" : ""
-                  } ${item === "Dim" ? "bg-[#15202B]" : " "} ${
-                    item === "Default" ? "bg-[black]" : " "
-                  } ${
+                  className={`w-full ${item === "Light" ? "bg-white" : ""} ${
+                    item === "Dim" ? "bg-[#15202B]" : " "
+                  } ${item === "Default" ? "bg-[black]" : " "} ${
                     themeColor === item
                       ? "border-[4px] border-[#1D9BF0]"
                       : "border-[0px]"
-                  } font-bold h-[50px] rounded-[10px] text-white`}
+                  } font-bold h-[50px] rounded-[10px] text-[#1D9BF0]`}
                 >
                   {item}
                 </button>
