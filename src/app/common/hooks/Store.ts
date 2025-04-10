@@ -92,7 +92,7 @@ export const useNotFound = create<UserFoundTypes>((set) => ({
 }));
 import ProfilePicture from "../icons/profile.jpg";
 import { SelectedUserType } from "@/app/components/__molecules/MessagesContext/MessagesContext";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 export const useUserProfile = create<UserProfileStore>((set) => ({
   name: "",
@@ -278,6 +278,7 @@ export const useLoged = create<LogedType>()(
     }),
     {
       name: "loged-storage",
+      storage: createJSONStorage(() => sessionStorage),
       partialize: (state) => ({ loged: state.loged }),
     }
   )
