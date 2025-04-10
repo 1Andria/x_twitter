@@ -107,7 +107,7 @@ function ProfileContext({ pathName }: PropsType) {
         setFollowersCount(followers.length);
         setFollowingCount(following.length);
         setProfilePicture(userData.profilePicture);
-        setCoverPhoto(userData.coverPhoto || "");
+        setCoverPhoto(userData.coverPhoto);
 
         const postsQuery = query(
           collection(db, "posts"),

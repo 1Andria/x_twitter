@@ -24,6 +24,7 @@ function SuggestFollowers({ hidden }: SuggestProps) {
   const setUsers = useUserStore((state) => state.setUsers);
   const [followedUsers, setFollowedUsers] = useState<string[]>([]);
   const contentColor = useThemeColors((state) => state.contentColor);
+  const [currentEmail, setCurrentEmail] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -57,7 +58,7 @@ function SuggestFollowers({ hidden }: SuggestProps) {
     const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       if (user) {
         const currentUserRef = doc(db, "users", user.uid);
-
+        setCurrentEmail(user.email);
         const unsubscribeSnap = onSnapshot(currentUserRef, (docSnap) => {
           const data = docSnap.data();
           setFollowedUsers(data?.followings || []);
@@ -115,7 +116,7 @@ function SuggestFollowers({ hidden }: SuggestProps) {
           Suggested for you:
         </h1>
         {users
-          .filter((user) => user.email !== auth.currentUser?.email)
+          .filter((user) => user.email !== currentEmail)
           .map((user) => {
             const isFollowing = followedUsers.includes(user.email);
 
