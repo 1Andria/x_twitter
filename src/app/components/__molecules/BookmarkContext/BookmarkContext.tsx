@@ -4,7 +4,6 @@ import { usePostData, useThemeColors } from "@/app/common/hooks/Store";
 import { auth } from "@/app/firebase/config";
 import PostItem from "../PostItem/PostItem";
 import PostFetcher from "@/app/common/functions/PostFetcher";
-import ArrowIcon from "@/app/common/icons/ArrowIcon";
 
 function BookmarkContext() {
   const posts = usePostData((state) => state.posts);
@@ -40,9 +39,6 @@ function BookmarkContext() {
               className={`w-full sticky top-0 pl-[15px] h-[60px] flex bg-[${contentColor}] border-b border-b-[#2F3336] items-center gap-[30px]`}
             >
               <div className=" gap-[20px] flex items-center justify-center">
-                <button className="w-[20px] h-[20px]">
-                  <ArrowIcon />
-                </button>
                 <h1
                   className={` font-bold text-[20px]  ${
                     contentColor === "white" ? "text-black" : "text-white   "

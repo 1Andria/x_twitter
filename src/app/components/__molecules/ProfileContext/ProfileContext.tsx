@@ -9,7 +9,6 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import ArrowIcon from "@/app/common/icons/ArrowIcon";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -128,11 +127,7 @@ function ProfileContext({ pathName }: PropsType) {
       <div
         className={`w-full sticky  top-0 pl-[15px] bg-[${contentColor}] h-[60px] flex  border-b border-b-[#2F3336] items-center gap-[30px]`}
       >
-        <div className="w-[50px] h-[50px] rounded-[50px] flex items-center justify-center">
-          <div className="w-[20px] h-[20px]">
-            <ArrowIcon />
-          </div>
-        </div>
+        <div className="w-[50px] h-[50px] rounded-[50px] flex items-center justify-center"></div>
         <div className="flex flex-col">
           <h1
             className={` ${

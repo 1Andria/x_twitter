@@ -341,10 +341,10 @@ const PostItem = ({ post }: PostItemProps) => {
         {post.imageUrl && (
           <div
             onClick={() => setAllComments(post.id)}
-            className="w-full pr-[10px] max-h-[500px] cursor-pointer"
+            className="w-full pr-[10px] max-h-[620px] cursor-pointer"
           >
             <Image
-              height={700}
+              height={600}
               width={700}
               src={post.imageUrl}
               alt="Post Image"
